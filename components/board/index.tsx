@@ -143,7 +143,6 @@ function OneBake() {
   return (
     <Flex>
      <Raffle />
-     <RaffleTable />
     </Flex>
   )
 }
