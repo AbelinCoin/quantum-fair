@@ -1,3 +1,4 @@
+import React,{ useState } from 'react'
 import styled from 'styled-components'
 
 const Flex = styled.div`
@@ -12,13 +13,42 @@ const Flex = styled.div`
   z-index: 12; 
 `
 
+const Card = styled.div`
+  justify-content: center;
+  background: #efefef;
+  flex-direction: column;
+  border-radius: 10px;
+  border: 2px solid;
+  border-color: #000000;
+  align-items: center;
+  display: block; 
+  align-content: center; 
+  height: 28vh;
+  width: 35vh;
+  padding: 0.2rem calc((100vw - 1000px) / 2); 
+  z-index: 12; 
+`
+
+const Table = styled.div`
+  justify-content: center;
+  background: #efefef;
+  flex-direction: column;
+  align-items: center;
+  display: block; 
+  align-content: center; 
+  height: 28vh;
+  width: 35vh;
+  padding: 0.2rem calc((100vw - 1000px) / 2); 
+  z-index: 12; 
+`
+
 const OneContent = styled.div`
   justify-content: center;
   background: #efefef;
   flex-direction: column;
   align-items: center;
   display: flex; 
-  transform: translateY(-200px);
+  transform: translateY(-150px);
   align-content: center; 
   z-index: 12; 
 `
@@ -46,6 +76,12 @@ const Typographo = styled.h1`
   font-weight: unset;
 `
 
+const Typographe = styled.h1`
+  font-size: initial;
+  font-family: 'Poppins';
+  font-weight: unset;
+`
+
 const Input = styled.input`
   border-radius: 10px;
   color: #000000;
@@ -68,10 +104,18 @@ const Button = styled.button`
   min-height: 37px;
 `
 
-function Mock() {
+function NoData() {
   return (
-    <>
-     <Flex>
+    <Flex>
+     <Typographe>No there active raffles yet</Typographe>
+    </Flex>
+  )
+}
+
+
+function Raffle() {
+  return (
+     <>
        <OneContent>
        <Typography>Raffle Board</Typography>
        <Typographo>Choose the raffle you want to run.</Typographo>
@@ -80,9 +124,28 @@ function Mock() {
        <Button>Raffle ID</Button>
        </Row>
        </OneContent>
-     </Flex>
-    </>
+     </>
   )
 }
 
-export default Mock
+
+function RaffleTable() {
+  const [active, setActive] = useState(true)
+  return (
+    <Table>
+     { active ? <Card /> : <NoData/> }
+    </Table>
+  )
+}
+
+
+function OneBake() {
+  return (
+    <Flex>
+     <Raffle />
+     <RaffleTable />
+    </Flex>
+  )
+}
+
+export default OneBake

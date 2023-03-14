@@ -1,6 +1,6 @@
 import Head from "next/head"
 import Navbar from "../../components/nav"
-import Mock from "../../components/board"
+import OneBake from "../../components/board"
 
 function Heading() {
   return (
@@ -20,7 +20,7 @@ function Board() {
   <>
     <Heading />
     <Navbar />  
-    <Mock />     
+    <OneBake />     
   </>
  )
 }
