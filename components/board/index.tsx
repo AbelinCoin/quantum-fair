@@ -48,7 +48,7 @@ const OneContent = styled.div`
   flex-direction: column;
   align-items: center;
   display: flex; 
-  transform: translateY(-150px);
+  transform: translateY(-245px);
   align-content: center; 
   z-index: 12; 
 `
