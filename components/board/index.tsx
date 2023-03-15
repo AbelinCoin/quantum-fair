@@ -54,7 +54,7 @@ const OneContent = styled.div`
   z-index: 12;
 `;
 
-const Row = styled.form`
+const Row = styled.div`
   justify-content: center;
   background: #efefef;
   flex-direction: row;
@@ -129,9 +129,9 @@ function RaffleSearcher() {
       <OneContent>
         <Typography>Raffle Board</Typography>
         <Typographo>Choose the raffle you want to run.</Typographo>
-        <Row onSubmit={FindID}>
+        <Row>
           <Input />
-          <Button>Raffle ID</Button>
+          <Button onClick={FindID}>Raffle ID</Button>
         </Row>
       </OneContent>
     </>
