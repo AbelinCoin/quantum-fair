@@ -1,4 +1,4 @@
-import ethers from 'ethers'
+import { ethers } from 'ethers'
 import { FairHub } from './abis'
 
 async function CreateRaffle() {
@@ -10,6 +10,8 @@ const provider = new ethers.providers.Web3Provider(ethereum);
 const walletAddress = accounts[0]; 
 const signer = provider.getSigner(walletAddress);
 const FairProxy = new ethers.Contract(FairContract, FairHub, signer)
+const Create = await FairProxy.createRaffle();
+console.log(Create);
 
  return (
     
