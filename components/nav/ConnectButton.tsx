@@ -17,20 +17,20 @@ export default function ConnectButton({ handleOpenModal }: Props) {
     <Box
       display="flex"
       alignItems="center"
-      background="gray.700"
       borderRadius="xl"
       mb='3'
       py="0"
     >
       <Box px="3">
-        <Text fontFamily='Poppins' color="black" fontSize="md">
+        <Text mr={4} fontFamily='Poppins' color="black" fontSize="medium">
           GOERLI
         </Text>
       </Box>
       <Button
         onClick={handleOpenModal}
-        bg="grey"
-        color="black"
+        bg="#666464"
+        fontFamily='Poppins'
+        color="white"
         border="1px solid transparent"
         _hover={{
           border: "1px",
@@ -38,12 +38,15 @@ export default function ConnectButton({ handleOpenModal }: Props) {
           borderColor: "blue.400",
           backgroundColor: "gray.700",
         }}
-        borderRadius="xl"
+        borderRadius="12px"
         m="1px"
         px={3}
         height="38px"
+        fontSize='medium'
+        minWidth='8rem'
+        fontWeight='bold'
       >
-        <Text color="white" fontSize="md" fontWeight="medium" mr="2">
+        <Text color="white" mr="2">
           {account &&
             `${account.slice(0, 6)}...${account.slice(
               account.length - 4,
