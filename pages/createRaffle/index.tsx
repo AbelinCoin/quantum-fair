@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Navbar from "../../components/nav";
 import styled from 'styled-components'
+import CreateRaffle from "../../components/create"
 
 function Heading() {
   return (
@@ -19,7 +20,8 @@ function Create() {
     return (
   <>
     <Heading/>
-    <Navbar />    
+    <Navbar /> 
+    <CreateRaffle />  
   </>
  )
 }
