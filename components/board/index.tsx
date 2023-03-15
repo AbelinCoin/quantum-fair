@@ -99,6 +99,7 @@ const Button = styled.button`
   align-items: center;
   border-radius: 10px;
   color: #000000;
+  cursor: pointer;
   margin-top: 2%;
   display: flex;
   font-family: "Poppins";
