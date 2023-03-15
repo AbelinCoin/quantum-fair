@@ -128,8 +128,8 @@ function RaffleSearcher() {
     const walletAddress = accounts[0];
     const signer = provider.getSigner(walletAddress);
     const RaffleProxy = new ethers.Contract(RaffleContract, Raffle, signer);
-    // const Found = await RaffleProxy.ids();
-    console.log(id);
+    const Found = await RaffleProxy.ids(id);
+    console.log(Found);
   }
 
   return (
