@@ -141,7 +141,7 @@ function RaffleSearcher() {
         <Typographo>Choose the raffle you want to run.</Typographo>
         <Row>
           <Input />
-          <Button onClick={FindID} disabled={account}>
+          <Button onClick={FindID}>
             Raffle ID
           </Button>
         </Row>
