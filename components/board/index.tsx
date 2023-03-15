@@ -1,17 +1,17 @@
-import React,{ useState } from 'react'
-import styled from 'styled-components'
+import React, { useState } from "react";
+import styled from "styled-components";
 
 const Flex = styled.div`
   justify-content: center;
   background: #efefef;
   flex-direction: column;
   align-items: center;
-  height: 100vh; 
-  display: flex; 
-  align-content: center; 
-  padding: 0.2rem calc((100vw - 1000px) / 2); 
-  z-index: 12; 
-`
+  height: 100vh;
+  display: flex;
+  align-content: center;
+  padding: 0.2rem calc((100vw - 1000px) / 2);
+  z-index: 12;
+`;
 
 const Card = styled.div`
   justify-content: center;
@@ -21,66 +21,66 @@ const Card = styled.div`
   border: 2px solid;
   border-color: #000000;
   align-items: center;
-  display: block; 
-  align-content: center; 
+  display: block;
+  align-content: center;
   height: 28vh;
   width: 35vh;
-  padding: 0.2rem calc((100vw - 1000px) / 2); 
-  z-index: 12; 
-`
+  padding: 0.2rem calc((100vw - 1000px) / 2);
+  z-index: 12;
+`;
 
 const Table = styled.div`
   justify-content: center;
   background: #efefef;
   flex-direction: column;
   align-items: center;
-  display: block; 
-  align-content: center; 
+  display: block;
+  align-content: center;
   height: 28vh;
   width: 35vh;
-  padding: 0.2rem calc((100vw - 1000px) / 2); 
-  z-index: 12; 
-`
+  padding: 0.2rem calc((100vw - 1000px) / 2);
+  z-index: 12;
+`;
 
 const OneContent = styled.div`
   justify-content: center;
   background: #efefef;
   flex-direction: column;
   align-items: center;
-  display: flex; 
+  display: flex;
   transform: translateY(-245px);
-  align-content: center; 
-  z-index: 12; 
-`
+  align-content: center;
+  z-index: 12;
+`;
 
 const Row = styled.div`
   justify-content: center;
   background: #efefef;
   flex-direction: row;
   align-items: center;
-  display: flex; 
-  align-content: center; 
-  z-index: 12; 
-`
+  display: flex;
+  align-content: center;
+  z-index: 12;
+`;
 
 const Typography = styled.h1`
   transform: translateY(30px);
   color: #000000;
   font-size: xx-large;
-  font-family: 'Poppins';
-`
+  font-family: "Poppins";
+`;
 
 const Typographo = styled.h1`
   font-size: initial;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-weight: unset;
-`
+`;
 
 const Typographe = styled.h1`
   font-size: initial;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-weight: unset;
-`
+`;
 
 const Input = styled.input`
   border-radius: 10px;
@@ -88,8 +88,8 @@ const Input = styled.input`
   margin-top: 2%;
   display: flex;
   height: 5vh;
-  font-family: 'Poppins';
-`
+  font-family: "Poppins";
+`;
 
 const Button = styled.button`
   background: #edd8d8;
@@ -100,51 +100,44 @@ const Button = styled.button`
   color: #000000;
   margin-top: 2%;
   display: flex;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   min-height: 37px;
-`
+`;
 
 function NoData() {
   return (
     <Flex>
-     <Typographe>No there active raffles yet</Typographe>
+      <Typographe>No there active raffles yet</Typographe>
     </Flex>
-  )
+  );
 }
-
 
 function Raffle() {
   return (
-     <>
-       <OneContent>
-       <Typography>Raffle Board</Typography>
-       <Typographo>Choose the raffle you want to run.</Typographo>
-       <Row>
-       <Input/>
-       <Button>Raffle ID</Button>
-       </Row>
-       </OneContent>
-     </>
-  )
+    <>
+      <OneContent>
+        <Typography>Raffle Board</Typography>
+        <Typographo>Choose the raffle you want to run.</Typographo>
+        <Row>
+          <Input />
+          <Button>Raffle ID</Button>
+        </Row>
+      </OneContent>
+    </>
+  );
 }
-
 
 function RaffleTable() {
-  const [active, setActive] = useState(true)
-  return (
-    <Table>
-     { active ? <Card /> : <NoData/> }
-    </Table>
-  )
+  const [active, setActive] = useState(true);
+  return <Table>{active ? <Card /> : <NoData />}</Table>;
 }
-
 
 function OneBake() {
   return (
     <Flex>
-     <Raffle />
+      <Raffle />
     </Flex>
-  )
+  );
 }
 
-export default OneBake
+export default OneBake;
