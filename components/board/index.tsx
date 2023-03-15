@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { ethers } from "ethers";
-import FairHub from '../abis'
+import { FairHub } from '../abis'
 import { useEthers } from "@usedapp/core";
 
 const Flex = styled.div`
@@ -131,6 +131,7 @@ function RaffleSearcher() {
       signer
     );
     const Found = await RaffleContract.status();
+    console.log(Found)
   }
 
   return (

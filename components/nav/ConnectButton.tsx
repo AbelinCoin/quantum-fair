@@ -23,13 +23,14 @@ export default function ConnectButton({ handleOpenModal }: Props) {
       py="0"
     >
       <Box px="3">
-        <Text color="white" fontSize="md">
+        <Text fontFamily='Poppins' color="black" fontSize="md">
           GOERLI
         </Text>
       </Box>
       <Button
         onClick={handleOpenModal}
-        bg="gray.800"
+        bg="grey"
+        color="black"
         border="1px solid transparent"
         _hover={{
           border: "1px",
