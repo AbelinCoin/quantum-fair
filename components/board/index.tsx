@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import ethers from 'ethers'
 
 const Flex = styled.div`
   justify-content: center;
@@ -53,7 +54,7 @@ const OneContent = styled.div`
   z-index: 12;
 `;
 
-const Row = styled.div`
+const Row = styled.form`
   justify-content: center;
   background: #efefef;
   flex-direction: row;
@@ -112,13 +113,23 @@ function NoData() {
   );
 }
 
-function Raffle() {
+function RaffleSearcher() {
+  
+  async function FindID() {
+  const FairContract = "0x173D4A72d8096C97E191104c248475E50DA2d1d3";
+  const ethereum = (window as any).ethereum;
+  const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+  const provider = new ethers.providers.Web3Provider(ethereum);
+  const walletAddress = accounts[0];
+  const signer = provider.getSigner(walletAddress);
+  const RaffleContract = new ethers.Contract(FairContract, QuantumHub, signer)}
+  
   return (
     <>
       <OneContent>
         <Typography>Raffle Board</Typography>
         <Typographo>Choose the raffle you want to run.</Typographo>
-        <Row>
+        <Row onSubmit={FindID}>
           <Input />
           <Button>Raffle ID</Button>
         </Row>
@@ -135,7 +146,7 @@ function RaffleTable() {
 function OneBake() {
   return (
     <Flex>
-      <Raffle />
+      <RaffleSearcher />
     </Flex>
   );
 }
