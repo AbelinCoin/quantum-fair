@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { ethers } from "ethers";
-import { FairHub } from '../abis'
+import { Raffle } from '../abis'
 import { useEthers } from "@usedapp/core";
 
 const Flex = styled.div`
@@ -119,18 +119,18 @@ function NoData() {
 function RaffleSearcher() {
   const { account } = useEthers();
   async function FindID() {
-    const FairContract = "0x173D4A72d8096C97E191104c248475E50DA2d1d3";
+    const RaffleContract = "0x173D4A72d8096C97E191104c248475E50DA2d1d3";
     const ethereum = window.ethereum;
     const accounts = await ethereum.request({ method: "eth_requestAccounts" });
     const provider = new ethers.providers.Web3Provider(ethereum);
     const walletAddress = accounts[0];
     const signer = provider.getSigner(walletAddress);
-    const RaffleContract = new ethers.Contract(
-      FairContract,
-      FairHub,
+    const RaffleProxy = new ethers.Contract(
+      RaffleContract,
+      Raffle,
       signer
     );
-    const Found = await RaffleContract.status();
+    const Found = await RaffleProxy.status();
     console.log(Found)
   }
 

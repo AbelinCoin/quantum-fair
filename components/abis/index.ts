@@ -1,4 +1,4 @@
-export const QuantumHub = [
+export const FairHub = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
     inputs: [{ internalType: "address", name: "_proxy", type: "address" }],
@@ -207,7 +207,7 @@ export const QuantumHub = [
   },
 ];
 
-export const FairHub = [
+export const Raffle = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   { inputs: [], name: "BatchLengthMismatch", type: "error" },
   { inputs: [], name: "EarlyClosing", type: "error" },
