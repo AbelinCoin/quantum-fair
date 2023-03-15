@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import ethers from 'ethers'
+import { ethers } from "ethers";
+import FairHub from '../abis'
+import { useEthers } from "@usedapp/core";
 
 const Flex = styled.div`
   justify-content: center;
@@ -115,16 +117,22 @@ function NoData() {
 }
 
 function RaffleSearcher() {
-  
+  const { account } = useEthers();
   async function FindID() {
-  const FairContract = "0x173D4A72d8096C97E191104c248475E50DA2d1d3";
-  const ethereum = (window as any).ethereum;
-  const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-  const provider = new ethers.providers.Web3Provider(ethereum);
-  const walletAddress = accounts[0];
-  const signer = provider.getSigner(walletAddress);
-  const RaffleContract = new ethers.Contract(FairContract, QuantumHub, signer)}
-  
+    const FairContract = "0x173D4A72d8096C97E191104c248475E50DA2d1d3";
+    const ethereum = window.ethereum;
+    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const walletAddress = accounts[0];
+    const signer = provider.getSigner(walletAddress);
+    const RaffleContract = new ethers.Contract(
+      FairContract,
+      FairHub,
+      signer
+    );
+    const Found = await RaffleContract.status();
+  }
+
   return (
     <>
       <OneContent>
@@ -132,7 +140,9 @@ function RaffleSearcher() {
         <Typographo>Choose the raffle you want to run.</Typographo>
         <Row>
           <Input />
-          <Button onClick={FindID}>Raffle ID</Button>
+          <Button onClick={FindID} disabled={account}>
+            Raffle ID
+          </Button>
         </Row>
       </OneContent>
     </>
