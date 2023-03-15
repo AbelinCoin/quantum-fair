@@ -164,12 +164,12 @@ const { isOpen, onOpen, onClose } = useDisclosure();
     <Nav> 
         <Bars onClick={ Active } />
         <BG>
-          <Image loader={() => src} alt='Lago' src={src} height='30' width='30'/>
+          <Image loader={() => src} alt='Lgo' src={src} height='30' width='30'/>
           <Typography href='/'>QuantumFair</Typography>
         </BG>
         <NavMenu>  
-         <NavData href='/create'>Create Raffle</NavData> 
-         <NavData href='/board'>Raffle Board</NavData>
+         <NavData href='/createRaffle'>Create Raffle</NavData> 
+         <NavData href='/raffleBoard'>Raffle Board</NavData>
         </NavMenu> 
         <NavBtn> 
          <ConnectButton handleOpenModal={onOpen} />
