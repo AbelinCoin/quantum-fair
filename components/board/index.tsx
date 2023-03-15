@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { ethers } from "ethers";
-import { Raffle } from '../abis'
+import { Raffle } from "../abis";
 import { useEthers } from "@usedapp/core";
 
 const Flex = styled.div`
@@ -118,6 +118,8 @@ function NoData() {
 
 function RaffleSearcher() {
   const { account } = useEthers();
+  const [id, setId] = useState(''); 
+
   async function FindID() {
     const RaffleContract = "0x173D4A72d8096C97E191104c248475E50DA2d1d3";
     const ethereum = window.ethereum;
@@ -125,13 +127,9 @@ function RaffleSearcher() {
     const provider = new ethers.providers.Web3Provider(ethereum);
     const walletAddress = accounts[0];
     const signer = provider.getSigner(walletAddress);
-    const RaffleProxy = new ethers.Contract(
-      RaffleContract,
-      Raffle,
-      signer
-    );
-    const Found = await RaffleProxy.status();
-    console.log(Found)
+    const RaffleProxy = new ethers.Contract(RaffleContract, Raffle, signer);
+    // const Found = await RaffleProxy.ids();
+    console.log(id);
   }
 
   return (
@@ -140,10 +138,8 @@ function RaffleSearcher() {
         <Typography>Raffle Board</Typography>
         <Typographo>Choose the raffle you want to run.</Typographo>
         <Row>
-          <Input />
-          <Button onClick={FindID}>
-            Raffle ID
-          </Button>
+          <Input onChange={e => { setId(e.currentTarget.value)}}/>
+          <Button onClick={FindID}>Raffle ID</Button>
         </Row>
       </OneContent>
     </>
