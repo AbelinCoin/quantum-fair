@@ -27,7 +27,6 @@ export default function ConnectButton({ handleOpenModal }: Props) {
         </Text>
       </Box>
       <Button
-        onClick={handleOpenModal}
         bg="#666464"
         fontFamily='Poppins'
         color="white"

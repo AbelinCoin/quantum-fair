@@ -19,7 +19,7 @@ function Board() {
     return (
   <>
     <Heading />
-    <Navbar />  
+    <Navbar /> 
     <OneBake />     
   </>
  )
