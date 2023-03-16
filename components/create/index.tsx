@@ -139,17 +139,19 @@ function CreateRaffle() {
       const walletAddress = accounts[0];
       const signer = provider.getSigner(walletAddress);
       const FairProxy = new ethers.Contract(FairContract, FairHub, signer);
-      const Create = await FairProxy.createRaffle(start, end, winners, {
+      const createRaffle = await FairProxy.createRaffle(start, end, winners, {
         hash: "0xf7baab1baf661869e72d3f70214e394102486912b6ed3872d9bb9d7e36e286c3",
         hash_function: 18,
         size: 32,
       });
-      const signed = await provider.getTransactionReceipt(Create.hash);
-      if (signed === 1) {
+      const signed = await provider.getTransactionReceipt(createRaffle.hash);
+      console.log(signed);
+      if (signed.status == 1) {
         setScreen(true);
       }
-      console.log(signed);
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   async function open() {
