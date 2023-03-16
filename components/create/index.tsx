@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { FairHub } from "../abis";
+import { FairHub, Raffle } from "../abis";
 import React, { useState } from "react";
 import styled from "styled-components";
 
@@ -128,8 +128,7 @@ function CreateRaffle() {
     setScreen(true);
   }
 
-  async function Initialize() {
-    const arrs = await JSON.parse(localStorage.arr);
+  async function create() {
     const FairContract = "0x7E0755a50E1C3b2BB8AbECE23F139Be25B8D5348";
     const ethereum = (window as any).ethereum;
     const accounts = await ethereum.request({ method: "eth_requestAccounts" });
@@ -137,12 +136,29 @@ function CreateRaffle() {
     const walletAddress = accounts[0];
     const signer = provider.getSigner(walletAddress);
     const FairProxy = new ethers.Contract(FairContract, FairHub, signer);
-    const Create = await FairProxy.createRaffle(arrs[1], arrs[2], arrs[3], {
+    const Create = await FairProxy.createRaffle(start, end, winners, {
       hash: "0xf7baab1baf661869e72d3f70214e394102486912b6ed3872d9bb9d7e36e286c3",
       hash_function: 18,
       size: 32,
     });
-    console.log(Create);
+    console.log(Create.hash);
+    const signed = await provider.getTransactionReceipt('0xa06c7116d7f197fac5f5cd5e994c9e307d18be865fcf3f2487a7d0ffe8a5a566');
+    console.log(signed)
+    if (Create.hash === "") {
+      setScreen(true);
+    }
+  }
+
+  async function open() {
+    const RaffleContract = "0x173D4A72d8096C97E191104c248475E50DA2d1d3";
+    const ethereum = (window as any).ethereum;
+    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const walletAddress = accounts[0];
+    const signer = provider.getSigner(walletAddress);
+    const RaffleProxy = new ethers.Contract(RaffleContract, Raffle, signer);
+    const Open = await RaffleProxy.open();
+    console.log(Open);
   }
 
   return (
@@ -184,7 +200,7 @@ function CreateRaffle() {
               setDescription(e.currentTarget.value);
             }}
           />
-          <Button onClick={Initialize}>Create</Button>
+          <Button onClick={open}>Create</Button>
         </OneContent>
       ) : (
         <OneContent>
@@ -223,7 +239,7 @@ function CreateRaffle() {
               setDescription(e.currentTarget.value);
             }}
           />
-          <Button onClick={Args}>Next</Button>
+          <Button onClick={create}>Next</Button>
         </OneContent>
       )}
     </Flex>
