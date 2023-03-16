@@ -126,6 +126,10 @@ function CreateRaffle() {
     localStorage.arr = await JSON.stringify(arr);
   }
 
+  async function getAgrs() {
+    const arrs = await JSON.parse(localStorage.arr);
+  }
+
   async function Initialize() {
     const FairContract = "0xa1eB5e2893442B0Eeb115eE0B31470790EE9D1a7";
     const ethereum = (window as any).ethereum;
