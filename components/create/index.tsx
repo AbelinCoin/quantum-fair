@@ -114,12 +114,17 @@ const OneContent = styled.div`
 `;
 
 function CreateRaffle() {
+  const [screen, setScreen] = useState(false);screen
   const [name, setName] = useState("");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [winners, setWinners] = useState("");
   const [description, setDescription] = useState("");
   const arr = [name, start, end, winners, description];
+  
+  async function Agrs() {
+    localStorage.arr = await JSON.stringify(arr);
+  }
   
   async function Initialize() {
     const FairContract = "0xa1eB5e2893442B0Eeb115eE0B31470790EE9D1a7";
@@ -130,7 +135,6 @@ function CreateRaffle() {
     const signer = provider.getSigner(walletAddress);
     const FairProxy = new ethers.Contract(FairContract, FairHub, signer);
     const Create = await FairProxy.createRaffle();
-    localStorage.arr = JSON.stringify(arr)
     console.log(Create);
   }
 
