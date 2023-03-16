@@ -18,6 +18,7 @@ export const Input = styled.input`
   margin-top: 2%;
   display: flex;
   height: 5vh;
+  min-width: 30rem;
   font-family: "Poppins";
 `;
 
