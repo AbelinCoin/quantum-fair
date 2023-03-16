@@ -130,18 +130,17 @@ function CreateRaffle() {
 
   async function Initialize() {
     const arrs = await JSON.parse(localStorage.arr);
-    const FairContract = "0xa1eB5e2893442B0Eeb115eE0B31470790EE9D1a7";
+    const FairContract = "0x7E0755a50E1C3b2BB8AbECE23F139Be25B8D5348";
     const ethereum = (window as any).ethereum;
     const accounts = await ethereum.request({ method: "eth_requestAccounts" });
     const provider = new ethers.providers.Web3Provider(ethereum);
     const walletAddress = accounts[0];
     const signer = provider.getSigner(walletAddress);
     const FairProxy = new ethers.Contract(FairContract, FairHub, signer);
-    const Create = await FairProxy.createRaffle(arr[1], arr[2], arr[3], {
+    const Create = await FairProxy.createRaffle(arrs[1], arrs[2], arrs[3], {
       hash: "0xf7baab1baf661869e72d3f70214e394102486912b6ed3872d9bb9d7e36e286c3",
       hash_function: 18,
       size: 32,
-      gasLimit: 10000000,
     });
     console.log(Create);
   }
@@ -151,21 +150,21 @@ function CreateRaffle() {
       {screen ? (
         <OneContent>
           <Typography>CREATE RAFFLE 2/3</Typography>
-          <LabelName>Raffle Name</LabelName>
+          <LabelName>Raffle Contract</LabelName>
           <Input
             type="text"
             onChange={(e) => {
               setName(e.currentTarget.value);
             }}
           />
-          <LabelStart>Start</LabelStart>
+          <LabelStart>Nft Token</LabelStart>
           <Input
             type="number"
             onChange={(e) => {
               setStart(e.currentTarget.value);
             }}
           />
-          <LabelEnd>End</LabelEnd>
+          <LabelEnd>Token ID</LabelEnd>
           <Input
             type="number"
             onChange={(e) => {
@@ -180,7 +179,7 @@ function CreateRaffle() {
             }}
           />
           <LabelDesc>Description</LabelDesc>
-          <InputDesc
+          <Input
             onChange={(e) => {
               setDescription(e.currentTarget.value);
             }}
