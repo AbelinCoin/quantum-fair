@@ -122,11 +122,11 @@ function CreateRaffle() {
   const [description, setDescription] = useState("");
   const arr = [name, start, end, winners, description];
 
-  async function Agrs() {
+  async function Args() {
     localStorage.arr = await JSON.stringify(arr);
   }
 
-  async function getAgrs() {
+  async function getArgs() {
     const arrs = await JSON.parse(localStorage.arr);
   }
 
@@ -176,7 +176,7 @@ function CreateRaffle() {
             setDescription(e.currentTarget.value);
           }}
         />
-        <Button>Next</Button>
+        <Button onClick={Args}>Next</Button>
       </OneContent>
     </Flex>
   );
