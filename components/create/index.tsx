@@ -115,12 +115,18 @@ const OneContent = styled.div`
 
 function CreateRaffle() {
   const [screen, setScreen] = useState(false);
+
   const [name, setName] = useState("");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [winners, setWinners] = useState("");
   const [description, setDescription] = useState("");
-  const [hash, setHash] = useState("");
+
+  const [raffleContract, setraffleContract] = useState("");
+  const [nftContract, setnftContract] = useState("");
+  const [ids, setIds] = useState("");
+  const [vaultFactory, setvaultFactory] = useState("");
+  const [vaultRouter, setvaultRouter] = useState("");
   const arr = [name, start, end, winners, description];
 
   async function Args() {
@@ -144,24 +150,19 @@ function CreateRaffle() {
         hash_function: 18,
         size: 32,
       });
-      const signed = await provider.getTransactionReceipt(createRaffle.hash);
-      console.log(signed);
-      if (signed.status == 1) {
-        setScreen(true);
-      }
+      setScreen(true);
     } catch (err) {
       console.error(err);
     }
   }
 
   async function open() {
-    const RaffleContract = "0x173D4A72d8096C97E191104c248475E50DA2d1d3";
     const ethereum = (window as any).ethereum;
     const accounts = await ethereum.request({ method: "eth_requestAccounts" });
     const provider = new ethers.providers.Web3Provider(ethereum);
     const walletAddress = accounts[0];
     const signer = provider.getSigner(walletAddress);
-    const RaffleProxy = new ethers.Contract(RaffleContract, Raffle, signer);
+    const RaffleProxy = new ethers.Contract(raffleContract, Raffle, signer);
     const Open = await RaffleProxy.open();
     console.log(Open);
   }
@@ -175,34 +176,36 @@ function CreateRaffle() {
           <Input
             type="text"
             onChange={(e) => {
-              setName(e.currentTarget.value);
+              setraffleContract(e.currentTarget.value);
             }}
           />
-          <LabelStart>Nft Token</LabelStart>
+          <LabelStart>Nft Contract</LabelStart>
           <Input
             type="number"
             onChange={(e) => {
-              setStart(e.currentTarget.value);
+              setnftContract(e.currentTarget.value);
             }}
           />
           <LabelEnd>Token ID</LabelEnd>
           <Input
             type="number"
             onChange={(e) => {
-              setEnd(e.currentTarget.value);
+              setId(e.currentTarget.value);
             }}
           />
-          <LabelWinners>Winners</LabelWinners>
+          <LabelWinners>Vault Factory</LabelWinners>
           <Input
+            value="0xbC462F32aD394cF4dc1200a04c3f03dfaf380375"
             type="number"
             onChange={(e) => {
-              setWinners(e.currentTarget.value);
+              setvaultFactory(e.currentTarget.value);
             }}
           />
-          <LabelDesc>Description</LabelDesc>
+          <LabelDesc>Vault Router</LabelDesc>
           <Input
+            value="0x04B3ceE98aa97284322CB8591eD3aC33c7a35414"
             onChange={(e) => {
-              setDescription(e.currentTarget.value);
+              setvaultRouter(e.currentTarget.value);
             }}
           />
           <Button onClick={open}>Create</Button>
