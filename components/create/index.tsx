@@ -116,21 +116,27 @@ const OneContent = styled.div`
 function CreateRaffle() {
   const [screen, setScreen] = useState(false);
   const [name, setName] = useState("");
-  const [start, setStart] = useState("");
-  const [end, setEnd] = useState("");
-  const [winners, setWinners] = useState("");
+  const [start, setStart] = useState('');
+  const [end, setEnd] = useState('');
+  const [winners, setWinners] = useState('');
   const [description, setDescription] = useState("");
+  const [hash, setHash] = useState(
+    "0xf7baab1baf661869e72d3f70214e394102486912b6ed3872d9bb9d7e36e286c3"
+  );
   const arr = [name, start, end, winners, description];
 
   async function Args() {
     localStorage.arr = await JSON.stringify(arr);
+    setScreen(true);
   }
 
   async function getArgs() {
     const arrs = await JSON.parse(localStorage.arr);
+    console.log(localStorage.arr.start);
   }
 
   async function Initialize() {
+    getArgs()
     const FairContract = "0xa1eB5e2893442B0Eeb115eE0B31470790EE9D1a7";
     const ethereum = (window as any).ethereum;
     const accounts = await ethereum.request({ method: "eth_requestAccounts" });
@@ -138,46 +144,100 @@ function CreateRaffle() {
     const walletAddress = accounts[0];
     const signer = provider.getSigner(walletAddress);
     const FairProxy = new ethers.Contract(FairContract, FairHub, signer);
-    const Create = await FairProxy.createRaffle();
+    const Create = await FairProxy.createRaffle(
+      localStorage.arr.start,
+      localStorage.arr.end,
+      localStorage.winners,
+      {
+        hash: "0xf7baab1baf661869e72d3f70214e394102486912b6ed3872d9bb9d7e36e286c3",
+        hash_function: 18,
+        size: 32,
+      }
+    );
     console.log(Create);
   }
 
   return (
     <Flex>
-      <OneContent>
-        <Typography>CREATE RAFFLE 1/3</Typography>
-        <LabelName>Raffle Name</LabelName>
-        <Input
-          onChange={(e) => {
-            setName(e.currentTarget.value);
-          }}
-        />
-        <LabelStart>Start</LabelStart>
-        <Input
-          onChange={(e) => {
-            setStart(e.currentTarget.value);
-          }}
-        />
-        <LabelEnd>End</LabelEnd>
-        <Input
-          onChange={(e) => {
-            setEnd(e.currentTarget.value);
-          }}
-        />
-        <LabelWinners>Winners</LabelWinners>
-        <Input
-          onChange={(e) => {
-            setWinners(e.currentTarget.value);
-          }}
-        />
-        <LabelDesc>Description</LabelDesc>
-        <InputDesc
-          onChange={(e) => {
-            setDescription(e.currentTarget.value);
-          }}
-        />
-        <Button onClick={Args}>Next</Button>
-      </OneContent>
+      {screen ? (
+        <OneContent>
+          <Typography>CREATE RAFFLE 2/3</Typography>
+          <LabelName>Raffle Name</LabelName>
+          <Input
+            type="text"
+            onChange={(e) => {
+              setName(e.currentTarget.value);
+            }}
+          />
+          <LabelStart>Start</LabelStart>
+          <Input
+            type="number"
+            onChange={(e) => {
+              setStart(e.currentTarget.value);
+            }}
+          />
+          <LabelEnd>End</LabelEnd>
+          <Input
+            type="number"
+            onChange={(e) => {
+              setEnd(e.currentTarget.value);
+            }}
+          />
+          <LabelWinners>Winners</LabelWinners>
+          <Input
+            type="number"
+            onChange={(e) => {
+              setWinners(e.currentTarget.value);
+            }}
+          />
+          <LabelDesc>Description</LabelDesc>
+          <InputDesc
+            onChange={(e) => {
+              setDescription(e.currentTarget.value);
+            }}
+          />
+          <Button onClick={Initialize}>Create</Button>
+        </OneContent>
+      ) : (
+        <OneContent>
+          <Typography>CREATE RAFFLE 1/3</Typography>
+          <LabelName>Raffle Name</LabelName>
+          <Input
+            type="text"
+            onChange={(e) => {
+              setName(e.currentTarget.value);
+            }}
+          />
+          <LabelStart>Start</LabelStart>
+          <Input
+            type="number"
+            onChange={(e) => {
+              setStart(e.currentTarget.value);
+            }}
+          />
+          <LabelEnd>End</LabelEnd>
+          <Input
+            type="number"
+            onChange={(e) => {
+              setEnd(e.currentTarget.value);
+            }}
+          />
+          <LabelWinners>Winners</LabelWinners>
+          <Input
+            type="number"
+            onChange={(e) => {
+              setWinners(e.currentTarget.value);
+            }}
+          />
+          <LabelDesc>Description</LabelDesc>
+          <InputDesc
+            onChange={(e) => {
+              setDescription(e.currentTarget.value);
+            }}
+          />
+          <Button onClick={Args}>Next</Button>
+        </OneContent>
+      )}
     </Flex>
   );
 }
