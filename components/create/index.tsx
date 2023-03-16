@@ -129,24 +129,27 @@ function CreateRaffle() {
   }
 
   async function create() {
-    const FairContract = "0x7E0755a50E1C3b2BB8AbECE23F139Be25B8D5348";
-    const ethereum = (window as any).ethereum;
-    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-    const provider = new ethers.providers.Web3Provider(ethereum);
-    const walletAddress = accounts[0];
-    const signer = provider.getSigner(walletAddress);
-    const FairProxy = new ethers.Contract(FairContract, FairHub, signer);
-    const Create = await FairProxy.createRaffle(start, end, winners, {
-      hash: "0xf7baab1baf661869e72d3f70214e394102486912b6ed3872d9bb9d7e36e286c3",
-      hash_function: 18,
-      size: 32,
-    });
-    console.log(Create.hash);
-    const signed = await provider.getTransactionReceipt('0xa06c7116d7f197fac5f5cd5e994c9e307d18be865fcf3f2487a7d0ffe8a5a566');
-    console.log(signed)
-    if (Create.hash === "") {
-      setScreen(true);
-    }
+    try {
+      const FairContract = "0x7E0755a50E1C3b2BB8AbECE23F139Be25B8D5348";
+      const ethereum = (window as any).ethereum;
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const walletAddress = accounts[0];
+      const signer = provider.getSigner(walletAddress);
+      const FairProxy = new ethers.Contract(FairContract, FairHub, signer);
+      const Create = await FairProxy.createRaffle(start, end, winners, {
+        hash: "0xf7baab1baf661869e72d3f70214e394102486912b6ed3872d9bb9d7e36e286c3",
+        hash_function: 18,
+        size: 32,
+      });
+      const signed = await provider.getTransactionReceipt(Create.hash);
+      if (signed === 1) {
+        setScreen(true);
+      }
+      console.log(signed);
+    } catch (err) {}
   }
 
   async function open() {
