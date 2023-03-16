@@ -116,13 +116,11 @@ const OneContent = styled.div`
 function CreateRaffle() {
   const [screen, setScreen] = useState(false);
   const [name, setName] = useState("");
-  const [start, setStart] = useState('');
-  const [end, setEnd] = useState('');
-  const [winners, setWinners] = useState('');
+  const [start, setStart] = useState("");
+  const [end, setEnd] = useState("");
+  const [winners, setWinners] = useState("");
   const [description, setDescription] = useState("");
-  const [hash, setHash] = useState(
-    "0xf7baab1baf661869e72d3f70214e394102486912b6ed3872d9bb9d7e36e286c3"
-  );
+  const [hash, setHash] = useState("");
   const arr = [name, start, end, winners, description];
 
   async function Args() {
@@ -130,13 +128,8 @@ function CreateRaffle() {
     setScreen(true);
   }
 
-  async function getArgs() {
-    const arrs = await JSON.parse(localStorage.arr);
-    console.log(localStorage.arr.start);
-  }
-
   async function Initialize() {
-    getArgs()
+    const arrs = await JSON.parse(localStorage.arr);
     const FairContract = "0xa1eB5e2893442B0Eeb115eE0B31470790EE9D1a7";
     const ethereum = (window as any).ethereum;
     const accounts = await ethereum.request({ method: "eth_requestAccounts" });
@@ -144,16 +137,12 @@ function CreateRaffle() {
     const walletAddress = accounts[0];
     const signer = provider.getSigner(walletAddress);
     const FairProxy = new ethers.Contract(FairContract, FairHub, signer);
-    const Create = await FairProxy.createRaffle(
-      localStorage.arr.start,
-      localStorage.arr.end,
-      localStorage.winners,
-      {
-        hash: "0xf7baab1baf661869e72d3f70214e394102486912b6ed3872d9bb9d7e36e286c3",
-        hash_function: 18,
-        size: 32,
-      }
-    );
+    const Create = await FairProxy.createRaffle(arr[1], arr[2], arr[3], {
+      hash: "0xf7baab1baf661869e72d3f70214e394102486912b6ed3872d9bb9d7e36e286c3",
+      hash_function: 18,
+      size: 32,
+      gasLimit: 10000000,
+    });
     console.log(Create);
   }
 
