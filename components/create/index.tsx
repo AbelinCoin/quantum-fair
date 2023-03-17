@@ -113,6 +113,47 @@ const LabelName = styled.label`
   transform: translate(-185px, 15px);
 `;
 
+const LabelRff = styled.label`
+  color: #000000;
+  font-size: initial;
+  font-weight: bold;
+  font-family: "Poppins";
+  transform: translate(-179px, 15px);
+`;
+
+const LabelID = styled.label`
+  color: #000000;
+  font-size: initial;
+  font-weight: bold;
+  font-family: "Poppins";
+  transform: translate(-201px, 15px);
+  transform: translate(-201px, 15px);
+`;
+
+const LabelVF = styled.label`
+  color: #000000;
+  font-size: initial;
+  font-weight: bold;
+  font-family: "Poppins";
+  transform: translate(-183px, 15px);
+  transform: translate(-183px, 15px);
+`;
+
+const LabelVR = styled.label`
+  color: #000000;
+  font-size: initial;
+  font-weight: bold;
+  font-family: "Poppins";
+  transform: translate(-186px, 15px);
+`;
+
+const LabelNft = styled.label`
+  color: #000000;
+  font-size: initial;
+  font-weight: bold;
+  font-family: "Poppins";
+  transform: translate(-192px, 15px);
+`;
 const OneContent = styled.div`
   justify-content: center;
   background: #efefef;
@@ -127,7 +168,7 @@ const OneContent = styled.div`
 function CreateRaffle() {
   const vaultFactory = "0xbC462F32aD394cF4dc1200a04c3f03dfaf380375";
   const vaultRouter = "0x04B3ceE98aa97284322CB8591eD3aC33c7a35414";
-  const [screen, setScreen] = useState(true);
+  const [screen, setScreen] = useState(fals);
   const [name, setName] = useState("");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
@@ -199,28 +240,28 @@ function CreateRaffle() {
       {screen ? (
         <OneContent>
           <Typography>CREATE RAFFLE 2/3</Typography>
-          <LabelName>Raffle Contract</LabelName>
+          <LabelRff>Raffle Contract</LabelRff>
           <Input
             onChange={(e) => {
               setraffleContract(e.currentTarget.value);
             }}
           />
-          <LabelStart>Nft Contract</LabelStart>
+          <LabelNft>Nft Contract</LabelNft>
           <Input
             onChange={(e) => {
               setnftContract(e.currentTarget.value);
             }}
           />
-          <LabelEnd>Token ID</LabelEnd>
+          <LabelID>Token ID</LabelID>
           <Input
             type="number"
             onChange={(e) => {
               setId(e.currentTarget.value);
             }}
           />
-          <LabelWinners>Vault Factory</LabelWinners>
+          <LabelVF>Vault Factory</LabelVF>
           <InputOpen value={vaultFactory} readOnly={true} />
-          <LabelDesc>Vault Router</LabelDesc>
+          <LabelVR>Vault Router</LabelVR>
           <InputOpen value={vaultRouter} readOnly={true} />
           <Button onClick={open}>Create</Button>
         </OneContent>
