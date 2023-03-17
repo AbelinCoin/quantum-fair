@@ -184,7 +184,7 @@ function CreateRaffle() {
     setScreen(true);
   }
 
-  async function Create() {
+  async function create() {
     try {
       const FairContract = "0x7E0755a50E1C3b2BB8AbECE23F139Be25B8D5348";
       const ethereum = (window as any).ethereum;
@@ -302,7 +302,7 @@ function CreateRaffle() {
               setDescription(e.currentTarget.value);
             }}
           />
-          <Button onClick={Create}>Next</Button>
+          <Button onClick={create}>Next</Button>
         </OneContent>
       )}
     </Flex>
