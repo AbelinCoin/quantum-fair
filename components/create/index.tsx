@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { FairHub, Raffle } from "../abis";
+import { FairHub, Raffle, MultiFaucetNFT } from "../abis";
 import React, { useState } from "react";
 import styled from "styled-components";
 
@@ -172,19 +172,32 @@ function CreateRaffle() {
   }
 
   async function open() {
-    const ethereum = (window as any).ethereum;
-    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-    const provider = new ethers.providers.Web3Provider(ethereum);
-    const walletAddress = accounts[0];
-    const signer = provider.getSigner(walletAddress);
-    const RaffleProxy = new ethers.Contract(raffleContract, Raffle, signer);
-    const Open = await RaffleProxy.open(
-      vaultFactory,
-      vaultRouter,
-      [nftContract],
-      [id]
-    );
-    console.log(Open);
+    try {
+      const FaucetContract = "0xf5de760f2e916647fd766B4AD9E85ff943cE3A2b";
+      const ethereum = (window as any).ethereum;
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const walletAddress = accounts[0];
+      const signer = provider.getSigner(walletAddress);
+      const MultiFaucet = new ethers.Contract(
+        FaucetContract,
+        MultiFaucetNFT,
+        signer
+      );
+      const RaffleProxy = new ethers.Contract(raffleContract, Raffle, signer);
+      const approve = await MultiFaucet.setApprovalForAll(raffleContract);
+      const Open = await RaffleProxy.open(
+        vaultFactory,
+        vaultRouter,
+        [nftContract],
+        [id]
+      );
+      console.log(Open);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (
