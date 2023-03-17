@@ -26,6 +26,17 @@ const Input = styled.input`
   font-family: "Poppins";
 `;
 
+const InputOpen = styled.input`
+  border-radius: 10px;
+  color: #000000;
+  margin-top: 5%;
+  display: flex;
+  background: transparent;
+  min-width: 30rem;
+  height: 5vh;
+  font-family: "Poppins";
+`;
+
 const InputDesc = styled.input`
   border-radius: 10px;
   color: #00000;
@@ -114,7 +125,7 @@ const OneContent = styled.div`
 `;
 
 function CreateRaffle() {
-  const [screen, setScreen] = useState(false);
+  const [screen, setScreen] = useState(true);
 
   const [name, setName] = useState("");
   const [start, setStart] = useState("");
@@ -122,11 +133,15 @@ function CreateRaffle() {
   const [winners, setWinners] = useState("");
   const [description, setDescription] = useState("");
 
-  const [raffleContract, setraffleContract] = useState("");
-  const [nftContract, setnftContract] = useState("");
-  const [ids, setIds] = useState("");
-  const [vaultFactory, setvaultFactory] = useState("");
-  const [vaultRouter, setvaultRouter] = useState("");
+  const [raffleContract, setraffleContract] = useState(""); // 0x4Acf1C08FD60aFE43e9B4285b8e77646855f5392
+  const [nftContract, setnftContract] = useState(""); // 0xf5de760f2e916647fd766B4AD9E85ff943cE3A2b
+  const [id, setId] = useState(""); // 2853340
+  const [vaultFactory, setvaultFactory] = useState(
+    "0xbC462F32aD394cF4dc1200a04c3f03dfaf380375"
+  );
+  const [vaultRouter, setvaultRouter] = useState(
+    "0x04B3ceE98aa97284322CB8591eD3aC33c7a35414"
+  );
   const arr = [name, start, end, winners, description];
 
   async function Args() {
@@ -163,7 +178,12 @@ function CreateRaffle() {
     const walletAddress = accounts[0];
     const signer = provider.getSigner(walletAddress);
     const RaffleProxy = new ethers.Contract(raffleContract, Raffle, signer);
-    const Open = await RaffleProxy.open();
+    const Open = await RaffleProxy.open(
+      vaultFactory,
+      vaultRouter,
+      [nftContract],
+      [id]
+    );
     console.log(Open);
   }
 
@@ -174,14 +194,12 @@ function CreateRaffle() {
           <Typography>CREATE RAFFLE 2/3</Typography>
           <LabelName>Raffle Contract</LabelName>
           <Input
-            type="text"
             onChange={(e) => {
               setraffleContract(e.currentTarget.value);
             }}
           />
           <LabelStart>Nft Contract</LabelStart>
           <Input
-            type="number"
             onChange={(e) => {
               setnftContract(e.currentTarget.value);
             }}
@@ -194,20 +212,9 @@ function CreateRaffle() {
             }}
           />
           <LabelWinners>Vault Factory</LabelWinners>
-          <Input
-            value="0xbC462F32aD394cF4dc1200a04c3f03dfaf380375"
-            type="number"
-            onChange={(e) => {
-              setvaultFactory(e.currentTarget.value);
-            }}
-          />
+          <InputOpen value={vaultFactory} readOnly={true} />
           <LabelDesc>Vault Router</LabelDesc>
-          <Input
-            value="0x04B3ceE98aa97284322CB8591eD3aC33c7a35414"
-            onChange={(e) => {
-              setvaultRouter(e.currentTarget.value);
-            }}
-          />
+          <InputOpen value={vaultRouter} readOnly={true} />
           <Button onClick={open}>Create</Button>
         </OneContent>
       ) : (
