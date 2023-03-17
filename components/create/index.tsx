@@ -125,23 +125,17 @@ const OneContent = styled.div`
 `;
 
 function CreateRaffle() {
+  const vaultFactory = "0xbC462F32aD394cF4dc1200a04c3f03dfaf380375";
+  const vaultRouter = "0x04B3ceE98aa97284322CB8591eD3aC33c7a35414";
   const [screen, setScreen] = useState(true);
-
   const [name, setName] = useState("");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [winners, setWinners] = useState("");
   const [description, setDescription] = useState("");
-
   const [raffleContract, setraffleContract] = useState(""); // 0x4Acf1C08FD60aFE43e9B4285b8e77646855f5392
   const [nftContract, setnftContract] = useState(""); // 0xf5de760f2e916647fd766B4AD9E85ff943cE3A2b
   const [id, setId] = useState(""); // 2853340
-  const [vaultFactory, setvaultFactory] = useState(
-    "0xbC462F32aD394cF4dc1200a04c3f03dfaf380375"
-  );
-  const [vaultRouter, setvaultRouter] = useState(
-    "0x04B3ceE98aa97284322CB8591eD3aC33c7a35414"
-  );
   const arr = [name, start, end, winners, description];
 
   async function Args() {
@@ -149,7 +143,7 @@ function CreateRaffle() {
     setScreen(true);
   }
 
-  async function create() {
+  async function Create() {
     try {
       const FairContract = "0x7E0755a50E1C3b2BB8AbECE23F139Be25B8D5348";
       const ethereum = (window as any).ethereum;
@@ -187,7 +181,7 @@ function CreateRaffle() {
         signer
       );
       const RaffleProxy = new ethers.Contract(raffleContract, Raffle, signer);
-      const approve = await MultiFaucet.setApprovalForAll(raffleContract);
+      const approve = await MultiFaucet.setApprovalForAll(raffleContract, true);
       const Open = await RaffleProxy.open(
         vaultFactory,
         vaultRouter,
@@ -267,7 +261,7 @@ function CreateRaffle() {
               setDescription(e.currentTarget.value);
             }}
           />
-          <Button onClick={create}>Next</Button>
+          <Button onClick={Create}>Next</Button>
         </OneContent>
       )}
     </Flex>
