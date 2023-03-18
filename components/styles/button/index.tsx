@@ -19,3 +19,16 @@ export const Button = styled.button`
   transform: translateX(183px);
 `;
 
+export const ButtonID = styled.button`
+  background: #edd8d8;
+  border: none;
+  margin-left: 10px;
+  align-items: center;
+  border-radius: 10px;
+  color: #000000;
+  cursor: pointer;
+  margin-top: 2%;
+  display: flex;
+  font-family: "Poppins";
+  min-height: 37px;
+`;

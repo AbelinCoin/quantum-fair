@@ -29,7 +29,7 @@ export const LabelWinners = styled.label`
   font-size: initial;
   font-weight: bold;
   font-family: "Poppins";
-  transform: translate(-205px, 15px);
+  transform: translate(-192px,15px);
 `;
 
 export const LabelDesc = styled.label`

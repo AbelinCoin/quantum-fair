@@ -8,7 +8,7 @@ import AccountModal from "./AccountModal";
 
 export default function Layout() {
   const [bool, setBool] = useState("none");
-  const src = "https://i.ibb.co/xJxBBbv/QF-Media-kit-ref.png";
+  const src = "/images/qf-logo.png";
 
   function Active() {
     setBool("flex");
