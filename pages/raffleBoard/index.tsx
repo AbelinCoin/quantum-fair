@@ -33,7 +33,7 @@ function NoData() {
   );
 }
 
-const Button = ({id: any}) => (
+const Button = (id: any) => (
   <Link href={`/search?id=${id}`}>
    <ButtonID>Search</ButtonID>
   </Link>

@@ -37,6 +37,7 @@ export const InputSearch = styled.input`
   border-radius: 10px;
   color: #000000;
   margin-top: 2%;
+  background: transparent;
   display: flex;
   height: 3vh;
   font-family: "Poppins";

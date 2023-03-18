@@ -14,7 +14,7 @@ function Heading() {
   )
 }
 
-function Search({url: any}) {
+function Search(url: any) {
 
  return (
    <>
