@@ -1,174 +1,34 @@
-import { ethers } from "ethers";
-import { FairHub, Raffle, MultiFaucetNFT } from "../abis";
 import React, { useState } from "react";
+import { ethers } from "ethers";
 import styled from "styled-components";
+import { FairHub, Raffle, MultiFaucetNFT } from "../abis";
+import { LabelName, LabelStart, LabelEnd, LabelWinners, LabelDesc, LabelRff, LabelNft, LabelID, LabelVF, LabelVR } from "../styles/label";
+import { Input, InputOpen, InputDesc } from "../styles/input";
+import { Button } from "../styles/button";
+import { Flex } from "../styles/div";
+import { Typography } from "../styles/typography";
 
-const Flex = styled.div`
-  justify-content: center;
-  background: #efefef;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
-  display: flex;
-  align-content: center;
-  padding: 0.2rem calc((100vw - 1000px) / 2);
-  z-index: 12;
-`;
+function CreateRaffle() {
 
-const Input = styled.input`
-  border-radius: 10px;
-  color: #000000;
-  margin-top: 5%;
-  display: flex;
-  background: transparent;
-  min-width: 30rem;
-  height: 5vh;
-  font-family: "Poppins";
-`;
+const [hide, setHide] = useState('flex');
 
-const InputOpen = styled.input`
-  border-radius: 10px;
-  color: #000000;
-  margin-top: 5%;
-  display: flex;
-  background: transparent;
-  min-width: 30rem;
-  height: 5vh;
-  font-family: "Poppins";
-`;
-
-const InputDesc = styled.input`
-  border-radius: 10px;
-  color: #00000;
-  background: transparent;
-  margin-top: 5%;
-  display: flex;
-  min-width: 30rem;
-  height: 15vh;
-  font-family: "Poppins";
-`;
-
-const Button = styled.button`
-  background: #ede500;
-  border: none;
-  margin-left: 10px;
-  align-items: center;
-  border-radius: 10px;
-  color: #000000;
-  cursor: pointer;
-  margin-top: 4%;
-  display: flex;
-  font-family: "Poppins";
-  min-height: 37px;
-  min-width: 6rem;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  transform: translateX(183px);
-`;
-
-const Typography = styled.h1`
-  color: #000000;
-  font-size: xx-large;
-  font-family: "Poppins";
-`;
-
-const LabelStart = styled.label`
-  color: #000000;
-  font-size: initial;
-  font-weight: bold;
-  font-family: "Poppins";
-  transform: translate(-218px, 15px);
-`;
-
-const LabelEnd = styled.label`
-  color: #000000;
-  font-size: initial;
-  font-weight: bold;
-  font-family: "Poppins";
-  transform: translate(-220px, 15px);
-`;
-
-const LabelWinners = styled.label`
-  color: #000000;
-  font-size: initial;
-  font-weight: bold;
-  font-family: "Poppins";
-  transform: translate(-205px, 15px);
-`;
-
-const LabelDesc = styled.label`
-  color: #000000;
-  font-size: initial;
-  font-weight: bold;
-  font-family: "Poppins";
-  transform: translate(-190px, 15px);
-`;
-
-const LabelName = styled.label`
-  color: #000000;
-  font-size: initial;
-  font-weight: bold;
-  font-family: "Poppins";
-  transform: translate(-185px, 15px);
-`;
-
-const LabelRff = styled.label`
-  color: #000000;
-  font-size: initial;
-  font-weight: bold;
-  font-family: "Poppins";
-  transform: translate(-179px, 15px);
-`;
-
-const LabelID = styled.label`
-  color: #000000;
-  font-size: initial;
-  font-weight: bold;
-  font-family: "Poppins";
-  transform: translate(-201px, 15px);
-  transform: translate(-201px, 15px);
-`;
-
-const LabelVF = styled.label`
-  color: #000000;
-  font-size: initial;
-  font-weight: bold;
-  font-family: "Poppins";
-  transform: translate(-183px, 15px);
-  transform: translate(-183px, 15px);
-`;
-
-const LabelVR = styled.label`
-  color: #000000;
-  font-size: initial;
-  font-weight: bold;
-  font-family: "Poppins";
-  transform: translate(-186px, 15px);
-`;
-
-const LabelNft = styled.label`
-  color: #000000;
-  font-size: initial;
-  font-weight: bold;
-  font-family: "Poppins";
-  transform: translate(-192px, 15px);
-`;
 const OneContent = styled.div`
   justify-content: center;
   background: #efefef;
   flex-direction: column;
   align-items: center;
-  display: flex;
+  display: ${hide};
   transform: translateY(0px);
   align-content: center;
   z-index: 12;
 `;
 
-function CreateRaffle() {
+
   const vaultFactory = "0xbC462F32aD394cF4dc1200a04c3f03dfaf380375";
   const vaultRouter = "0x04B3ceE98aa97284322CB8591eD3aC33c7a35414";
   const [screen, setScreen] = useState(false);
+  const [generated, setGenerated] = useState(false);
+  const [output, setOutput] = useState(false);
   const [name, setName] = useState("");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
@@ -200,7 +60,7 @@ function CreateRaffle() {
         hash_function: 18,
         size: 32,
       });
-      setScreen(true);
+      setGenerated(true);
     } catch (err) {
       console.error(err);
     }
@@ -230,6 +90,8 @@ function CreateRaffle() {
         [id]
       );
       console.log(Open);
+      setHide('none');
+      setOutput(true);
     } catch (err) {
       console.error(err);
     }
@@ -237,6 +99,12 @@ function CreateRaffle() {
 
   return (
     <Flex>
+     { generated && 
+        <OneContent>
+          <Typography>FairHub Created</Typography>
+           <h1>Copy and paste on the next step</h1>
+          <Button onClick={setScreen(true)}>Good</Button>
+        </OneContent> }
       {screen ? (
         <OneContent>
           <Typography>CREATE RAFFLE 2/3</Typography>
@@ -305,6 +173,12 @@ function CreateRaffle() {
           <Button onClick={create}>Next</Button>
         </OneContent>
       )}
+     { output && 
+        <OneContent>
+          <Typography>CREATE RAFFLE 3/3</Typography>
+
+          <Button onClick={open}>Watch</Button>
+        </OneContent> }
     </Flex>
   );
 }
