@@ -71,3 +71,16 @@ export const Table = styled.div`
   padding: 0.2rem calc((100vw - 1000px) / 2);
   z-index: 12;
 `;
+
+export const CardSearch = styled.div`
+  justify-content: center;
+  background: #efefef;
+  flex-direction: column;
+  align-items: center;
+  display: block;
+  align-content: center;
+  height: 28vh;
+  width: 35vh;
+  padding: 0.2rem calc((100vw - 1000px) / 2);
+  z-index: 12;
+`;

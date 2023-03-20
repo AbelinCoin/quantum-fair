@@ -1,6 +1,8 @@
-import Head from "next/head"
-import { useRouter } from "next/router"
-import Navbar from "../../components/nav"
+import Head from "next/head";
+import { useRouter } from "next/router";
+import Navbar from "../../components/nav";
+import { CardSearch } from "../../components/styles/div";
+import { Typography } from "../../components/styles/typography";
 
 function Heading() {
   return (
@@ -12,19 +14,20 @@ function Heading() {
         <link rel="icon" href="/favicon.png" />
       </Head>
     </>
-  )
+  );
 }
 
 function Search() {
-
- const { query } = useRouter();
- return (
-   <>
-    <Heading />
-    <Navbar />
-    <h1>{query.id}</h1>
-   </>
- )
+  const { query } = useRouter();
+  return (
+    <>
+      <Heading />
+      <Navbar />
+      <CardSearch>
+        <Typography>{query.id}</Typography>
+      </CardSearch>
+    </>
+  );
 }
 
-export default Search
+export default Search;
