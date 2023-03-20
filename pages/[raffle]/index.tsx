@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Navbar from "../../components/nav";
-import { CardSearch } from "../../components/styles/div";
-import { Typography } from "../../components/styles/typography";
+import { Flex, CardSearch } from "../../components/styles/div";
+import { RffId } from "../../components/styles/typography";
 
 function Heading() {
   return (
@@ -23,9 +23,11 @@ function Search() {
     <>
       <Heading />
       <Navbar />
-      <CardSearch>
-        <Typography>{query.id}</Typography>
-      </CardSearch>
+      <Flex>
+        <CardSearch>
+          <RffId>Raffle N #{query.id}</RffId>
+        </CardSearch>
+      </Flex>
     </>
   );
 }

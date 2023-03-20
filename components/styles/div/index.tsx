@@ -74,13 +74,15 @@ export const Table = styled.div`
 
 export const CardSearch = styled.div`
   justify-content: center;
-  background: #efefef;
+  background: #d9d7d7;
   flex-direction: column;
   align-items: center;
   display: block;
   align-content: center;
-  height: 28vh;
-  width: 35vh;
+  height: 65vh;
+  width: 90vh;
   padding: 0.2rem calc((100vw - 1000px) / 2);
   z-index: 12;
+      transform: translateY(40px);
+}
 `;
