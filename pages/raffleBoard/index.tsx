@@ -33,12 +33,6 @@ function NoData() {
   );
 }
 
-const Button = (id: any) => (
-  <Link href={`/search?id=${id}`}>
-   <ButtonID>Search</ButtonID>
-  </Link>
-)
-
 function RaffleBoard() {
 
   const [raffleId, setraffleId] = useState('');  
@@ -53,7 +47,9 @@ function RaffleBoard() {
         <Typographo>Choose the raffle you want to run.</Typographo>
         <Row>
           <InputSearch onChange={(e) => { setraffleId(e.currentTarget.value)}}/>
-          <Button id={raffleId} />
+          <Link href={`/raffle?id=${raffleId}`}>
+          <ButtonID>Search</ButtonID>
+          </Link>
         </Row>
       </Content>
       </Flex>

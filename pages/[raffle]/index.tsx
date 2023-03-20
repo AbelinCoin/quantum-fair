@@ -1,4 +1,5 @@
 import Head from "next/head"
+import { useRouter } from "next/router"
 import Navbar from "../../components/nav"
 
 function Heading() {
@@ -14,13 +15,14 @@ function Heading() {
   )
 }
 
-function Search(url: any) {
+function Search() {
 
+ const { query } = useRouter();
  return (
    <>
     <Heading />
     <Navbar />
-    <h1>{url.query.id}</h1>
+    <h1>{query.id}</h1>
    </>
  )
 }
