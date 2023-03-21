@@ -11,7 +11,8 @@ import {
   NftCard,
   NftImg,
 } from "../../components/styles/div";
-import { RffId } from "../../components/styles/typography";
+import { RffId, RffWn, RffEd } from "../../components/styles/typography";
+import { Button } from "../../components/styles/button";
 
 function Heading() {
   return (
@@ -30,7 +31,7 @@ function Search() {
   const [exist, setExist] = useState(false);
   const [image, setImage] = useState(false);
   const { query } = useRouter();
-  
+
   async function Raffle() {
     try {
       const id = query.id;
@@ -71,15 +72,31 @@ function Search() {
               </NftCardInt>
             )}
             <RffId>Raffle #{query.id}</RffId>
-            <RffId>Winners: </RffId>
+            <RffWn>Winners: </RffWn>
             <RffId>End Time: </RffId>
           </CardSearch>
         ) : (
           <CardSearch>
-            <NftCard>
-              <NftImg src="/images/question.png" />
-            </NftCard>
+            {image ? (
+              <NftCard>
+                <NftImg />
+              </NftCard>
+            ) : (
+              <NftCardInt>
+                <NftImg src="/images/question.png" />
+              </NftCardInt>
+            )}
             <RffId>Raffle #{query.id}</RffId>
+            <RffWn>Winners: </RffWn>
+            <RffEd>End Time: </RffEd>
+            <Button
+              style={{
+                minWidth: "16rem",
+                transform: "translate(160px, -40px)",
+              }}
+            >
+              Join to Raffle
+            </Button>
           </CardSearch>
         )}
       </Flex>

@@ -88,23 +88,23 @@ export const CardSearch = styled.div`
 
 export const NftCardInt = styled.div`
   justify-content: center;
-  background: #e7e7e7;
+  background: #d9d7d7;
   flex-direction: column;
   align-items: center;
   display: flex;
   align-content: center;
-  height: 35vh;
+  min-height: 32vh;
   width: 30vh;
   border: 1px solid #000;
   border-radius: 6px;
   border: 2px solid #000;
   border-radius: 6px;
-  transform: translate(-180px, -10px);
+  transform: translate(-184px, 50px);
 `;
 
 export const NftCard = styled.div`
   justify-content: center;
-  background: transparent;
+  background: #d9d7d7;
   flex-direction: column;
   align-items: center;
   display: flex;

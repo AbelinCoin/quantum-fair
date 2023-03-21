@@ -29,5 +29,19 @@ export const RffId = styled.h1`
   color: #000000;
   font-size: x-large;
   font-family: "Poppins";
-  transform: translate(125px, -243px);
+  transform: translate(125px, -158px);
+`;
+
+export const RffWn = styled.h1`
+  color: #000000;
+  font-size: larger;
+  font-family: "Poppins";
+  transform: translate(84px, -181px);
+`;
+
+export const RffEd = styled.h1`
+  color: #000000;
+  font-size: larger;
+  font-family: "Poppins";
+  transform: translate(90px, -200px);
 `;
