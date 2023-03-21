@@ -120,7 +120,6 @@ export const NftCard = styled.div`
 
 export const NftImg = styled.img`
   justify-content: center;
-  background: #e7e7e7;
   width: 90%;
   display: flex;
   align-content: center;

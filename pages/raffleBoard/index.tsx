@@ -1,16 +1,21 @@
 import React, { useState } from "react";
-import Head from "next/head"
-import Link from "next/link"
-import { useRouter } from "next/router"
-import styled from "styled-components";
-import Navbar from "../../components/nav"
-import { ethers } from "ethers";
-import { Raffle } from "../../components/abis";
-import { Flex, EachCard, Row, Content, Table } from "../../components/styles/div";
+import Head from "next/head";
+import Link from "next/link";
+import Navbar from "../../components/nav";
+import {
+  Flex,
+  EachCard,
+  Row,
+  Content,
+  Table,
+} from "../../components/styles/div";
 import { InputSearch } from "../../components/styles/input";
 import { ButtonID } from "../../components/styles/button";
-import { Typograph, Typographo, Typographe } from "../../components/styles/typography";
-
+import {
+  Typograph,
+  Typographo,
+  Typographe,
+} from "../../components/styles/typography";
 
 function Heading() {
   return (
@@ -22,7 +27,7 @@ function Heading() {
         <link rel="icon" href="/favicon.png" />
       </Head>
     </>
-  )
+  );
 }
 
 function NoData() {
@@ -34,24 +39,30 @@ function NoData() {
 }
 
 function RaffleBoard() {
-
-  const [raffleId, setraffleId] = useState('');  
+  const [raffleId, setraffleId] = useState("");
 
   return (
     <>
       <Heading />
-      <Navbar /> 
+      <Navbar />
       <Flex>
-      <Content>
-        <Typograph>Raffle Board</Typograph>
-        <Typographo>Choose the raffle you want to run.</Typographo>
-        <Row>
-          <InputSearch onChange={(e) => { setraffleId(e.currentTarget.value)}}/>
-          <Link href={`/raffle?id=${raffleId}`}>
-          <ButtonID>Search</ButtonID>
-          </Link>
-        </Row>
-      </Content>
+        <Content>
+          <Typograph>Raffle Board</Typograph>
+          <Typographo>Choose the raffle you want to run.</Typographo>
+          <Row>
+            <InputSearch
+              onChange={(e) => {
+                setraffleId(e.currentTarget.value);
+              }}
+            />
+            <Link
+              style={{ textDecoration: "none" }}
+              href={`/raffle?id=${raffleId}`}
+            >
+              <ButtonID>Search</ButtonID>
+            </Link>
+          </Row>
+        </Content>
       </Flex>
     </>
   );
@@ -62,6 +73,4 @@ function RaffleTable() {
   return <Table>{active ? <EachCard /> : <NoData />}</Table>;
 }
 
-export default RaffleBoard
-
-
+export default RaffleBoard;

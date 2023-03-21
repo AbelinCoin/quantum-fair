@@ -4,7 +4,18 @@ import { ethers } from "ethers";
 import styled from "styled-components";
 import Navbar from "../../components/nav";
 import { FairHub, Raffle, MultiFaucetNFT } from "../../components/abis";
-import { LabelName, LabelStart, LabelEnd, LabelWinners, LabelDesc, LabelRff, LabelNft, LabelID, LabelVF, LabelVR } from "../../components/styles/label";
+import {
+  LabelName,
+  LabelStart,
+  LabelEnd,
+  LabelWinners,
+  LabelDesc,
+  LabelRff,
+  LabelNft,
+  LabelID,
+  LabelVF,
+  LabelVR,
+} from "../../components/styles/label";
 import { Input, InputOpen, InputDesc } from "../../components/styles/input";
 import { Button } from "../../components/styles/button";
 import { Flex, Card } from "../../components/styles/div";
@@ -20,24 +31,22 @@ function Heading() {
         <link rel="icon" href="/favicon.png" />
       </Head>
     </>
-  )
+  );
 }
 
 function CreateRaffle() {
+  const [hide, setHide] = useState("flex");
 
-const [hide, setHide] = useState('flex');
-
-const OneContent = styled.div`
-  justify-content: center;
-  background: #efefef;
-  flex-direction: column;
-  align-items: center;
-  display: ${hide};
-  transform: translateY(0px);
-  align-content: center;
-  z-index: 12;
-`;
-
+  const OneContent = styled.div`
+    justify-content: center;
+    background: #efefef;
+    flex-direction: column;
+    align-items: center;
+    display: ${hide};
+    transform: translateY(0px);
+    align-content: center;
+    z-index: 12;
+  `;
 
   const vaultFactory = "0xbC462F32aD394cF4dc1200a04c3f03dfaf380375";
   const vaultRouter = "0x04B3ceE98aa97284322CB8591eD3aC33c7a35414";
@@ -53,12 +62,6 @@ const OneContent = styled.div`
   const [nftContract, setnftContract] = useState(""); // 0xf5de760f2e916647fd766B4AD9E85ff943cE3A2b
   const [id, setId] = useState(""); // 2853340
   const [hub, setHub] = useState("");
-  const arr = [name, start, end, winners, description];
-
-  async function Args() {
-    localStorage.arr = await JSON.stringify(arr);
-    setScreen(true);
-  }
 
   async function create() {
     try {
@@ -106,7 +109,7 @@ const OneContent = styled.div`
         [id]
       );
       console.log(Open);
-      setHide('none');
+      setHide("none");
       setOutput(true);
     } catch (err) {
       console.error(err);
@@ -114,93 +117,80 @@ const OneContent = styled.div`
   }
 
   return (
-  <>
-   <Heading />
-    <Navbar />
-     <Flex>
-     { generated && 
-        <OneContent>
-          <Typography>FairHub Created</Typography>
-           <Card>{hub}</Card>
-           <h1>Copy and paste on the next step</h1>
-          <Button onClick={open}>Good</Button>
-        </OneContent> }
-      {screen ? (
-        <OneContent>
-          <Typography>CREATE RAFFLE 2/3</Typography>
-          <LabelRff>Raffle Contract</LabelRff>
-          <Input
-            onChange={(e) => {
-              setraffleContract(e.currentTarget.value);
-            }}
-          />
-          <LabelNft>Nft Contract</LabelNft>
-          <Input
-            onChange={(e) => {
-              setnftContract(e.currentTarget.value);
-            }}
-          />
-          <LabelID>Token ID</LabelID>
-          <Input
-            type="number"
-            onChange={(e) => {
-              setId(e.currentTarget.value);
-            }}
-          />
-          <LabelVF>Vault Factory</LabelVF>
-          <InputOpen value={vaultFactory} readOnly={true} />
-          <LabelVR>Vault Router</LabelVR>
-          <InputOpen value={vaultRouter} readOnly={true} />
-          <Button onClick={open}>Create</Button>
-        </OneContent>
-      ) : (
-        <OneContent>
-          <Typography>CREATE RAFFLE 1/3</Typography>
-          <LabelName>Raffle Name</LabelName>
-          <Input
-            type="text"
-            onChange={(e) => {
-              setName(e.currentTarget.value);
-            }}
-          />
-          <LabelStart>Start</LabelStart>
-          <Input
-            type="number"
-            onChange={(e) => {
-              setStart(e.currentTarget.value);
-            }}
-          />
-          <LabelEnd>End</LabelEnd>
-          <Input
-            type="number"
-            onChange={(e) => {
-              setEnd(e.currentTarget.value);
-            }}
-          />
-          <LabelWinners>N° Winners</LabelWinners>
-          <Input
-            type="number"
-            onChange={(e) => {
-              setWinners(e.currentTarget.value);
-            }}
-          />
-          <LabelDesc>Description</LabelDesc>
-          <InputDesc
-            onChange={(e) => {
-              setDescription(e.currentTarget.value);
-            }}
-          />
-          <Button onClick={open}>Next</Button>
-        </OneContent>
-      )}
-     { output && 
-        <OneContent>
-          <Typography>CREATE RAFFLE 3/3</Typography>
-
-          <Button onClick={open}>Watch</Button>
-        </OneContent> }
-    </Flex>
-  </>
+    <>
+      <Heading />
+      <Navbar />
+      <Flex>
+        {screen ? (
+          <OneContent>
+            <Typography>CREATE RAFFLE 2/3</Typography>
+            <LabelRff>Raffle Contract</LabelRff>
+            <Input
+              onChange={(e) => {
+                setraffleContract(e.currentTarget.value);
+              }}
+            />
+            <LabelNft>Nft Contract</LabelNft>
+            <Input
+              onChange={(e) => {
+                setnftContract(e.currentTarget.value);
+              }}
+            />
+            <LabelID>Token ID</LabelID>
+            <Input
+              type="number"
+              onChange={(e) => {
+                setId(e.currentTarget.value);
+              }}
+            />
+            <LabelVF>Vault Factory</LabelVF>
+            <InputOpen value={vaultFactory} readOnly={true} />
+            <LabelVR>Vault Router</LabelVR>
+            <InputOpen value={vaultRouter} readOnly={true} />
+            <Button onClick={open}>Create</Button>
+          </OneContent>
+        ) : (
+          <OneContent>
+            <Typography>CREATE RAFFLE 1/3</Typography>
+            <LabelName>Raffle Name</LabelName>
+            <Input
+              type="text"
+              onChange={(e) => {
+                setName(e.currentTarget.value);
+              }}
+            />
+            <LabelStart>Start</LabelStart>
+            <Input
+              type="number"
+              onChange={(e) => {
+                setStart(e.currentTarget.value);
+              }}
+            />
+            <LabelEnd>End</LabelEnd>
+            <Input
+              type="number"
+              onChange={(e) => {
+                setEnd(e.currentTarget.value);
+              }}
+            />
+            <LabelWinners>N° Winners</LabelWinners>
+            <Input
+              type="number"
+              onChange={(e) => {
+                setWinners(e.currentTarget.value);
+              }}
+            />
+            <LabelDesc>Description</LabelDesc>
+            <InputDesc
+              onChange={(e) => {
+                setDescription(e.currentTarget.value);
+              }}
+            />
+            <Button onClick={open}>Next</Button>
+          </OneContent>
+        )}
+      </Flex>
+    </>
   );
 }
 

@@ -27,11 +27,10 @@ function Heading() {
 }
 
 function Search() {
-  const src =
-    "https://img.freepik.com/vector-gratis/vector-tipografia-estilo-basura-trazo-pincel-signo-interrogacion_53876-140880.jpg?w=360&t=st=1679373690~exp=1679374290~hmac=390ba5565909c8535c3822f8b922e80391f22ce0fa16cec820570232f777943f";
   const [exist, setExist] = useState(false);
   const [image, setImage] = useState(false);
   const { query } = useRouter();
+  
   async function Raffle() {
     try {
       const id = query.id;
@@ -68,15 +67,17 @@ function Search() {
               </NftCard>
             ) : (
               <NftCardInt>
-                <NftImg src={src} />
+                <NftImg />
               </NftCardInt>
             )}
             <RffId>Raffle #{query.id}</RffId>
+            <RffId>Winners: </RffId>
+            <RffId>End Time: </RffId>
           </CardSearch>
         ) : (
           <CardSearch>
             <NftCard>
-              <NftImg src={src} />
+              <NftImg src="/images/question.png" />
             </NftCard>
             <RffId>Raffle #{query.id}</RffId>
           </CardSearch>

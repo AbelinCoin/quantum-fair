@@ -29,7 +29,7 @@ export const InputDesc = styled.input`
   margin-top: 5%;
   display: flex;
   min-width: 30rem;
-  height: 9vh;
+  height: 10vh;
   font-family: "Poppins";
 `;
 
