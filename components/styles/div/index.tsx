@@ -77,12 +77,34 @@ export const CardSearch = styled.div`
   background: #d9d7d7;
   flex-direction: column;
   align-items: center;
-  display: block;
+  display: flex;
   align-content: center;
   height: 65vh;
-  width: 90vh;
-  padding: 0.2rem calc((100vw - 1000px) / 2);
+  width: 100vh;
   z-index: 12;
-      transform: translateY(40px);
-}
+  transform: translateY(50px);
+  border-radius: 6px;
+`;
+
+export const NftCard = styled.div`
+  justify-content: center;
+  background: #d9d7d7;
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+  align-content: center;
+  height: 35vh;
+  width: 30vh;
+  border: 1px solid #000;
+  border-radius: 6px;
+  border: 2px solid #000;
+  border-radius: 6px;
+    transform: translate(-180px,-60px);
+`;
+
+export const NftImg = styled.img`
+  justify-content: center;
+  background: #d9d7d7;
+  display: flex;
+  align-content: center;
 `;

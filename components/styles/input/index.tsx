@@ -7,7 +7,7 @@ export const Input = styled.input`
   display: flex;
   background: transparent;
   min-width: 30rem;
-  height: 3vh;
+  height: 5vh;
   font-family: "Poppins";
 `;
 
@@ -18,7 +18,7 @@ export const InputOpen = styled.input`
   display: flex;
   background: transparent;
   min-width: 30rem;
-  height: 3vh;
+  height: 5vh;
   font-family: "Poppins";
 `;
 
@@ -39,6 +39,6 @@ export const InputSearch = styled.input`
   margin-top: 2%;
   background: transparent;
   display: flex;
-  height: 3vh;
+  height: 5vh;
   font-family: "Poppins";
 `;

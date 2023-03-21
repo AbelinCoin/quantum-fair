@@ -177,7 +177,7 @@ const OneContent = styled.div`
               setEnd(e.currentTarget.value);
             }}
           />
-          <LabelWinners>N* Winners</LabelWinners>
+          <LabelWinners>N° Winners</LabelWinners>
           <Input
             type="number"
             onChange={(e) => {
