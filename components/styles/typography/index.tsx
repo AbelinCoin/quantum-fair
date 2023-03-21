@@ -27,6 +27,7 @@ export const Typographe = styled.h1`
 
 export const RffId = styled.h1`
   color: #000000;
-  font-size: xx-large;
+  font-size: x-large;
   font-family: "Poppins";
+  transform: translate(125px, -243px);
 `;

@@ -1,10 +1,16 @@
 import Head from "next/head";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { ethers } from "ethers";
 import Navbar from "../../components/nav";
 import { FairHub } from "../../components/abis";
-import { Flex, CardSearch, NftCard, NftImg } from "../../components/styles/div";
+import {
+  Flex,
+  CardSearch,
+  NftCardInt,
+  NftCard,
+  NftImg,
+} from "../../components/styles/div";
 import { RffId } from "../../components/styles/typography";
 
 function Heading() {
@@ -21,6 +27,10 @@ function Heading() {
 }
 
 function Search() {
+  const src =
+    "https://img.freepik.com/vector-gratis/vector-tipografia-estilo-basura-trazo-pincel-signo-interrogacion_53876-140880.jpg?w=360&t=st=1679373690~exp=1679374290~hmac=390ba5565909c8535c3822f8b922e80391f22ce0fa16cec820570232f777943f";
+  const [exist, setExist] = useState(false);
+  const [image, setImage] = useState(false);
   const { query } = useRouter();
   async function Raffle() {
     try {
@@ -49,12 +59,28 @@ function Search() {
       <Heading />
       <Navbar />
       <Flex>
-        <CardSearch>
-          <NftCard>
-            <NftImg />
-            <RffId>Raffle #{query.id}</RffId>#
-          </NftCard>
-        </CardSearch>
+        {" "}
+        {exist ? (
+          <CardSearch>
+            {image ? (
+              <NftCard>
+                <NftImg />
+              </NftCard>
+            ) : (
+              <NftCardInt>
+                <NftImg src={src} />
+              </NftCardInt>
+            )}
+            <RffId>Raffle #{query.id}</RffId>
+          </CardSearch>
+        ) : (
+          <CardSearch>
+            <NftCard>
+              <NftImg src={src} />
+            </NftCard>
+            <RffId>Raffle #{query.id}</RffId>
+          </CardSearch>
+        )}
       </Flex>
     </>
   );
