@@ -163,7 +163,7 @@ function CreateRaffle() {
             <Input
               type="number"
               onChange={(e) => {
-                setStart(e.currentTarget.value);
+                setStart(e.target.value);
               }}
             />
             <LabelEnd>End</LabelEnd>
@@ -186,7 +186,7 @@ function CreateRaffle() {
                 setDescription(e.currentTarget.value);
               }}
             />
-            <Button onClick={open}>Next</Button>
+            <Button onClick={create}>Next</Button>
           </OneContent>
         )}
       </Flex>
