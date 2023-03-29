@@ -3,7 +3,8 @@ import { DAppProvider } from "@usedapp/core";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-   <DAppProvider config={{}}>
-    <Component {...pageProps} />
-   </DAppProvider>)
+    <DAppProvider config={{}}>
+      <Component {...pageProps} />
+    </DAppProvider>
+  );
 }

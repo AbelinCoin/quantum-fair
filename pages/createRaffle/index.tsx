@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Head from "next/head";
 import { ethers } from "ethers";
 import styled from "styled-components";
@@ -35,7 +35,7 @@ function Heading() {
 }
 
 function CreateRaffle() {
-  const [hide, setHide] = useState("flex");
+  const [hide, setHide] = React.useState("flex");
 
   const OneContent = styled.div`
     justify-content: center;
@@ -50,18 +50,18 @@ function CreateRaffle() {
 
   const vaultFactory = "0xbC462F32aD394cF4dc1200a04c3f03dfaf380375";
   const vaultRouter = "0x04B3ceE98aa97284322CB8591eD3aC33c7a35414";
-  const [screen, setScreen] = useState(false);
-  const [generated, setGenerated] = useState(false);
-  const [output, setOutput] = useState(false);
-  const [name, setName] = useState("");
-  const [start, setStart] = useState("");
-  const [end, setEnd] = useState("");
-  const [winners, setWinners] = useState("");
-  const [description, setDescription] = useState("");
-  const [raffleContract, setraffleContract] = useState(""); // 0x4Acf1C08FD60aFE43e9B4285b8e77646855f5392
-  const [nftContract, setnftContract] = useState(""); // 0xf5de760f2e916647fd766B4AD9E85ff943cE3A2b
-  const [id, setId] = useState(""); // 2853340
-  const [hub, setHub] = useState("");
+  const [screen, setScreen] = React.useState(false);
+  const [generated, setGenerated] = React.useState(false);
+  const [output, setOutput] = React.useState(false);
+  const [name, setName] = React.useState("");
+  const [start, setStart] = React.useState(0);
+  const [end, setEnd] = React.useState("");
+  const [winners, setWinners] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [raffleContract, setraffleContract] = React.useState(""); // 0x4Acf1C08FD60aFE43e9B4285b8e77646855f5392
+  const [nftContract, setnftContract] = React.useState(""); // 0xf5de760f2e916647fd766B4AD9E85ff943cE3A2b
+  const [id, setId] = React.useState(""); // 2853340
+  const [hub, setHub] = React.useState("");
 
   async function create() {
     try {
