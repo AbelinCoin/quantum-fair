@@ -54,7 +54,7 @@ function CreateRaffle() {
   const [generated, setGenerated] = React.useState(false);
   const [output, setOutput] = React.useState(false);
   const [name, setName] = React.useState("");
-  const [start, setStart] = React.useState(0);
+  const [start, setStart] = React.useState("");
   const [end, setEnd] = React.useState("");
   const [winners, setWinners] = React.useState("");
   const [description, setDescription] = React.useState("");
