@@ -18,7 +18,7 @@ import {
 } from "../../components/styles/label";
 import { Input, InputOpen, InputDesc } from "../../components/styles/input";
 import { Button } from "../../components/styles/button";
-import { Flex, Card } from "../../components/styles/div";
+import { Flex } from "../../components/styles/div";
 import { Typography } from "../../components/styles/typography";
 
 function Heading() {
@@ -35,14 +35,25 @@ function Heading() {
 }
 
 function CreateRaffle() {
-  const [hide, setHide] = React.useState("flex");
+  // const [hide, setHide] = React.useState("flex");
 
   const OneContent = styled.div`
     justify-content: center;
     background: #efefef;
     flex-direction: column;
     align-items: center;
-    display: ${hide};
+    display: flex;
+    transform: translateY(0px);
+    align-content: center;
+    z-index: 12;
+  `;
+
+  const TwoContent = styled.div`
+    justify-content: center;
+    background: #efefef;
+    flex-direction: column;
+    align-items: center;
+    display: flex;
     transform: translateY(0px);
     align-content: center;
     z-index: 12;
@@ -51,7 +62,7 @@ function CreateRaffle() {
   const vaultFactory = "0xbC462F32aD394cF4dc1200a04c3f03dfaf380375";
   const vaultRouter = "0x04B3ceE98aa97284322CB8591eD3aC33c7a35414";
   const [screen, setScreen] = React.useState(false);
-  const [generated, setGenerated] = React.useState(false);
+  // const [generated, setGenerated] = React.useState(false);
   const [output, setOutput] = React.useState(false);
   const [name, setName] = React.useState("");
   const [start, setStart] = React.useState("");
@@ -61,7 +72,7 @@ function CreateRaffle() {
   const [raffleContract, setraffleContract] = React.useState(""); // 0x4Acf1C08FD60aFE43e9B4285b8e77646855f5392
   const [nftContract, setnftContract] = React.useState(""); // 0xf5de760f2e916647fd766B4AD9E85ff943cE3A2b
   const [id, setId] = React.useState(""); // 2853340
-  const [hub, setHub] = React.useState("");
+  // const [hub, setHub] = React.useState("");
 
   async function create() {
     try {
@@ -79,7 +90,7 @@ function CreateRaffle() {
         hash_function: 18,
         size: 32,
       });
-      setGenerated(true);
+      // setGenerated(true);
     } catch (err) {
       console.error(err);
     }
@@ -109,7 +120,6 @@ function CreateRaffle() {
         [id]
       );
       console.log(Open);
-      setHide("none");
       setOutput(true);
     } catch (err) {
       console.error(err);
@@ -150,7 +160,7 @@ function CreateRaffle() {
             <Button onClick={open}>Create</Button>
           </OneContent>
         ) : (
-          <OneContent>
+          <TwoContent>
             <Typography>CREATE RAFFLE 1/3</Typography>
             <LabelName>Raffle Name</LabelName>
             <Input
@@ -187,7 +197,7 @@ function CreateRaffle() {
               }}
             />
             <Button onClick={create}>Next</Button>
-          </OneContent>
+          </TwoContent>
         )}
       </Flex>
     </>
