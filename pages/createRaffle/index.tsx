@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import { ethers } from "ethers";
-import styled from "styled-components";
+import axios from "axios";
 import Navbar from "../../components/nav";
 import { FairHub, Raffle, MultiFaucetNFT } from "../../components/abis";
 import {
@@ -48,7 +48,7 @@ function CreateRaffle() {
   const [raffleContract, setraffleContract] = React.useState(""); // 0x4Acf1C08FD60aFE43e9B4285b8e77646855f5392
   const [nftContract, setnftContract] = React.useState(""); // 0xf5de760f2e916647fd766B4AD9E85ff943cE3A2b
   const [id, setId] = React.useState(""); // 2853340
-  // const [hub, setHub] = React.useState("");
+  const [hub, setHub] = React.useState("");
 
   async function create() {
     try {
@@ -66,7 +66,12 @@ function CreateRaffle() {
         hash_function: 18,
         size: 32,
       });
-      // setGenerated(true);
+      console.log(createRaffle);
+      const getContract = await axios.post(
+        `https://api-goerli.etherscan.io/api?module=account&action=txlistinternal&txhash=${createRaffle.hash}&apikey=GBCBJB46CJB6NMCGMR3X5KENZR3P84RUZH`
+      );
+      setHub(getContract.data.result[0].contractAddress);
+      // setScreen(true);
     } catch (err) {
       console.error(err);
     }
