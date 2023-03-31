@@ -72,7 +72,7 @@ function CreateRaffle() {
       );
       setHub(getContract.data.result[0].contractAddress);
       console.log(hub);
-      // setScreen(true);
+      setScreen(true);
     } catch (err) {
       console.error(err);
     }
