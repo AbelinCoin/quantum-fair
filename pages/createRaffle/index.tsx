@@ -71,6 +71,7 @@ function CreateRaffle() {
         `https://api-goerli.etherscan.io/api?module=account&action=txlistinternal&txhash=${createRaffle.hash}&apikey=GBCBJB46CJB6NMCGMR3X5KENZR3P84RUZH`
       );
       setHub(getContract.data.result[0].contractAddress);
+      console.log(hub);
       // setScreen(true);
     } catch (err) {
       console.error(err);
