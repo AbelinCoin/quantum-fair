@@ -35,30 +35,6 @@ function Heading() {
 }
 
 function CreateRaffle() {
-  // const [hide, setHide] = React.useState("flex");
-
-  const OneContent = styled.div`
-    justify-content: center;
-    background: #efefef;
-    flex-direction: column;
-    align-items: center;
-    display: flex;
-    transform: translateY(0px);
-    align-content: center;
-    z-index: 12;
-  `;
-
-  const TwoContent = styled.div`
-    justify-content: center;
-    background: #efefef;
-    flex-direction: column;
-    align-items: center;
-    display: flex;
-    transform: translateY(0px);
-    align-content: center;
-    z-index: 12;
-  `;
-
   const vaultFactory = "0xbC462F32aD394cF4dc1200a04c3f03dfaf380375";
   const vaultRouter = "0x04B3ceE98aa97284322CB8591eD3aC33c7a35414";
   const [screen, setScreen] = React.useState(false);
@@ -132,7 +108,18 @@ function CreateRaffle() {
       <Navbar />
       <Flex>
         {screen ? (
-          <OneContent>
+          <div
+            style={{
+              justifyContent: "center",
+              background: "#efefef",
+              flexDirection: "column",
+              alignItems: "center",
+              display: "flex",
+              transform: "translateY(0px)",
+              alignContent: "center",
+              zIndex: "12",
+            }}
+          >
             <Typography>CREATE RAFFLE 2/3</Typography>
             <LabelRff>Raffle Contract</LabelRff>
             <Input
@@ -158,9 +145,20 @@ function CreateRaffle() {
             <LabelVR>Vault Router</LabelVR>
             <InputOpen value={vaultRouter} readOnly={true} />
             <Button onClick={open}>Create</Button>
-          </OneContent>
+          </div>
         ) : (
-          <TwoContent>
+          <div
+            style={{
+              justifyContent: "center",
+              background: "#efefef",
+              flexDirection: "column",
+              alignItems: "center",
+              display: "flex",
+              transform: "translateY(0px)",
+              alignContent: "center",
+              zIndex: "12",
+            }}
+          >
             <Typography>CREATE RAFFLE 1/3</Typography>
             <LabelName>Raffle Name</LabelName>
             <Input
@@ -197,7 +195,7 @@ function CreateRaffle() {
               }}
             />
             <Button onClick={create}>Next</Button>
-          </TwoContent>
+          </div>
         )}
       </Flex>
     </>
