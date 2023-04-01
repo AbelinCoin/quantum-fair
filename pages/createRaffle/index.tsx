@@ -132,7 +132,26 @@ function CreateRaffle() {
     <>
       <Heading />
       <Navbar />
-      <Flex>
+      <Flex style={{ height: "fit-content" }}>
+        {" "}
+        {hub && (
+          <div
+            style={{
+              transform: "translateY(200px)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "#d5cfcf",
+              height: "18rem",
+              width: "40rem",
+              border: "1px solid",
+              borderRadius: "6px",
+              zIndex: "2",
+            }}
+          >
+            <h1 style={{ fontFamily: "Poppins", fontSize: "1.5rem" }}>{hub}</h1>
+          </div>
+        )}
         {screen ? (
           <div
             style={{
@@ -141,9 +160,9 @@ function CreateRaffle() {
               flexDirection: "column",
               alignItems: "center",
               display: "flex",
-              transform: "translateY(0px)",
+              transform: "translateY(-0px)",
               alignContent: "center",
-              zIndex: "12",
+              zIndex: "1",
             }}
           >
             <Typography>CREATE RAFFLE 2/3</Typography>
@@ -180,9 +199,9 @@ function CreateRaffle() {
               flexDirection: "column",
               alignItems: "center",
               display: "flex",
-              transform: "translateY(0px)",
+              transform: "translateY(-280px)",
               alignContent: "center",
-              zIndex: "12",
+              zIndex: "1",
             }}
           >
             <Typography>CREATE RAFFLE 1/3</Typography>
