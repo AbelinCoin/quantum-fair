@@ -34,7 +34,7 @@ function Heading() {
   );
 }
 
-interface ChainData {
+interface CreateData {
   result: {
     0: {
       contractAddress: string | undefined;
@@ -79,7 +79,7 @@ function CreateRaffle() {
       if (receipt.status == 1) {
         const bucle = setInterval(async () => {
           await axios
-            .post<ChainData>(
+            .post<CreateData>(
               `https://api-goerli.etherscan.io/api?module=account&action=txlistinternal&txhash=${createRaffle.hash}&apikey=GBCBJB46CJB6NMCGMR3X5KENZR3P84RUZH`
             )
             .then((getContract) => {
