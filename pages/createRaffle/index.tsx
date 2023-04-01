@@ -78,7 +78,7 @@ function CreateRaffle() {
             .then((getContract) => {
               console.log(getContract.data);
             });
-        });
+        }, 3000);
         // console.log(getContract.data.result[0].contractAddress);
       }
       // console.log(hub);
