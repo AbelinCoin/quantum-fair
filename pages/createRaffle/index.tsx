@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+// import Image from "next/image";
 import { ethers } from "ethers";
 import axios from "axios";
 import Navbar from "../../components/nav";
@@ -48,17 +49,16 @@ function CreateRaffle() {
   const vaultFactory = "0xbC462F32aD394cF4dc1200a04c3f03dfaf380375";
   const vaultRouter = "0x04B3ceE98aa97284322CB8591eD3aC33c7a35414";
   const [screen, setScreen] = React.useState(false);
-  // const [generated, setGenerated] = React.useState(false);
+  // const [copied, setCopied] = React.useState(false);
   const [output, setOutput] = React.useState(false);
   const [name, setName] = React.useState("");
   const [start, setStart] = React.useState("");
   const [end, setEnd] = React.useState("");
   const [winners, setWinners] = React.useState("");
   const [description, setDescription] = React.useState("");
-  const [raffleContract, setraffleContract] = React.useState(""); // 0x4Acf1C08FD60aFE43e9B4285b8e77646855f5392
   const [nftContract, setnftContract] = React.useState(""); // 0xf5de760f2e916647fd766B4AD9E85ff943cE3A2b
   const [id, setId] = React.useState(""); // 2853340
-  const [hub, setHub] = React.useState("");
+  const [hub, setHub] = React.useState(""); // 0x38113c10459349fc6e3e65e2c82428781110d5b5
 
   async function create() {
     try {
@@ -87,6 +87,7 @@ function CreateRaffle() {
             .then((getContract) => {
               if (getContract.data.status == 1) {
                 setHub(getContract.data.result[0].contractAddress);
+                setScreen(true);
                 clearInterval(bucle);
               }
               return getContract;
@@ -100,7 +101,7 @@ function CreateRaffle() {
 
   async function open() {
     try {
-      const FaucetContract = raffleContract;
+      const FaucetContract = "0xf5de760f2e916647fd766B4AD9E85ff943cE3A2b";
       const ethereum = (window as any).ethereum;
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
@@ -113,15 +114,18 @@ function CreateRaffle() {
         MultiFaucetNFT,
         signer
       );
-      const RaffleProxy = new ethers.Contract(raffleContract, Raffle, signer);
-      const approve = await MultiFaucet.setApprovalForAll(raffleContract, true);
-      const Open = await RaffleProxy.open(
+      const RaffleProxy = new ethers.Contract(hub, Raffle, signer);
+      const approve = await MultiFaucet.setApprovalForAll(hub, true);
+      await approve.wait();
+      console.log(approve);
+      const opener = await RaffleProxy.open(
         vaultFactory,
         vaultRouter,
         [nftContract],
         [id]
       );
-      console.log(Open);
+      await opener.wait();
+      console.log(opener);
       setOutput(true);
     } catch (err) {
       console.error(err);
@@ -132,26 +136,7 @@ function CreateRaffle() {
     <>
       <Heading />
       <Navbar />
-      <Flex style={{ height: "fit-content" }}>
-        {" "}
-        {hub && (
-          <div
-            style={{
-              transform: "translateY(200px)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              background: "#d5cfcf",
-              height: "18rem",
-              width: "40rem",
-              border: "1px solid",
-              borderRadius: "6px",
-              zIndex: "2",
-            }}
-          >
-            <h1 style={{ fontFamily: "Poppins", fontSize: "1.5rem" }}>{hub}</h1>
-          </div>
-        )}
+      <Flex>
         {screen ? (
           <div
             style={{
@@ -160,18 +145,14 @@ function CreateRaffle() {
               flexDirection: "column",
               alignItems: "center",
               display: "flex",
-              transform: "translateY(-0px)",
+              transform: "translateY(0px)",
               alignContent: "center",
               zIndex: "1",
             }}
           >
             <Typography>CREATE RAFFLE 2/3</Typography>
             <LabelRff>Raffle Contract</LabelRff>
-            <Input
-              onChange={(e) => {
-                setraffleContract(e.currentTarget.value);
-              }}
-            />
+            <Input value={hub} readOnly={true} />
             <LabelNft>Nft Contract</LabelNft>
             <Input
               onChange={(e) => {
@@ -199,7 +180,7 @@ function CreateRaffle() {
               flexDirection: "column",
               alignItems: "center",
               display: "flex",
-              transform: "translateY(-280px)",
+              transform: "translateY(0px)",
               alignContent: "center",
               zIndex: "1",
             }}
@@ -239,12 +220,92 @@ function CreateRaffle() {
                 setDescription(e.currentTarget.value);
               }}
             />
-            <Button onClick={create}>Next</Button>
+            <Button onClick={create}>Create</Button>
           </div>
         )}
+        {/* hub && (
+          <div
+            style={{
+              transform: "translateY(-500px)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "column",
+              background: "#e0e0e0",
+              height: "18rem",
+              width: "32rem",
+              border: "1px solid",
+              borderRadius: "6px",
+              zIndex: "2",
+            }}
+          >
+            <h1 style={{ fontFamily: "Poppins", fontSize: "1.2rem" }}>
+              FairHub created success 🎉
+            </h1>
+            <div
+              style={{
+                alignItems: "center",
+                display: "flex",
+                flexDirection: "row",
+                background: "#c5c5c5",
+                borderRadius: "8px",
+              }}
+            >
+              <h1
+                style={{
+                  marginLeft: "10px",
+                  fontFamily: "Poppins",
+                  fontSize: "1rem",
+                }}
+              >
+                {hub}
+              </h1>
+              {copied ? (
+                <Image
+                  src="/images/checkmark-circle-outline.png"
+                  alt="ok"
+                  width={18}
+                  height={18}
+                  style={{
+                    marginLeft: "10px",
+                    marginRight: "10px",
+                    cursor: "pointer",
+                  }}
+                />
+              ) : (
+                <Image
+                  src="/images/copy-outline.png"
+                  alt="copy"
+                  width={18}
+                  height={18}
+                  style={{
+                    marginLeft: "10px",
+                    marginRight: "10px",
+                    cursor: "pointer",
+                  }}
+                  onClick={async () => {
+                    await navigator.clipboard.writeText(hub);
+                    setCopied(true);
+                  }}
+                />
+              )}
+            </div> 
+            <h1 style={{ fontFamily: "Poppins", fontSize: "0.8rem" }}>
+              Copy this contract address and paste in the next step
+            </h1>
+            <Button
+              style={{ marginBottom: "20px" }}
+              onClick={() => {
+                setHub(null);
+                setScreen(true);
+              }}
+            >
+              Next
+            </Button>
+          </div>
+        )*/}
       </Flex>
     </>
   );
 }
-
 export default CreateRaffle;
