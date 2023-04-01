@@ -34,6 +34,14 @@ function Heading() {
   );
 }
 
+interface ChainData {
+  result: {
+    0: {
+      contractAddress: string | undefined;
+    };
+  };
+}
+
 function CreateRaffle() {
   const vaultFactory = "0xbC462F32aD394cF4dc1200a04c3f03dfaf380375";
   const vaultRouter = "0x04B3ceE98aa97284322CB8591eD3aC33c7a35414";
@@ -71,7 +79,7 @@ function CreateRaffle() {
       if (receipt.status == 1) {
         const bucle = setInterval(async () => {
           await axios
-            .post(
+            .post<ChainData>(
               `https://api-goerli.etherscan.io/api?module=account&action=txlistinternal&txhash=${createRaffle.hash}&apikey=GBCBJB46CJB6NMCGMR3X5KENZR3P84RUZH`
             )
             .then((getContract) => {
