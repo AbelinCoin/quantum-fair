@@ -70,13 +70,17 @@ function CreateRaffle() {
       const receipt = await provider.getTransactionReceipt(createRaffle.hash);
       if (receipt.status == 1) {
         console.log(createRaffle.hash);
-        setInterval(async (get: any) => {
+        const bucle = setInterval(async () => {
           await axios
             .post(
               `https://api-goerli.etherscan.io/api?module=account&action=txlistinternal&txhash=${createRaffle.hash}&apikey=GBCBJB46CJB6NMCGMR3X5KENZR3P84RUZH`
             )
             .then((getContract) => {
               console.log(getContract.data);
+              if (getContract.data.result[0].contractAddress !== undefined) {
+                setHub(getContract.data.result[0].contractAddress);
+                clearInterval(bucle);
+              }
             });
         }, 3000);
         // console.log(getContract.data.result[0].contractAddress);
