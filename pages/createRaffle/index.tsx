@@ -35,7 +35,7 @@ function Heading() {
 }
 
 interface CreateData {
-  status: string;
+  status: number;
   message: string;
   result: {
     0: {
@@ -85,13 +85,11 @@ function CreateRaffle() {
               `https://api-goerli.etherscan.io/api?module=account&action=txlistinternal&txhash=${createRaffle.hash}&apikey=GBCBJB46CJB6NMCGMR3X5KENZR3P84RUZH`
             )
             .then((getContract) => {
-              console.log(getContract.data);
-              if (getContract.data.result[0].contractAddress !== undefined) {
+              if (getContract.data.status == 1) {
                 setHub(getContract.data.result[0].contractAddress);
-                console.log(hub);
-                // setScreen(true);
                 clearInterval(bucle);
               }
+              return getContract;
             });
         }, 3000);
       }
