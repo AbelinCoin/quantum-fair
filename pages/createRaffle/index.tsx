@@ -37,7 +37,7 @@ function Heading() {
 interface CreateData {
   result: {
     0: {
-      contractAddress: string | undefined;
+      contractAddress: string | null;
     };
   };
 }
@@ -85,13 +85,13 @@ function CreateRaffle() {
             .then((getContract) => {
               if (getContract.data.result[0].contractAddress !== undefined) {
                 setHub(getContract.data.result[0].contractAddress);
+                console.log(hub);
+                // setScreen(true);
                 clearInterval(bucle);
               }
             });
         }, 3000);
       }
-      console.log(hub);
-      // setScreen(true);
     } catch (err) {
       console.error(err);
     }
