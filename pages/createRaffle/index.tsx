@@ -66,17 +66,24 @@ function CreateRaffle() {
         hash_function: 18,
         size: 32,
       });
-      createRaffle.wait().then(async (receipt: any) => {
-        receipt = await provider.getTransactionReceipt(createRaffle.hash);
-        if (receipt.status == 1) {
-          const getContract = await axios.post(
-            `https://api-goerli.etherscan.io/api?module=account&action=txlistinternal&txhash=${createRaffle.hash}&apikey=GBCBJB46CJB6NMCGMR3X5KENZR3P84RUZH`
-          );
-          console.log(getContract.data);
-        }
-      });
-      console.log(hub);
-      setScreen(true);
+      await createRaffle.wait();
+      const receipt = await provider.getTransactionReceipt(createRaffle.hash);
+      if (receipt.status == 1) {
+        console.log(createRaffle.hash);
+        setInterval(async (get) => {
+          await axios
+            .post(
+              `https://api-goerli.etherscan.io/api?module=account&action=txlistinternal&txhash=${createRaffle.hash}&apikey=GBCBJB46CJB6NMCGMR3X5KENZR3P84RUZH`
+            )
+            .then((getContract) => {
+              console.log(getContract.data);
+            });
+        });
+        // console.log(getContract.data.result[0].contractAddress);
+        // console.log(getContract.data);
+      }
+      // console.log(hub);
+      // /setScreen(true);
     } catch (err) {
       console.error(err);
     }
@@ -84,7 +91,7 @@ function CreateRaffle() {
 
   async function open() {
     try {
-      const FaucetContract = "0xf5:::::de760f2e916647fd766B4AD9E85ff943cE3A2b";
+      const FaucetContract = raffleContract;
       const ethereum = (window as any).ethereum;
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
