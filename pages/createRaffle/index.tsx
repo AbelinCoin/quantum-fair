@@ -69,7 +69,6 @@ function CreateRaffle() {
       await createRaffle.wait();
       const receipt = await provider.getTransactionReceipt(createRaffle.hash);
       if (receipt.status == 1) {
-        console.log(createRaffle.hash);
         const bucle = setInterval(async () => {
           await axios
             .post(
@@ -82,7 +81,6 @@ function CreateRaffle() {
               }
             });
         }, 3000);
-        // console.log(getContract.data.result[0].contractAddress);
       }
       console.log(hub);
       // setScreen(true);
