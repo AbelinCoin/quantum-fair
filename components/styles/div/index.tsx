@@ -4,7 +4,7 @@ export const Flex = styled.div`
   background: #efefef;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  height: 130vh;
   display: flex;
   align-content: center;
   padding: 0.2rem calc((100vw - 1000px) / 2);

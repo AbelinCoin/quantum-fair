@@ -49,6 +49,7 @@ function CreateRaffle() {
   const vaultFactory = "0xbC462F32aD394cF4dc1200a04c3f03dfaf380375";
   const vaultRouter = "0x04B3ceE98aa97284322CB8591eD3aC33c7a35414";
   const [screen, setScreen] = React.useState(false);
+  const [canyed, setCanyed] = React.useState(false);
   // const [copied, setCopied] = React.useState(false);
   const [output, setOutput] = React.useState(false);
   const [name, setName] = React.useState("");
@@ -87,6 +88,7 @@ function CreateRaffle() {
             .then((getContract) => {
               if (getContract.data.status == 1) {
                 setHub(getContract.data.result[0].contractAddress);
+                setCanyed(true);
                 setScreen(true);
                 clearInterval(bucle);
               }
@@ -124,9 +126,11 @@ function CreateRaffle() {
         [nftContract],
         [id]
       );
-      await opener.wait();
-      console.log(opener);
-      setOutput(true);
+      const opening = await opener.wait();
+      if (opening.status == 1) {
+        console.log(opener);
+        setOutput(true);
+      }
     } catch (err) {
       console.error(err);
     }
@@ -145,7 +149,7 @@ function CreateRaffle() {
               flexDirection: "column",
               alignItems: "center",
               display: "flex",
-              transform: "translateY(0px)",
+              transform: "translateY(30px)",
               alignContent: "center",
               zIndex: "1",
             }}
@@ -171,6 +175,16 @@ function CreateRaffle() {
             <LabelVR>Vault Router</LabelVR>
             <InputOpen value={vaultRouter} readOnly={true} />
             <Button onClick={open}>Create</Button>
+            <Button
+              style={{ transform: "translate(-190px, -56px);" }}
+              onClick={() => {
+                if (String(hub).length > 42) {
+                  setScreen(false);
+                }
+              }}
+            >
+              Back
+            </Button>
           </div>
         ) : (
           <div
@@ -180,7 +194,7 @@ function CreateRaffle() {
               flexDirection: "column",
               alignItems: "center",
               display: "flex",
-              transform: "translateY(0px)",
+              transform: "translateY(30px)",
               alignContent: "center",
               zIndex: "1",
             }}
@@ -220,7 +234,19 @@ function CreateRaffle() {
                 setDescription(e.currentTarget.value);
               }}
             />
-            <Button onClick={create}>Create</Button>
+            {canyed ? (
+              <Button
+                onClick={() => {
+                  if (String(hub).length > 42) {
+                    setScreen(true);
+                  }
+                }}
+              >
+                Next
+              </Button>
+            ) : (
+              <Button onClick={create}>Create</Button>
+            )}
           </div>
         )}
         {/* hub && (
