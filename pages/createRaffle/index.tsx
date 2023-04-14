@@ -58,7 +58,7 @@ function CreateRaffle() {
   const [winners, setWinners] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [nftContract, setnftContract] = React.useState(""); // 0xf5de760f2e916647fd766B4AD9E85ff943cE3A2b
-  const [id, setId] = React.useState(""); // 2853340
+  const [id, setId] = React.useState(""); // 3667556
   const [hub, setHub] = React.useState(""); // 0x38113c10459349fc6e3e65e2c82428781110d5b5
 
   async function create() {
@@ -117,19 +117,19 @@ function CreateRaffle() {
         signer
       );
       const RaffleProxy = new ethers.Contract(hub, Raffle, signer);
-      const approve = await MultiFaucet.setApprovalForAll(hub, true);
-      await approve.wait();
-      console.log(approve);
-      const opener = await RaffleProxy.open(
-        vaultFactory,
-        vaultRouter,
-        [nftContract],
-        [id]
-      );
-      const opening = await opener.wait();
-      if (opening.status == 1) {
-        console.log(opener);
-        setOutput(true);
+      const approve = await MultiFaucet.approve(hub, id);
+      const approving = await approve.wait();
+      if (approving.status == 1) {
+        const opener = await RaffleProxy.open(
+          vaultFactory,
+          vaultRouter,
+          [nftContract],
+          [id]
+        );
+        const opening = await opener.wait();
+        if (opening.status == 1) {
+          setOutput(true);
+        }
       }
     } catch (err) {
       console.error(err);
@@ -174,11 +174,11 @@ function CreateRaffle() {
             <InputOpen value={vaultFactory} readOnly={true} />
             <LabelVR>Vault Router</LabelVR>
             <InputOpen value={vaultRouter} readOnly={true} />
-            <Button onClick={open}>Create</Button>
+            <Button onClick={open}>Open</Button>
             <Button
-              style={{ transform: "translate(-190px, -56px);" }}
+              style={{ transform: "translate(-190px, -60px)" }}
               onClick={() => {
-                if (String(hub).length > 42) {
+                if (String(hub).length >= 42) {
                   setScreen(false);
                 }
               }}
@@ -237,7 +237,7 @@ function CreateRaffle() {
             {canyed ? (
               <Button
                 onClick={() => {
-                  if (String(hub).length > 42) {
+                  if (String(hub).length >= 42) {
                     setScreen(true);
                   }
                 }}

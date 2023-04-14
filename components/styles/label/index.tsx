@@ -29,7 +29,7 @@ export const LabelWinners = styled.label`
   font-size: initial;
   font-weight: bold;
   font-family: "Poppins";
-  transform: translate(-192px,15px);
+  transform: translate(-192px, 15px);
 `;
 
 export const LabelDesc = styled.label`
@@ -45,7 +45,7 @@ export const LabelRff = styled.label`
   font-size: initial;
   font-weight: bold;
   font-family: "Poppins";
-  transform: translate(-179px, 15px);
+  transform: translate(-172px, 15px);
 `;
 
 export const LabelNft = styled.label`
@@ -53,7 +53,7 @@ export const LabelNft = styled.label`
   font-size: initial;
   font-weight: bold;
   font-family: "Poppins";
-  transform: translate(-192px, 15px);
+  transform: translate(-187px, 15px);
 `;
 
 export const LabelID = styled.label`
@@ -81,5 +81,3 @@ export const LabelVR = styled.label`
   font-family: "Poppins";
   transform: translate(-186px, 15px);
 `;
-
-
