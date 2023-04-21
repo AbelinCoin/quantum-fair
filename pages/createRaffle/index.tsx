@@ -103,7 +103,7 @@ function CreateRaffle() {
 
   async function open() {
     try {
-      const FaucetContract = "0xf5de760f2e916647fd766B4AD9E85ff943cE3A2b";
+      const FaucetContract = nftContract;
       const ethereum = (window as any).ethereum;
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
