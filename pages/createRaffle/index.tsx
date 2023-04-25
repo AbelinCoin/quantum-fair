@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-// import Image from "next/image";
+import { useRouter } from "next/router";
 import { ethers } from "ethers";
 import axios from "axios";
 import Navbar from "../../components/nav";
@@ -44,7 +44,7 @@ interface CreateData {
     };
   };
 }
-
+const router=useRouter
 function CreateRaffle() {
   const vaultFactory = "0xbC462F32aD394cF4dc1200a04c3f03dfaf380375";
   const vaultRouter = "0x04B3ceE98aa97284322CB8591eD3aC33c7a35414";
