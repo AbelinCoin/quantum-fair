@@ -871,3 +871,5 @@ export const MultiFaucetNFT = [
   },
   { stateMutability: "payable", type: "receive" },
 ];
+export const ActiveRaffle = [
+]
