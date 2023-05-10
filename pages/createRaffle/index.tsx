@@ -21,6 +21,8 @@ import { Input, InputOpen, InputDesc } from "../../components/styles/input";
 import { Button } from "../../components/styles/button";
 import { Flex } from "../../components/styles/div";
 import { Typography } from "../../components/styles/typography";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function Heading() {
   return (
@@ -60,6 +62,9 @@ function CreateRaffle() {
   const [nftContract, setnftContract] = React.useState(""); // 0xf5de760f2e916647fd766B4AD9E85ff943cE3A2b
   const [id, setId] = React.useState(""); // 3667556
   const [hub, setHub] = React.useState(""); // 0x38113c10459349fc6e3e65e2c82428781110d5b5
+  const [startDate, setStartDate] = React.useState<Date>(new Date());
+  const [endDate, setEndDate] = React.useState<Date>(new Date());
+
 
   async function create() {
     try {
@@ -72,11 +77,17 @@ function CreateRaffle() {
       const walletAddress = accounts[0];
       const signer = provider.getSigner(walletAddress);
       const FairProxy = new ethers.Contract(FairContract, FairHub, signer);
-      const createRaffle = await FairProxy.createRaffle(start, end, winners, {
-        hash: "0xf7baab1baf661869e72d3f70214e394102486912b6ed3872d9bb9d7e36e286c3",
-        hash_function: 18,
-        size: 32,
-      });
+      const createRaffle = await FairProxy.createRaffle(   
+        startDate.getTime() / 1000, // Convertir fecha de inicio a segundos desde el 01/01/1970
+        endDate.getTime() / 1000, // Convertir fecha de fin a segundos desde el 01/01/1970
+        winners,
+        {
+          hash: "0xf7baab1baf661869e72d3f70214e394102486912b6ed3872d9bb9d7e36e286c3",
+          hash_function: 18,
+          size: 32,
+        }
+      );
+      
       await createRaffle.wait();
       const receipt = await provider.getTransactionReceipt(createRaffle.hash);
       if (receipt.status == 1) {
@@ -154,7 +165,7 @@ function CreateRaffle() {
               zIndex: "1",
             }}
           >
-            <Typography>CREATE RAFFLE 2/3</Typography>
+            <Typography>CREATE RAFFLE 2/2</Typography>
             <LabelRff>Raffle Contract</LabelRff>
             <Input value={hub} readOnly={true} />
             <LabelNft>Nft Contract</LabelNft>
@@ -199,7 +210,7 @@ function CreateRaffle() {
               zIndex: "1",
             }}
           >
-            <Typography>CREATE RAFFLE 1/3</Typography>
+            <Typography>CREATE RAFFLE 1/2</Typography>
             <LabelName>Raffle Name</LabelName>
             <Input
               type="text"
@@ -207,27 +218,27 @@ function CreateRaffle() {
                 setName(e.currentTarget.value);
               }}
             />
-            <LabelStart>Start</LabelStart>
-            <Input
-              type="number"
-              onChange={(e) => {
-                setStart(e.target.value);
-              }}
+            <LabelStart>Start Date:</LabelStart>
+            <DatePicker
+              selected={startDate}
+              onChange={(date: Date | null) =>
+                setStartDate(date ? date : new Date())
+              }
             />
-            <LabelEnd>End</LabelEnd>
-            <Input
-              type="number"
-              onChange={(e) => {
-                setEnd(e.currentTarget.value);
-              }}
+            <LabelEnd>End Date:</LabelEnd>
+            <DatePicker
+              selected={endDate}
+              onChange={(date: Date | null) =>
+                setEndDate(date ? date : new Date())
+              }
             />
-            <LabelWinners>N° Winners</LabelWinners>
+            {/* <LabelWinners>N° Winners</LabelWinners>
             <Input
               type="number"
               onChange={(e) => {
                 setWinners(e.currentTarget.value);
               }}
-            />
+            /> */}
             <LabelDesc>Description</LabelDesc>
             <InputDesc
               onChange={(e) => {
