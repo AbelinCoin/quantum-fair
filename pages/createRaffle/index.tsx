@@ -44,7 +44,7 @@ interface CreateData {
     };
   };
 }
-const router=useRouter
+
 function CreateRaffle() {
   const vaultFactory = "0xbC462F32aD394cF4dc1200a04c3f03dfaf380375";
   const vaultRouter = "0x04B3ceE98aa97284322CB8591eD3aC33c7a35414";
@@ -101,7 +101,8 @@ function CreateRaffle() {
     }
   }
 
-  async function open() {
+  async function Open() {
+    const router=useRouter()
     try {
       const FaucetContract = nftContract;
       const ethereum = (window as any).ethereum;
@@ -128,7 +129,7 @@ function CreateRaffle() {
         );
         const opening = await opener.wait();
         if (opening.status == 1) {
-          setOutput(true);
+          router.push(`/raffle?id=${raffleId}`);
         }
       }
     } catch (err) {
@@ -174,7 +175,7 @@ function CreateRaffle() {
             <InputOpen value={vaultFactory} readOnly={true} />
             <LabelVR>Vault Router</LabelVR>
             <InputOpen value={vaultRouter} readOnly={true} />
-            <Button onClick={open}>Open</Button>
+            <Button onClick={Open}>Open</Button>
             <Button
               style={{ transform: "translate(-190px, -60px)" }}
               onClick={() => {
