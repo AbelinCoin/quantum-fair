@@ -58,10 +58,11 @@ function CreateRaffle() {
   const [start, setStart] = React.useState("");
   const [end, setEnd] = React.useState("");
   const [winners, setWinners] = React.useState("");
+  const [price, setPrice] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [nftContract, setnftContract] = React.useState(""); // 0x38abA480f2bA7A17bC01EE5E1AD64fCedd93EfE7
   const [id, setId] = React.useState(""); // 29
-  const [hub, setHub] = React.useState(""); 
+  const [hub, setHub] = React.useState(""); // 0xca11f9ff5fc64de0445b0a64a27f94cc91f6b9d5
 
   async function create() {
     try {
@@ -74,18 +75,24 @@ function CreateRaffle() {
       const walletAddress = accounts[0];
       const signer = provider.getSigner(walletAddress);
       const FairProxy = new ethers.Contract(ProxyContract, Proxy, signer);
-      const createRaffle = await FairProxy.createRaffle(start, end, winners, {
-        hash: "0xf7baab1baf661869e72d3f70214e394102486912b6ed3872d9bb9d7e36e286c3",
-        hash_function: 18,
-        size: 32,
-      });
+      const createRaffle = await FairProxy.createRaffle(
+        start,
+        end,
+        winners,
+        price,
+        {
+          hash: "0xf7baab1baf661869e72d3f70214e394102486912b6ed3872d9bb9d7e36e286c3",
+          hash_function: 18,
+          size: 32,
+        }
+      );
       await createRaffle.wait();
       const receipt = await provider.getTransactionReceipt(createRaffle.hash);
       if (receipt.status == 1) {
         const bucle = setInterval(async () => {
           await axios
             .post<CreateData>(
-              `https://api-goerli.etherscan.io/api?module=account&action=txlistinternal&txhash=${createRaffle.hash}&apikey=GBCBJB46CJB6NMCGMR3X5KENZR3P84RUZH`
+              `https://api-goerli-optimism.etherscan.io/api?module=account&action=txlistinternal&txhash=${createRaffle.hash}&apikey=GBCBJB46CJB6NMCGMR3X5KENZR3P84RUZH`
             )
             .then((getContract) => {
               if (getContract.data.status == 1) {
@@ -104,9 +111,8 @@ function CreateRaffle() {
   }
 
   async function Open() {
-    const router = useRouter();
+    // const router = useRouter();
     try {
-      const FaucetContract = nftContract;
       const ethereum = (window as any).ethereum;
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
@@ -114,14 +120,12 @@ function CreateRaffle() {
       const provider = new ethers.providers.Web3Provider(ethereum);
       const walletAddress = accounts[0];
       const signer = provider.getSigner(walletAddress);
-      const ERC721 = new ethers.Contract(FaucetContract, ERC721ABI, signer);
+      const ERC721 = new ethers.Contract(nftContract, ERC721ABI, signer);
       const RaffleProxy = new ethers.Contract(hub, Raffle, signer);
       const approve = await ERC721.approve(hub, id);
       const approving = await approve.wait();
       if (approving.status == 1) {
         const opener = await RaffleProxy.open(
-          vaultFactory,
-          vaultRouter,
           [nftContract],
           [id]
         );
@@ -227,6 +231,13 @@ function CreateRaffle() {
                 setWinners(e.currentTarget.value);
               }}
             />
+            <LabelWinners>Ticker Price</LabelWinners>
+            <Input
+              type="number"
+              onChange={(e) => {
+                setPrice(e.currentTarget.value);
+              }}
+            />
             <LabelDesc>Description</LabelDesc>
             <InputDesc
               onChange={(e) => {
@@ -248,87 +259,6 @@ function CreateRaffle() {
             )}
           </div>
         )}
-        {/* hub && (
-          <div
-            style={{
-              transform: "translateY(-500px)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexDirection: "column",
-              background: "#e0e0e0",
-              height: "18rem",
-              width: "32rem",
-              border: "1px solid",
-              borderRadius: "6px",
-              zIndex: "2",
-            }}
-          >
-            <h1 style={{ fontFamily: "Poppins", fontSize: "1.2rem" }}>
-              FairHub created success 🎉
-            </h1>
-            <div
-              style={{
-                alignItems: "center",
-                display: "flex",
-                flexDirection: "row",
-                background: "#c5c5c5",
-                borderRadius: "8px",
-              }}
-            >
-              <h1
-                style={{
-                  marginLeft: "10px",
-                  fontFamily: "Poppins",
-                  fontSize: "1rem",
-                }}
-              >
-                {hub}
-              </h1>
-              {copied ? (
-                <Image
-                  src="/images/checkmark-circle-outline.png"
-                  alt="ok"
-                  width={18}
-                  height={18}
-                  style={{
-                    marginLeft: "10px",
-                    marginRight: "10px",
-                    cursor: "pointer",
-                  }}
-                />
-              ) : (
-                <Image
-                  src="/images/copy-outline.png"
-                  alt="copy"
-                  width={18}
-                  height={18}
-                  style={{
-                    marginLeft: "10px",
-                    marginRight: "10px",
-                    cursor: "pointer",
-                  }}
-                  onClick={async () => {
-                    await navigator.clipboard.writeText(hub);
-                    setCopied(true);
-                  }}
-                />
-              )}
-            </div> 
-            <h1 style={{ fontFamily: "Poppins", fontSize: "0.8rem" }}>
-              Copy this contract address and paste in the next step
-            </h1>
-            <Button
-              style={{ marginBottom: "20px" }}
-              onClick={() => {
-                setHub(null);
-                setScreen(true);
-              }}
-            >
-              Next
-            </Button>
-          </div>
-        )*/}
       </Flex>
     </>
   );
