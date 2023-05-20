@@ -59,13 +59,13 @@ function CreateRaffle() {
   const [end, setEnd] = React.useState("");
   const [winners, setWinners] = React.useState("");
   const [description, setDescription] = React.useState("");
-  const [nftContract, setnftContract] = React.useState(""); // 0xf5de760f2e916647fd766B4AD9E85ff943cE3A2b
-  const [id, setId] = React.useState(""); // 3667556
-  const [hub, setHub] = React.useState(""); // 0x38113c10459349fc6e3e65e2c82428781110d5b5
+  const [nftContract, setnftContract] = React.useState(""); // 0x38abA480f2bA7A17bC01EE5E1AD64fCedd93EfE7
+  const [id, setId] = React.useState(""); // 29
+  const [hub, setHub] = React.useState(""); 
 
   async function create() {
     try {
-      const FairContract = "0x21f754BEEB1c5d1c9470E8E5a33D8E2526462799";
+      const ProxyContract = "0x21f754BEEB1c5d1c9470E8E5a33D8E2526462799";
       const ethereum = (window as any).ethereum;
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
@@ -73,7 +73,7 @@ function CreateRaffle() {
       const provider = new ethers.providers.Web3Provider(ethereum);
       const walletAddress = accounts[0];
       const signer = provider.getSigner(walletAddress);
-      const FairProxy = new ethers.Contract(FairContract, Proxy, signer);
+      const FairProxy = new ethers.Contract(ProxyContract, Proxy, signer);
       const createRaffle = await FairProxy.createRaffle(start, end, winners, {
         hash: "0xf7baab1baf661869e72d3f70214e394102486912b6ed3872d9bb9d7e36e286c3",
         hash_function: 18,
@@ -114,11 +114,7 @@ function CreateRaffle() {
       const provider = new ethers.providers.Web3Provider(ethereum);
       const walletAddress = accounts[0];
       const signer = provider.getSigner(walletAddress);
-      const ERC721 = new ethers.Contract(
-        FaucetContract,
-       ERC721ABI,
-        signer
-      );
+      const ERC721 = new ethers.Contract(FaucetContract, ERC721ABI, signer);
       const RaffleProxy = new ethers.Contract(hub, Raffle, signer);
       const approve = await ERC721.approve(hub, id);
       const approving = await approve.wait();
@@ -130,9 +126,9 @@ function CreateRaffle() {
           [id]
         );
         const opening = await opener.wait();
-        if (opening.status == 1) {
-          router.push(`/raffle?id=${raffleId}`);
-        }
+        // if (opening.status == 1) {
+        //    router.push(`/raffle?id=${raffleId}`);
+        //  }
       }
     } catch (err) {
       console.error(err);

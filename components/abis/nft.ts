@@ -1,13 +1,5 @@
 export const ERC721 = [
-  {
-    inputs: [
-      { internalType: "address", name: "_DAI", type: "address" },
-      { internalType: "address", name: "_WETH", type: "address" },
-      { internalType: "string", name: "_URI", type: "string" },
-    ],
-    stateMutability: "nonpayable",
-    type: "constructor",
-  },
+  { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
     anonymous: false,
     inputs: [
@@ -59,52 +51,17 @@ export const ERC721 = [
       {
         indexed: true,
         internalType: "address",
-        name: "recipient",
+        name: "previousOwner",
         type: "address",
       },
-    ],
-    name: "FaucetDrained",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
       {
         indexed: true,
         internalType: "address",
-        name: "recipient",
+        name: "newOwner",
         type: "address",
       },
     ],
-    name: "FaucetDripped",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "operator",
-        type: "address",
-      },
-      { indexed: false, internalType: "bool", name: "status", type: "bool" },
-    ],
-    name: "OperatorUpdated",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "operator",
-        type: "address",
-      },
-      { indexed: false, internalType: "bool", name: "status", type: "bool" },
-    ],
-    name: "SuperOperatorUpdated",
+    name: "OwnershipTransferred",
     type: "event",
   },
   {
@@ -123,55 +80,6 @@ export const ERC721 = [
     type: "event",
   },
   {
-    inputs: [],
-    name: "DAI",
-    outputs: [{ internalType: "contract IERC20", name: "", type: "address" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "DAI_AMOUNT",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "ETH_AMOUNT",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "NFT_COUNT",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "URI",
-    outputs: [{ internalType: "string", name: "", type: "string" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "WETH",
-    outputs: [{ internalType: "contract IERC20", name: "", type: "address" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "WETH_AMOUNT",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
       { internalType: "address", name: "to", type: "address" },
       { internalType: "uint256", name: "tokenId", type: "uint256" },
@@ -182,24 +90,6 @@ export const ERC721 = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "approvedOperators",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "availableDrips",
-    outputs: [
-      { internalType: "uint256", name: "ethDrips", type: "uint256" },
-      { internalType: "uint256", name: "daiDrips", type: "uint256" },
-      { internalType: "uint256", name: "wethDrips", type: "uint256" },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [{ internalType: "address", name: "owner", type: "address" }],
     name: "balanceOf",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
@@ -207,15 +97,8 @@ export const ERC721 = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "address", name: "_recipient", type: "address" }],
-    name: "drain",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "_recipient", type: "address" }],
-    name: "drip",
+    inputs: [],
+    name: "faucet",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -246,8 +129,8 @@ export const ERC721 = [
   },
   {
     inputs: [],
-    name: "nftsMinted",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "owner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
@@ -256,6 +139,13 @@ export const ERC721 = [
     name: "ownerOf",
     outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -274,7 +164,7 @@ export const ERC721 = [
       { internalType: "address", name: "from", type: "address" },
       { internalType: "address", name: "to", type: "address" },
       { internalType: "uint256", name: "tokenId", type: "uint256" },
-      { internalType: "bytes", name: "_data", type: "bytes" },
+      { internalType: "bytes", name: "data", type: "bytes" },
     ],
     name: "safeTransferFrom",
     outputs: [],
@@ -292,13 +182,6 @@ export const ERC721 = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "superOperators",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [{ internalType: "bytes4", name: "interfaceId", type: "bytes4" }],
     name: "supportsInterface",
     outputs: [{ internalType: "bool", name: "", type: "bool" }],
@@ -313,9 +196,33 @@ export const ERC721 = [
     type: "function",
   },
   {
+    inputs: [{ internalType: "uint256", name: "index", type: "uint256" }],
+    name: "tokenByIndex",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "owner", type: "address" },
+      { internalType: "uint256", name: "index", type: "uint256" },
+    ],
+    name: "tokenOfOwnerByIndex",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
     name: "tokenURI",
     outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalSupply",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
@@ -331,43 +238,10 @@ export const ERC721 = [
     type: "function",
   },
   {
-    inputs: [
-      { internalType: "address", name: "_operator", type: "address" },
-      { internalType: "bool", name: "_status", type: "bool" },
-    ],
-    name: "updateApprovedOperator",
+    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
+    name: "transferOwnership",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
-  {
-    inputs: [
-      { internalType: "uint256", name: "_nftCount", type: "uint256" },
-      { internalType: "uint256", name: "_ethAmount", type: "uint256" },
-      { internalType: "uint256", name: "_daiAmount", type: "uint256" },
-      { internalType: "uint256", name: "_wethAmount", type: "uint256" },
-    ],
-    name: "updateDripAmounts",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "_operator", type: "address" },
-      { internalType: "bool", name: "_status", type: "bool" },
-    ],
-    name: "updateSuperOperator",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "string", name: "_URI", type: "string" }],
-    name: "updateTokenURI",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  { stateMutability: "payable", type: "receive" },
 ];
