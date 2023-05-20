@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { ethers } from "ethers";
 import Navbar from "../../components/nav";
-import { FairHub } from "../../components/abis";
+import { Proxy } from "../../components/abis/proxy";
 import {
   Flex,
   CardSearch,
@@ -43,7 +43,7 @@ function Search() {
       const provider = new ethers.providers.Web3Provider(ethereum);
       const walletAddress = accounts[0];
       const signer = provider.getSigner(walletAddress);
-      const FairProxy = new ethers.Contract(FairContract, FairHub, signer);
+      const FairProxy = new ethers.Contract(FairContract, Proxy, signer);
       const search = await FairProxy.ids(id);
     } catch (err) {
       console.error(err);

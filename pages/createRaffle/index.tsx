@@ -4,7 +4,9 @@ import { useRouter } from "next/router";
 import { ethers } from "ethers";
 import axios from "axios";
 import Navbar from "../../components/nav";
-import { FairHub, Raffle, MultiFaucetNFT } from "../../components/abis";
+import { Proxy } from "../../components/abis/proxy";
+import { Raffle } from "../../components/abis/raffle";
+import { ERC721 as ERC721ABI } from "../../components/abis/nft";
 import {
   LabelName,
   LabelStart,
@@ -46,7 +48,7 @@ interface CreateData {
 }
 
 function CreateRaffle() {
-  const vaultFactory = "0xbC462F32aD394cF4dc1200a04c3f03dfaf380375";
+  const vaultFactory = "0xE37F25b41D33AF5A6844aE910C2390d6954f9a61";
   const vaultRouter = "0x04B3ceE98aa97284322CB8591eD3aC33c7a35414";
   const [screen, setScreen] = React.useState(false);
   const [canyed, setCanyed] = React.useState(false);
@@ -63,7 +65,7 @@ function CreateRaffle() {
 
   async function create() {
     try {
-      const FairContract = "0x7E0755a50E1C3b2BB8AbECE23F139Be25B8D5348";
+      const FairContract = "0x21f754BEEB1c5d1c9470E8E5a33D8E2526462799";
       const ethereum = (window as any).ethereum;
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
@@ -71,7 +73,7 @@ function CreateRaffle() {
       const provider = new ethers.providers.Web3Provider(ethereum);
       const walletAddress = accounts[0];
       const signer = provider.getSigner(walletAddress);
-      const FairProxy = new ethers.Contract(FairContract, FairHub, signer);
+      const FairProxy = new ethers.Contract(FairContract, Proxy, signer);
       const createRaffle = await FairProxy.createRaffle(start, end, winners, {
         hash: "0xf7baab1baf661869e72d3f70214e394102486912b6ed3872d9bb9d7e36e286c3",
         hash_function: 18,
@@ -102,7 +104,7 @@ function CreateRaffle() {
   }
 
   async function Open() {
-    const router=useRouter()
+    const router = useRouter();
     try {
       const FaucetContract = nftContract;
       const ethereum = (window as any).ethereum;
@@ -112,13 +114,13 @@ function CreateRaffle() {
       const provider = new ethers.providers.Web3Provider(ethereum);
       const walletAddress = accounts[0];
       const signer = provider.getSigner(walletAddress);
-      const MultiFaucet = new ethers.Contract(
+      const ERC721 = new ethers.Contract(
         FaucetContract,
-        MultiFaucetNFT,
+       ERC721ABI,
         signer
       );
       const RaffleProxy = new ethers.Contract(hub, Raffle, signer);
-      const approve = await MultiFaucet.approve(hub, id);
+      const approve = await ERC721.approve(hub, id);
       const approving = await approve.wait();
       if (approving.status == 1) {
         const opener = await RaffleProxy.open(
