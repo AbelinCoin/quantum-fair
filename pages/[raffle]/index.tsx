@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { ethers } from "ethers";
 import { Proxy } from "../../components/abis/proxy";
+import Navbar  from "../../components/nav";
 import React from "react";
 import { Box, Image, VStack, HStack, Text } from "@chakra-ui/react";
 
@@ -49,17 +50,20 @@ const RaffleCard: React.FC<IRaffleCardProps> = ({ address, endTime }) => {
   }
 
   return (
+    <>
+    <Navbar />
     <Box
       w="80%"
       maxW="600px"
       mx="auto"
       p={6}
       borderRadius="xl"
-      bg="white"
+      bg="#efefef"
       boxShadow="lg"
       textAlign="center"
+      transform='translateY(75px)'
     >
-      <Heading/>
+      <Heading />
       <Text mb={2} color="teal.500">
         Raffle ID #{query.id}
       </Text>
@@ -86,6 +90,7 @@ const RaffleCard: React.FC<IRaffleCardProps> = ({ address, endTime }) => {
         </VStack>
       </HStack>
     </Box>
+    </>
   );
 };
 
