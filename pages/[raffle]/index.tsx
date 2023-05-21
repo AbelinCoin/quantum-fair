@@ -52,7 +52,7 @@ const RaffleCard: React.FC<IRaffleCardProps> = ({ id, address, endTime }) => {
     <Box w="400px" h="400px" bg="gray.700" p="4" borderRadius="md">
       <Heading />
       <Text fontSize="xl" fontWeight="bold" mb="4">
-        Raffle ID #{id}
+        Raffle ID #{query.id}
       </Text>
       <HStack spacing="4">
         <Box w="200px" h="100%">
