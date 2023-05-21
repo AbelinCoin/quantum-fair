@@ -49,15 +49,24 @@ const RaffleCard: React.FC<IRaffleCardProps> = ({ address, endTime }) => {
   }
 
   return (
-    <Box w="400px" h="400px" bg="gray.700" p="4" borderRadius="md">
-      <Heading />
-      <Text fontSize="xl" fontWeight="bold" mb="4">
+    <Box
+      w="80%"
+      maxW="600px"
+      mx="auto"
+      p={6}
+      borderRadius="xl"
+      bg="white"
+      boxShadow="lg"
+      textAlign="center"
+    >
+      <Heading/>
+      <Text mb={2} color="teal.500">
         Raffle ID #{query.id}
       </Text>
-      <HStack spacing="4">
-        <Box w="200px" h="100%">
+      <HStack spacing="4" justify="center">
+        <Box w="300px" h="300px">
           <Image
-            src="https://via.placeholder.com/200"
+            src="https://via.placeholder.com/300"
             alt="imagen del NFT"
             objectFit="cover"
             w="100%"
@@ -66,10 +75,14 @@ const RaffleCard: React.FC<IRaffleCardProps> = ({ address, endTime }) => {
           />
         </Box>
         <VStack spacing="4" align="flex-start">
-          <Text fontWeight="bold">Address:</Text>
-          <Text>{/*address*/}</Text>
-          <Text fontWeight="bold">End Time:</Text>
-          <Text>{/*endTime.toLocaleString()*/}</Text>
+          <Text fontWeight="bold" fontSize="xl">
+            Address:
+          </Text>
+          <Text fontSize="md">0x123...4567</Text>
+          <Text fontWeight="bold" fontSize="xl">
+            End Time:
+          </Text>
+          <Text fontSize="md">May 31,2023 at 12:00 PM</Text>
         </VStack>
       </HStack>
     </Box>
