@@ -25,7 +25,7 @@ interface IRaffleCardProps {
   endTime: Date;
 }
 
-const RaffleCard: React.FC<IRaffleCardProps> = ({ id, address, endTime }) => {
+const RaffleCard: React.FC<IRaffleCardProps> = ({ address, endTime }) => {
   const [exist, setExist] = useState(false);
   const [image, setImage] = useState(false);
   const { query } = useRouter();
@@ -67,9 +67,9 @@ const RaffleCard: React.FC<IRaffleCardProps> = ({ id, address, endTime }) => {
         </Box>
         <VStack spacing="4" align="flex-start">
           <Text fontWeight="bold">Address:</Text>
-          <Text>{address}</Text>
+          <Text>{/*address*/}</Text>
           <Text fontWeight="bold">End Time:</Text>
-          <Text>{endTime.toLocaleString()}</Text>
+          <Text>{/*endTime.toLocaleString()*/}</Text>
         </VStack>
       </HStack>
     </Box>
