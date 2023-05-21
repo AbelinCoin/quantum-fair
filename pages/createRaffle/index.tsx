@@ -111,7 +111,7 @@ function CreateRaffle() {
   }
 
   async function Open() {
-    // const router = useRouter();
+    const router = useRouter();
     try {
       const ethereum = (window as any).ethereum;
       const accounts = await ethereum.request({
@@ -121,18 +121,16 @@ function CreateRaffle() {
       const walletAddress = accounts[0];
       const signer = provider.getSigner(walletAddress);
       const ERC721 = new ethers.Contract(nftContract, ERC721ABI, signer);
-      const RaffleProxy = new ethers.Contract(hub, Raffle, signer);
+      const raffle = new ethers.Contract(hub, Raffle, signer);
       const approve = await ERC721.approve(hub, id);
       const approving = await approve.wait();
       if (approving.status == 1) {
-        const opener = await RaffleProxy.open(
-          [nftContract],
-          [id]
-        );
+        const opener = await raffle.open([nftContract], [id]);
         const opening = await opener.wait();
-        // if (opening.status == 1) {
-        //    router.push(`/raffle?id=${raffleId}`);
-        //  }
+        if (opening.status == 1) {
+          const raffleId = await raffle.raffleId();
+          router.push(`/raffle?id=${raffleId}`);
+        }
       }
     } catch (err) {
       console.error(err);
