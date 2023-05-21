@@ -7,7 +7,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <DAppProvider config={{}}>
       <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
+        <Component {...pageProps} />
       </ChakraProvider>
     </DAppProvider>
   );
