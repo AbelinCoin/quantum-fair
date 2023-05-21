@@ -1,18 +1,10 @@
 import Head from "next/head";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { ethers } from "ethers";
-import Navbar from "../../components/nav";
 import { Proxy } from "../../components/abis/proxy";
-import {
-  Flex,
-  CardSearch,
-  NftCardInt,
-  NftCard,
-  NftImg,
-} from "../../components/styles/div";
-import { RffId, RffWn, RffEd } from "../../components/styles/typography";
-import { Button } from "../../components/styles/button";
+import React from "react";
+import { Box, Image, VStack, HStack, Text } from "@chakra-ui/react";
 
 function Heading() {
   return (
@@ -27,7 +19,13 @@ function Heading() {
   );
 }
 
-function Search() {
+interface IRaffleCardProps {
+  id: number;
+  address: string;
+  endTime: Date;
+}
+
+const RaffleCard: React.FC<IRaffleCardProps> = ({ id, address, endTime }) => {
   const [exist, setExist] = useState(false);
   const [image, setImage] = useState(false);
   const { query } = useRouter();
@@ -50,58 +48,32 @@ function Search() {
     }
   }
 
-  useEffect(() => {
-    Raffle();
-  });
-
   return (
-    <>
+    <Box w="400px" h="400px" bg="gray.700" p="4" borderRadius="md">
       <Heading />
-      <Navbar />
-      <Flex>
-        {" "}
-        {exist ? (
-          <CardSearch>
-            {image ? (
-              <NftCard>
-                <NftImg />
-              </NftCard>
-            ) : (
-              <NftCardInt>
-                <NftImg />
-              </NftCardInt>
-            )}
-            <RffId>Raffle #{query.id}</RffId>
-            <RffWn>Winners: </RffWn>
-            <RffId>End Time: </RffId>
-          </CardSearch>
-        ) : (
-          <CardSearch>
-            {image ? (
-              <NftCard>
-                <NftImg />
-              </NftCard>
-            ) : (
-              <NftCardInt>
-                <NftImg src="/images/question.png" />
-              </NftCardInt>
-            )}
-            <RffId>Raffle #{query.id}</RffId>
-            <RffWn>Winners: </RffWn>
-            <RffEd>End Time: </RffEd>
-            <Button
-              style={{
-                minWidth: "16rem",
-                transform: "translate(160px, -40px)",
-              }}
-            >
-              Join to Raffle
-            </Button>
-          </CardSearch>
-        )}
-      </Flex>
-    </>
+      <Text fontSize="xl" fontWeight="bold" mb="4">
+        Raffle ID #{id}
+      </Text>
+      <HStack spacing="4">
+        <Box w="200px" h="100%">
+          <Image
+            src="https://via.placeholder.com/200"
+            alt="imagen del NFT"
+            objectFit="cover"
+            w="100%"
+            h="100%"
+            borderRadius="md"
+          />
+        </Box>
+        <VStack spacing="4" align="flex-start">
+          <Text fontWeight="bold">Address:</Text>
+          <Text>{address}</Text>
+          <Text fontWeight="bold">End Time:</Text>
+          <Text>{endTime.toLocaleString()}</Text>
+        </VStack>
+      </HStack>
+    </Box>
   );
-}
+};
 
-export default Search;
+export default RaffleCard;
