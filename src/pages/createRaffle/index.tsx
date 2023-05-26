@@ -7,23 +7,9 @@ import Navbar from "../../components/nav";
 import { Proxy } from "../../components/abis/proxy";
 import { Raffle } from "../../components/abis/raffle";
 import { ERC721 as ERC721ABI } from "../../components/abis/nft";
-import {
-  LabelName,
-  LabelStart,
-  LabelEnd,
-  LabelWinners,
-  LabelDesc,
-  LabelRff,
-  LabelNft,
-  LabelID,
-  LabelVF,
-  LabelVR,
-} from "../../components/styles/label";
-import { Input, InputOpen, InputDesc } from "../../components/styles/input";
-import { Button } from "../../components/styles/button";
-import { Flex } from "../../components/styles/div";
+import { InputDesc } from "../../components/styles/input";
 import { Typography } from "../../components/styles/typography";
-
+import { FormLabel, Input, Stack, Flex, Button } from "@chakra-ui/react";
 function Heading() {
   return (
     <>
@@ -141,123 +127,103 @@ function CreateRaffle() {
     <>
       <Heading />
       <Navbar />
-      <Flex>
-        {screen ? (
-          <div
-            style={{
-              justifyContent: "center",
-              background: "#efefef",
-              flexDirection: "column",
-              alignItems: "center",
-              display: "flex",
-              transform: "translateY(30px)",
-              alignContent: "center",
-              zIndex: "1",
-            }}
-          >
-            <Typography>CREATE RAFFLE 2/3</Typography>
-            <LabelRff>Raffle Contract</LabelRff>
-            <Input value={hub} readOnly={true} />
-            <LabelNft>Nft Contract</LabelNft>
-            <Input
-              onChange={(e) => {
-                setnftContract(e.currentTarget.value);
-              }}
-            />
-            <LabelID>Token ID</LabelID>
-            <Input
-              type="number"
-              onChange={(e) => {
-                setId(e.currentTarget.value);
-              }}
-            />
-            <LabelVF>Vault Factory</LabelVF>
-            <InputOpen value={vaultFactory} readOnly={true} />
-            <LabelVR>Vault Router</LabelVR>
-            <InputOpen value={vaultRouter} readOnly={true} />
-            <Button onClick={Open}>Open</Button>
-            <Button
-              style={{ transform: "translate(-190px, -60px)" }}
-              onClick={() => {
-                if (String(hub).length >= 42) {
-                  setScreen(false);
-                }
-              }}
-            >
-              Back
-            </Button>
-          </div>
-        ) : (
-          <div
-            style={{
-              justifyContent: "center",
-              background: "#efefef",
-              flexDirection: "column",
-              alignItems: "center",
-              display: "flex",
-              transform: "translateY(30px)",
-              alignContent: "center",
-              zIndex: "1",
-            }}
-          >
-            <Typography>CREATE RAFFLE 1/3</Typography>
-            <LabelName>Raffle Name</LabelName>
-            <Input
-              type="text"
-              onChange={(e) => {
-                setName(e.currentTarget.value);
-              }}
-            />
-            <LabelStart>Start</LabelStart>
-            <Input
-              type="number"
-              onChange={(e) => {
-                setStart(e.target.value);
-              }}
-            />
-            <LabelEnd>End</LabelEnd>
-            <Input
-              type="number"
-              onChange={(e) => {
-                setEnd(e.currentTarget.value);
-              }}
-            />
-            <LabelWinners>N° Winners</LabelWinners>
-            <Input
-              type="number"
-              onChange={(e) => {
-                setWinners(e.currentTarget.value);
-              }}
-            />
-            <LabelWinners>Ticker Price</LabelWinners>
-            <Input
-              type="number"
-              onChange={(e) => {
-                setPrice(e.currentTarget.value);
-              }}
-            />
-            <LabelDesc>Description</LabelDesc>
-            <InputDesc
-              onChange={(e) => {
-                setDescription(e.currentTarget.value);
-              }}
-            />
-            {canyed ? (
+      <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
+        <Flex p={8} flex={1} align={"center"} justify={"center"}>
+          {screen ? (
+            <Stack spacing={4} w={"full"} maxW={"md"}>
+              <Typography>CREATE RAFFLE 2/3</Typography>
+              <FormLabel>Raffle Contract</FormLabel>
+              <Input type="email" value={hub} readOnly={true} />
+              <FormLabel>Nft Contract</FormLabel>
+              <Input
+                onChange={(e) => {
+                  setnftContract(e.currentTarget.value);
+                }}
+              />
+              <FormLabel>Token ID</FormLabel>
+              <Input
+                type="number"
+                onChange={(e) => {
+                  setId(e.currentTarget.value);
+                }}
+              />
+              <FormLabel>Vault Factory</FormLabel>
+              <Input value={vaultFactory} readOnly={true} />
+              <FormLabel>Vault Router</FormLabel>
+              <Input value={vaultRouter} readOnly={true} />
+              <Button onClick={Open}>Open</Button>
               <Button
+                style={{ transform: "translate(-190px, -60px)" }}
                 onClick={() => {
                   if (String(hub).length >= 42) {
-                    setScreen(true);
+                    setScreen(false);
                   }
                 }}
               >
-                Next
+                Back
               </Button>
-            ) : (
-              <Button onClick={create}>Create</Button>
-            )}
-          </div>
-        )}
-      </Flex>
+            </Stack>
+          ) : (
+            <Stack spacing={4} w={"full"} maxW={"md"}>
+              <Typography>CREATE RAFFLE 1/3</Typography>
+              <FormLabel>Raffle Name</FormLabel>
+              <Input
+                type="text"
+                onChange={(e) => {
+                  setName(e.currentTarget.value);
+                }}
+              />
+              <FormLabel>Start</FormLabel>
+              <Input
+                type="number"
+                onChange={(e) => {
+                  setStart(e.target.value);
+                }}
+              />
+              <FormLabel>End</FormLabel>
+              <Input
+                type="number"
+                onChange={(e) => {
+                  setEnd(e.currentTarget.value);
+                }}
+              />
+              <FormLabel>N° Winners</FormLabel>
+              <Input
+                type="number"
+                onChange={(e) => {
+                  setWinners(e.currentTarget.value);
+                }}
+              />
+              <FormLabel>Ticker Price</FormLabel>
+              <Input
+                type="number"
+                onChange={(e) => {
+                  setPrice(e.currentTarget.value);
+                }}
+              />
+              <FormLabel>Description</FormLabel>
+              <InputDesc
+                onChange={(e) => {
+                  setDescription(e.currentTarget.value);
+                }}
+              />
+              {canyed ? (
+                <Button
+                  onClick={() => {
+                    if (String(hub).length >= 42) {
+                      setScreen(true);
+                    }
+                  }}
+                >
+                  Next
+                </Button>
+              ) : (
+                <Button onClick={create}>Create</Button>
+              )}
+            </Stack>
+          )}
+        </Flex>
+      </Stack>
     </>
   );
 }
