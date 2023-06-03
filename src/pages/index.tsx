@@ -9,14 +9,13 @@ function Heading() {
         <link rel="icon" href="/favicon.png" />
       </Head>
     </>
-  )
+  );
 }
 
 export default function App() {
   return (
-  <>
-  <Heading/>
-
-  </>  
+    <>
+      <Heading />
+    </>
   );
 }
