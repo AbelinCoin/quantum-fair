@@ -6,11 +6,11 @@ import Navbar from "../ui/navbar";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <DAppProvider config={{}}>
-      <ChakraProvider theme={theme}>
-        <Navbar />  
+    <ChakraProvider resetCSS theme={theme}>
+      <DAppProvider config={{}}>
+        <Navbar />
         <Component {...pageProps} />
-      </ChakraProvider>
-    </DAppProvider>
+      </DAppProvider>
+    </ChakraProvider>
   );
 }
