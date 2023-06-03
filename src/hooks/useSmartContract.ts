@@ -15,7 +15,7 @@ export default function useSmartContract() {
     end: string,
     winners: string,
     price: string
-  ) {
+  ): Promise<object> {
     try {
       const ProxyContract = "0x21f754BEEB1c5d1c9470E8E5a33D8E2526462799";
       const ethereum = (window as any).ethereum;
@@ -47,17 +47,26 @@ export default function useSmartContract() {
             .then((getContract) => {
               if (getContract.data.status == 1) {
                 clearInterval(bucle);
-                return getContract.data.result[0].contractAddress;
+                return {
+                  status: 400,
+                  data: getContract.data.result[0].contractAddress,
+                };
               }
             });
         }, 3000);
       }
-    } catch (err) {
+      return { status: 400, data: "Something went wrong" };
+    } catch (err: any) {
       console.error(err);
+      return { status: 500, data: err };
     }
   }
 
-  async function open(nftContract: string, hub: string, id: string) {
+  async function open(
+    nftContract: string,
+    hub: string,
+    id: string
+  ): Promise<object> {
     try {
       const ethereum = (window as any).ethereum;
       const accounts = await ethereum.request({
@@ -74,11 +83,13 @@ export default function useSmartContract() {
         const opening = await opener.wait();
         if (opening.status == 1) {
           const raffleId = await raffle.raffleId();
-          return raffleId;
+          return { status: 200, data: raffleId };
         }
       }
-    } catch (err) {
+      return { status: 400, data: "Something went wrong" };
+    } catch (err: any) {
       console.error(err);
+      return { status: 500, data: err };
     }
   }
 

@@ -1,15 +1,8 @@
 import React from "react";
 import Head from "next/head";
-import { useRouter } from "next/router";
-import { ethers } from "ethers";
-import axios from "axios";
-import Navbar from "../../components/nav";
-import { Proxy } from "../../components/abis/proxy";
-import { Raffle } from "../../components/abis/raffle";
-import { ERC721 as ERC721ABI } from "../../components/abis/nft";
-import { InputDesc } from "../../components/styles/input";
-import { Typography } from "../../components/styles/typography";
-import { FormLabel, Input, Stack, Flex, Button } from "@chakra-ui/react";
+import { FormLabel, Input, Stack, Flex, Button, Text } from "@chakra-ui/react";
+import useSmartContract from "../../hooks/useSmartContract";
+
 function Heading() {
   return (
     <>
@@ -23,23 +16,13 @@ function Heading() {
   );
 }
 
-interface CreateData {
-  status: number;
-  message: string;
-  result: {
-    0: {
-      contractAddress: string;
-    };
-  };
-}
-
 function CreateRaffle() {
+  const { create, open } = useSmartContract();
   const vaultFactory = "0xE37F25b41D33AF5A6844aE910C2390d6954f9a61";
   const vaultRouter = "0x04B3ceE98aa97284322CB8591eD3aC33c7a35414";
   const [screen, setScreen] = React.useState(false);
   const [canyed, setCanyed] = React.useState(false);
   // const [copied, setCopied] = React.useState(false);
-  const [output, setOutput] = React.useState(false);
   const [name, setName] = React.useState("");
   const [start, setStart] = React.useState("");
   const [end, setEnd] = React.useState("");
@@ -50,88 +33,14 @@ function CreateRaffle() {
   const [id, setId] = React.useState(""); // 29
   const [hub, setHub] = React.useState(""); // 0xca11f9ff5fc64de0445b0a64a27f94cc91f6b9d5
 
-  async function create() {
-    try {
-      const ProxyContract = "0x21f754BEEB1c5d1c9470E8E5a33D8E2526462799";
-      const ethereum = (window as any).ethereum;
-      const accounts = await ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const walletAddress = accounts[0];
-      const signer = provider.getSigner(walletAddress);
-      const FairProxy = new ethers.Contract(ProxyContract, Proxy, signer);
-      const createRaffle = await FairProxy.createRaffle(
-        start,
-        end,
-        winners,
-        price,
-        {
-          hash: "0xf7baab1baf661869e72d3f70214e394102486912b6ed3872d9bb9d7e36e286c3",
-          hash_function: 18,
-          size: 32,
-        }
-      );
-      await createRaffle.wait();
-      const receipt = await provider.getTransactionReceipt(createRaffle.hash);
-      if (receipt.status == 1) {
-        const bucle = setInterval(async () => {
-          await axios
-            .post<CreateData>(
-              `https://api-goerli-optimism.etherscan.io/api?module=account&action=txlistinternal&txhash=${createRaffle.hash}&apikey=GBCBJB46CJB6NMCGMR3X5KENZR3P84RUZH`
-            )
-            .then((getContract) => {
-              if (getContract.data.status == 1) {
-                setHub(getContract.data.result[0].contractAddress);
-                setCanyed(true);
-                setScreen(true);
-                clearInterval(bucle);
-              }
-              return getContract;
-            });
-        }, 3000);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  async function Open() {
-    const router = useRouter();
-    try {
-      const ethereum = (window as any).ethereum;
-      const accounts = await ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const walletAddress = accounts[0];
-      const signer = provider.getSigner(walletAddress);
-      const ERC721 = new ethers.Contract(nftContract, ERC721ABI, signer);
-      const raffle = new ethers.Contract(hub, Raffle, signer);
-      const approve = await ERC721.approve(hub, id);
-      const approving = await approve.wait();
-      if (approving.status == 1) {
-        const opener = await raffle.open([nftContract], [id]);
-        const opening = await opener.wait();
-        if (opening.status == 1) {
-          const raffleId = await raffle.raffleId();
-          router.push(`/raffle?id=${raffleId}`);
-        }
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
   return (
     <>
       <Heading />
-      <Navbar />
       <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
         <Flex p={8} flex={1} align={"center"} justify={"center"}>
           {screen ? (
             <Stack spacing={4} w={"full"} maxW={"md"}>
-              <Typography>CREATE RAFFLE 2/3</Typography>
+              <Text>CREATE RAFFLE 2/3</Text>
               <FormLabel>Raffle Contract</FormLabel>
               <Input type="email" value={hub} readOnly={true} />
               <FormLabel>Nft Contract</FormLabel>
@@ -151,7 +60,13 @@ function CreateRaffle() {
               <Input value={vaultFactory} readOnly={true} />
               <FormLabel>Vault Router</FormLabel>
               <Input value={vaultRouter} readOnly={true} />
-              <Button onClick={Open}>Open</Button>
+              <Button
+                onClick={async () => {
+                  await open(nftContract, hub, id);
+                }}
+              >
+                Open
+              </Button>
               <Button
                 style={{ transform: "translate(-190px, -60px)" }}
                 onClick={() => {
@@ -165,7 +80,7 @@ function CreateRaffle() {
             </Stack>
           ) : (
             <Stack spacing={4} w={"full"} maxW={"md"}>
-              <Typography>CREATE RAFFLE 1/3</Typography>
+              <Text>CREATE RAFFLE 1/3</Text>
               <FormLabel>Raffle Name</FormLabel>
               <Input
                 type="text"
@@ -202,7 +117,7 @@ function CreateRaffle() {
                 }}
               />
               <FormLabel>Description</FormLabel>
-              <InputDesc
+              <Input
                 onChange={(e) => {
                   setDescription(e.currentTarget.value);
                 }}
@@ -218,7 +133,13 @@ function CreateRaffle() {
                   Next
                 </Button>
               ) : (
-                <Button onClick={create}>Create</Button>
+                <Button
+                  onClick={async () => {
+                    await create(start, end, winners, price);
+                  }}
+                >
+                  Create
+                </Button>
               )}
             </Stack>
           )}

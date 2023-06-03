@@ -2,8 +2,6 @@ import Head from "next/head";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { ethers } from "ethers";
-import { Proxy } from "../../components/abis/proxy";
-import Navbar  from "../../components/nav";
 import React from "react";
 import { Box, Image, VStack, HStack, Text } from "@chakra-ui/react";
 
