@@ -1,4 +1,4 @@
-export const ERC721 = [
+export const ERC721ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
     anonymous: false,
