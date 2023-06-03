@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Navbar from "../components/nav";
 function Heading() {
   return (
     <>
@@ -17,7 +16,7 @@ export default function App() {
   return (
   <>
   <Heading/>
-  <Navbar />  
+
   </>  
   );
 }
