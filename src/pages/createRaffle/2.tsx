@@ -61,7 +61,7 @@ function CreateRaffle() {
             <Input value={vaultRouter} readOnly={true} />
             <Button
               onClick={async () => {
-                await open(nftContract, hub, id);
+                await open(nftContract, hub as string, id);
               }}
             >
               Open
