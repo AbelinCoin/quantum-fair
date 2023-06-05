@@ -1,3 +1,5 @@
+import { ReactElement } from "react";
+
 export interface CreateData {
   status: number;
   message: string;
