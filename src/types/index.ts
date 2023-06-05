@@ -21,7 +21,7 @@ interface IRaffleCardProps {
   endTime: Date;
 }
 
-interface FeatureProps {
+export interface FeatureProps {
   text: string;
   iconBg: string;
   icon?: ReactElement;

@@ -1,7 +1,7 @@
 import { DefaultSeoProps } from "next-seo";
 
 const config: DefaultSeoProps = {
-  titleTemplate: `%s @ Quantum Fair.`,
+  titleTemplate: `%s | Raffles`,
   title: `Quantum Fair`,
   description: `Quantum Fair - Raffles`,
   canonical: `https://olivefoodsco.com`,

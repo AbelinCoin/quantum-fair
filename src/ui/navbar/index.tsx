@@ -65,7 +65,7 @@ export default function Navbar() {
             {active ? (
               <Button
                 variant={"solid"}
-                colorScheme={"teal"}
+                colorScheme={"gray"}
                 size={"sm"}
                 mr={4}
                 leftIcon={<GreenDot />}
