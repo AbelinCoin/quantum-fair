@@ -74,14 +74,14 @@ export default function Navbar() {
               </Button>
             ) : (
               <Button
-                variant={"solid"}
+               variant={"solid"}
                 colorScheme={"gray"}
                 size={"sm"}
                 mr={4}
                 leftIcon={<Metamask />}
                 onClick={activateBrowserWallet}
               >
-                Connect
+                Connect Wallet
               </Button>
             )}
           </Flex>
