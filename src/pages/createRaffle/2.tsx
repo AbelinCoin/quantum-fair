@@ -24,7 +24,7 @@ function CreateRaffle() {
   const vaultRouter = "0x04B3ceE98aa97284322CB8591eD3aC33c7a35414";
   const [nftContract, setnftContract] = useState(""); // 0x38abA480f2bA7A17bC01EE5E1AD64fCedd93EfE7
   const [id, setId] = useState(""); // 29
-  const [hub, setHub] = useState(""); // 0xca11f9ff5fc64de0445b0a64a27f94cc91f6b9d5
+  const [hub, setHub] = useState(query.contract); // 0xca11f9ff5fc64de0445b0a64a27f94cc91f6b9d5
 
   return (
     <>
@@ -35,7 +35,7 @@ function CreateRaffle() {
             <Text>CREATE RAFFLE 2/3</Text>
             <FormLabel>Raffle Contract</FormLabel>
             <Input
-              type="email"
+              type="text"
               value={query.contract}
               readOnly={query.contract ? true : false}
               onChange={(e) => {
@@ -65,9 +65,6 @@ function CreateRaffle() {
               }}
             >
               Open
-            </Button>
-            <Button style={{ transform: "translate(-190px, -60px)" }}>
-              Back
             </Button>
           </Stack>
         </Flex>
