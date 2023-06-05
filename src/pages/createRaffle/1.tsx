@@ -81,7 +81,7 @@ function CreateRaffle() {
                 const fair = await create(start, end, winners, price);
                 if (fair.status === 200) {
                   setHub(fair.data);
-                  router.push(`/createRaffle/1?contract=${hub}`)
+                  router.push(`/createRaffle/2?contract=${hub}`)
                 }
               }}
             >
