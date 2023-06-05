@@ -16,7 +16,7 @@ export default function Navbar() {
   const { Metamask } = useIcons();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { active, activateBrowserWallet, account } = useEthers();
-  
+
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -62,15 +62,28 @@ export default function Navbar() {
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
-            <Button
-              variant={"solid"}
-              colorScheme={"teal"}
-              size={"sm"}
-              mr={4}
-              leftIcon={<Metamask />}
-            >
-              Connect
-            </Button>
+            {active ? (
+              <Button
+                variant={"solid"}
+                colorScheme={"teal"}
+                size={"sm"}
+                mr={4}
+                leftIcon={<Metamask />}
+              >
+                {account}
+              </Button>
+            ) : (
+              <Button
+                variant={"solid"}
+                colorScheme={"teal"}
+                size={"sm"}
+                mr={4}
+                leftIcon={<Metamask />}
+                onClick={activateBrowserWallet}
+              >
+                Connect
+              </Button>
+            )}
           </Flex>
         </Flex>
       </Box>
