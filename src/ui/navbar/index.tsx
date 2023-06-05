@@ -8,12 +8,12 @@ import {
   useDisclosure,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon, Icon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { useEthers } from "@usedapp/core";
 import useIcons from "../icons";
 
 export default function Navbar() {
-  const { Metamask } = useIcons();
+  const { Metamask, GreenDot } = useIcons();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { active, activateBrowserWallet, account } = useEthers();
 
@@ -68,7 +68,7 @@ export default function Navbar() {
                 colorScheme={"teal"}
                 size={"sm"}
                 mr={4}
-                leftIcon={<Metamask />}
+                leftIcon={<GreenDot />}
               >
                 {account}
               </Button>
