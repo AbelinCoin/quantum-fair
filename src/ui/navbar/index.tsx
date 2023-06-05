@@ -75,7 +75,7 @@ export default function Navbar() {
             ) : (
               <Button
                 variant={"solid"}
-                colorScheme={"teal"}
+                colorScheme={"gray"}
                 size={"sm"}
                 mr={4}
                 leftIcon={<Metamask />}
