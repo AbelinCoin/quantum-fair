@@ -1,21 +1,7 @@
 import React, { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import Navbar from "../../components/nav";
-import {
-  Flex,
-  EachCard,
-  Row,
-  Content,
-  Table,
-} from "../../components/styles/div";
-import { InputSearch } from "../../components/styles/input";
-import { ButtonID } from "../../components/styles/button";
-import {
-  Typograph,
-  Typographo,
-  Typographe,
-} from "../../components/styles/typography";
+import { Button, Flex, Input, Stack, Text } from "@chakra-ui/react";
 
 function Heading() {
   return (
@@ -30,47 +16,31 @@ function Heading() {
   );
 }
 
-function NoData() {
-  return (
-    <Flex>
-      <Typographe>No there active raffles yet</Typographe>
-    </Flex>
-  );
-}
-
 function RaffleBoard() {
   const [raffleId, setraffleId] = useState("");
 
   return (
     <>
       <Heading />
-      <Navbar />
       <Flex>
-        <Content>
-          <Typograph>Raffle Board</Typograph>
-          <Typographo>Choose the raffle you want to run.</Typographo>
-          <Row>
-            <InputSearch
-              onChange={(e) => {
-                setraffleId(e.currentTarget.value);
-              }}
-            />
-            <Link
-              style={{ textDecoration: "none" }}
-              href={`/raffle?id=${raffleId}`}
-            >
-              <ButtonID>Search</ButtonID>
-            </Link>
-          </Row>
-        </Content>
+        <Text>Raffle Board</Text>
+        <Text>Choose the raffle you want to run.</Text>
+        <Stack>
+          <Input
+            onChange={(e) => {
+              setraffleId(e.currentTarget.value);
+            }}
+          />
+          <Link
+            style={{ textDecoration: "none" }}
+            href={`/raffle?id=${raffleId}`}
+          >
+            <Button>Search</Button>
+          </Link>
+        </Stack>
       </Flex>
     </>
   );
-}
-
-function RaffleTable() {
-  const [active, setActive] = useState(true);
-  return <Table>{active ? <EachCard /> : <NoData />}</Table>;
 }
 
 export default RaffleBoard;
