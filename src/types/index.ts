@@ -1,4 +1,4 @@
-export interface CreateData{
+export interface CreateData {
   status: number;
   message: string;
   result: {
@@ -6,4 +6,9 @@ export interface CreateData{
       contractAddress: string;
     };
   };
+}
+
+export interface Create {
+  status: number;
+  data: string;
 }

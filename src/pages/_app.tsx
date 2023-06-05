@@ -3,6 +3,7 @@ import { DAppProvider } from "@usedapp/core";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "../theme";
 import Navbar from "../ui/navbar";
+import "../styles/icons.scss";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

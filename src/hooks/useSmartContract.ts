@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 import { ERC721ABI } from "../abis/nft";
 import { Proxy } from "../abis/proxy";
 import { Raffle } from "../abis/raffle";
-import { CreateData } from "../types";
+import { Create, CreateData } from "../types";
 
 export default function useSmartContract() {
   // 0x38abA480f2bA7A17bC01EE5E1AD64fCedd93EfE7
@@ -15,15 +15,12 @@ export default function useSmartContract() {
     end: string,
     winners: string,
     price: string
-  ): Promise<object> {
+  ): Promise<Create> {
     try {
       const ProxyContract = "0x21f754BEEB1c5d1c9470E8E5a33D8E2526462799";
       const ethereum = (window as any).ethereum;
-      const accounts = await ethereum.request({
-        method: "eth_requestAccounts",
-      });
       const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner(accounts);
+      const signer = provider.getSigner();
       const FairProxy = new ethers.Contract(ProxyContract, Proxy, signer);
       const createRaffle = await FairProxy.createRaffle(
         start,
