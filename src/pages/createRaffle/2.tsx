@@ -35,6 +35,7 @@ function CreateRaffle() {
             <Text textAlign={"center"}>CREATE RAFFLE 2/3</Text>
             <FormLabel>Raffle Contract</FormLabel>
             <Input
+              required
               type="text"
               value={query.contract}
               readOnly={query.contract ? true : false}
@@ -44,12 +45,14 @@ function CreateRaffle() {
             />
             <FormLabel>Nft Contract</FormLabel>
             <Input
+              required
               onChange={(e) => {
                 setnftContract(e.currentTarget.value);
               }}
             />
             <FormLabel>Token ID</FormLabel>
             <Input
+              required
               type="number"
               onChange={(e) => {
                 setId(e.currentTarget.value);

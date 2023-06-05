@@ -36,14 +36,14 @@ function CreateRaffle() {
           <Stack spacing={4} w={"full"} maxW={"md"}>
             <Text textAlign={"center"}>CREATE RAFFLE 1/3</Text>
             <FormLabel>Raffle Name</FormLabel>
-            <Input
-              type="text"
+            <Inputtype="text"
               onChange={(e) => {
                 setName(e.currentTarget.value);
               }}
             />
             <FormLabel>Start</FormLabel>
             <Input
+              required
               type="number"
               onChange={(e) => {
                 setStart(e.target.value);
@@ -51,21 +51,21 @@ function CreateRaffle() {
             />
             <FormLabel>End</FormLabel>
             <Input
-              type="number"
+             required  type="number"
               onChange={(e) => {
                 setEnd(e.currentTarget.value);
               }}
             />
             <FormLabel>N° Winners</FormLabel>
             <Input
-              type="number"
+             required  type="number"
               onChange={(e) => {
                 setWinners(e.currentTarget.value);
               }}
             />
             <FormLabel>Ticker Price</FormLabel>
             <Input
-              type="number"
+             required  type="number"
               onChange={(e) => {
                 setPrice(e.currentTarget.value);
               }}

@@ -66,11 +66,8 @@ export default function useSmartContract() {
   ): Promise<object> {
     try {
       const ethereum = (window as any).ethereum;
-      const accounts = await ethereum.request({
-        method: "eth_requestAccounts",
-      });
       const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner(accounts);
+      const signer = provider.getSigner();
       const ERC721 = new ethers.Contract(nftContract, ERC721ABI, signer);
       const raffle = new ethers.Contract(hub, Raffle, signer);
       const approve = await ERC721.approve(hub, id);
