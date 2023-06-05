@@ -1,9 +1,22 @@
-import Head from "next/head";
-import { useState } from "react";
+import Head from "next/head";import {
+  Container,
+  SimpleGrid,
+  Image,
+  Flex,
+  Heading,
+  Text,
+  Stack,
+  StackDivider,
+  Icon,
+  useColorModeValue,
+} from '@chakra-ui/react';
+import {
+  IoAnalyticsSharp,
+  IoLogoBitcoin,
+  IoSearchSharp,
+} from 'react-icons/io5';
+import { ReactElement } from 'react';
 import { useRouter } from "next/router";
-import { ethers } from "ethers";
-import React from "react";
-import { Box, Image, VStack, HStack, Text } from "@chakra-ui/react";
 
 function Heading() {
   return (
@@ -18,77 +31,83 @@ function Heading() {
   );
 }
 
-interface IRaffleCardProps {
-  id: number;
-  address: string;
-  endTime: Date;
-}
-
-const RaffleCard: React.FC<IRaffleCardProps> = ({ address, endTime }) => {
-  const [exist, setExist] = useState(false);
-  const [image, setImage] = useState(false);
-  const { query } = useRouter();
-
-  async function Raffle() {
-    try {
-      const id = query.id;
-      const FairContract = "";
-      const ethereum = (window as any).ethereum;
-      const accounts = await ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const walletAddress = accounts[0];
-      const signer = provider.getSigner(walletAddress);
-      const FairProxy = new ethers.Contract(FairContract, Proxy, signer);
-      const search = await FairProxy.ids(id);
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
+const Feature = ({ text, icon, iconBg }: FeatureProps) => {
   return (
-    <>
-    <Box
-      w="80%"
-      maxW="600px"
-      mx="auto"
-      p={6}
-      borderRadius="xl"
-      bg="#efefef"
-      boxShadow="lg"
-      textAlign="center"
-      transform='translateY(75px)'
-    >
-      <Heading />
-      <Text mb={2} color="teal.500">
-        Raffle ID #{query.id}
-      </Text>
-      <HStack spacing="4" justify="center">
-        <Box w="300px" h="300px">
-          <Image
-            src="https://via.placeholder.com/300"
-            alt="imagen del NFT"
-            objectFit="cover"
-            w="100%"
-            h="100%"
-            borderRadius="md"
-          />
-        </Box>
-        <VStack spacing="4" align="flex-start">
-          <Text fontWeight="bold" fontSize="xl">
-            Address:
-          </Text>
-          <Text fontSize="md">0x123...4567</Text>
-          <Text fontWeight="bold" fontSize="xl">
-            End Time:
-          </Text>
-          <Text fontSize="md">May 31,2023 at 12:00 PM</Text>
-        </VStack>
-      </HStack>
-    </Box>
-    </>
+    <Stack direction={'row'} align={'center'}>
+      <Flex
+        w={8}
+        h={8}
+        align={'center'}
+        justify={'center'}
+        rounded={'full'}
+        bg={iconBg}>
+        {icon}
+      </Flex>
+      <Text fontWeight={600}>{text}</Text>
+    </Stack>
   );
 };
 
-export default RaffleCard;
+export default function SplitWithImage() {
+  return (
+    <Container maxW={'5xl'} py={12}>
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
+        <Stack spacing={4}>
+          <Text
+            textTransform={'uppercase'}
+            color={'blue.400'}
+            fontWeight={600}
+            fontSize={'sm'}
+            bg={useColorModeValue('blue.50', 'blue.900')}
+            p={2}
+            alignSelf={'flex-start'}
+            rounded={'md'}>
+            Our Story
+          </Text>
+          <Heading>A digital Product design agency</Heading>
+          <Text color={'gray.500'} fontSize={'lg'}>
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+            nonumy eirmod tempor invidunt ut labore
+          </Text>
+          <Stack
+            spacing={4}
+            divider={
+              <StackDivider
+                borderColor={useColorModeValue('gray.100', 'gray.700')}
+              />
+            }>
+            <Feature
+              icon={
+                <Icon as={IoAnalyticsSharp} color={'yellow.500'} w={5} h={5} />
+              }
+              iconBg={useColorModeValue('yellow.100', 'yellow.900')}
+              text={'Business Planning'}
+            />
+            <Feature
+              icon={<Icon as={IoLogoBitcoin} color={'green.500'} w={5} h={5} />}
+              iconBg={useColorModeValue('green.100', 'green.900')}
+              text={'Financial Planning'}
+            />
+            <Feature
+              icon={
+                <Icon as={IoSearchSharp} color={'purple.500'} w={5} h={5} />
+              }
+              iconBg={useColorModeValue('purple.100', 'purple.900')}
+              text={'Market Analysis'}
+            />
+          </Stack>
+        </Stack>
+        <Flex>
+          <Image
+            rounded={'md'}
+            alt={'feature image'}
+            src={
+              'https://images.unsplash.com/photo-1554200876-56c2f25224fa?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+            }
+            objectFit={'cover'}
+          />
+        </Flex>
+      </SimpleGrid>
+    </Container>
+  );
+}

@@ -12,3 +12,15 @@ export interface Queries {
   status: number;
   data: string;
 }
+
+interface IRaffleCardProps {
+  id: number;
+  address: string;
+  endTime: Date;
+}
+
+interface FeatureProps {
+  text: string;
+  iconBg: string;
+  icon?: ReactElement;
+}
