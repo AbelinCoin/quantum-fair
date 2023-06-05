@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 import { ERC721ABI } from "../abis/nft";
 import { Proxy } from "../abis/proxy";
 import { Raffle } from "../abis/raffle";
-import { Create, CreateData } from "../types";
+import { Queries, CreateData } from "../types";
 
 export default function useSmartContract() {
   // 0x38abA480f2bA7A17bC01EE5E1AD64fCedd93EfE7
@@ -15,7 +15,7 @@ export default function useSmartContract() {
     end: string,
     winners: string,
     price: string
-  ): Promise<Create> {
+  ): Promise<Queries> {
     try {
       const ProxyContract = "0x21f754BEEB1c5d1c9470E8E5a33D8E2526462799";
       const ethereum = (window as any).ethereum;
@@ -63,7 +63,7 @@ export default function useSmartContract() {
     nftContract: string,
     hub: string,
     id: string
-  ): Promise<object> {
+  ): Promise<Queries> {
     try {
       const ethereum = (window as any).ethereum;
       const provider = new ethers.providers.Web3Provider(ethereum);
@@ -87,5 +87,19 @@ export default function useSmartContract() {
     }
   }
 
-  return { create, open };
+  async function findByHub(hub: string): Promise<Queries> {
+    try {
+      const ethereum = (window as any).ethereum;
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
+      const FairProxy = new ethers.Contract(hub, Proxy, signer);
+      const query = await FairProxy.raffleId();
+      return { status: 200, data: query };
+    } catch (err: any) {
+      console.error(err);
+      return { status: 500, data: err };
+    }
+  }
+
+  return { create, open, findByHub };
 }

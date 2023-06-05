@@ -8,7 +8,7 @@ export interface CreateData {
   };
 }
 
-export interface Create {
+export interface Queries {
   status: number;
   data: string;
 }

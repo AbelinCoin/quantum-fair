@@ -18,7 +18,8 @@ function Heading() {
 }
 
 function CreateRaffle() {
-  const { open } = useSmartContract();
+  const { open, findByHub } = useSmartContract();
+  const router = useRouter();
   const { query } = useRouter();
   const vaultFactory = "0xE37F25b41D33AF5A6844aE910C2390d6954f9a61";
   const vaultRouter = "0x04B3ceE98aa97284322CB8591eD3aC33c7a35414";
@@ -64,7 +65,11 @@ function CreateRaffle() {
             <Input value={vaultRouter} readOnly={true} />
             <Button
               onClick={async () => {
-                await open(nftContract, hub as string, id);
+                const fair = await open(nftContract, hub as string, id);
+                if (fair.status === 200) {
+                await findByHub(hub as string,);
+                  router.push(`/raffle?id=${fair.data}`);
+                }
               }}
             >
               Open

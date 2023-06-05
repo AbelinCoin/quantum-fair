@@ -36,8 +36,8 @@ function CreateRaffle() {
           <Stack spacing={4} w={"full"} maxW={"md"}>
             <Text textAlign={"center"}>CREATE RAFFLE 1/3</Text>
             <FormLabel>Raffle Name</FormLabel>
-            <Inputtype="text"
-              onChange={(e) => {
+            <Input type="text"
+              onChange={(e)=> {
                 setName(e.currentTarget.value);
               }}
             />
