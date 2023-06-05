@@ -32,7 +32,7 @@ function CreateRaffle() {
       <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
         <Flex p={8} flex={1} align={"center"} justify={"center"}>
           <Stack spacing={4} w={"full"} maxW={"md"}>
-            <Text>CREATE RAFFLE 2/3</Text>
+            <Text textAlign={"center"}>CREATE RAFFLE 2/3</Text>
             <FormLabel>Raffle Contract</FormLabel>
             <Input
               type="text"

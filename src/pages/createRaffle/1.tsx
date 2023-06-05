@@ -34,7 +34,7 @@ function CreateRaffle() {
       <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
         <Flex p={8} flex={1} align={"center"} justify={"center"}>
           <Stack spacing={4} w={"full"} maxW={"md"}>
-            <Text>CREATE RAFFLE 1/3</Text>
+            <Text textAlign={"center"}>CREATE RAFFLE 1/3</Text>
             <FormLabel>Raffle Name</FormLabel>
             <Input
               type="text"
@@ -81,7 +81,7 @@ function CreateRaffle() {
                 const fair = await create(start, end, winners, price);
                 if (fair.status === 200) {
                   setHub(fair.data);
-                  router.push(`/createRaffle/2?contract=${hub}`)
+                  router.push(`/createRaffle/2?contract=${hub}`);
                 }
               }}
             >
