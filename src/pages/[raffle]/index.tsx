@@ -49,7 +49,6 @@ const RaffleCard: React.FC<IRaffleCardProps> = ({ address, endTime }) => {
 
   return (
     <>
-    <Navbar />
     <Box
       w="80%"
       maxW="600px"
