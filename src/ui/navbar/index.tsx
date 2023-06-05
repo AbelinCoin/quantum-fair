@@ -70,7 +70,7 @@ export default function Navbar() {
                 mr={4}
                 leftIcon={<GreenDot />}
               >
-                {account}
+                {account?.substring(0,6) + "..." + account?.substring(38)}
               </Button>
             ) : (
               <Button
