@@ -135,9 +135,11 @@ function CreateRaffle() {
               ) : (
                 <Button
                   onClick={async () => {
-                    await create(start, end, winners, price).then((fair) =>
-                      setHub(fair.data)
-                    );
+                    const fair = await create(start, end, winners, price);
+                    if (fair.status === 200) {
+                      setHub(fair.data);
+                      setScreen(true);
+                    }
                   }}
                 >
                   Create
