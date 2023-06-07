@@ -7,6 +7,7 @@ import {
   Button,
   useDisclosure,
   useColorModeValue,
+  Image,Input
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { useEthers } from "@usedapp/core";
@@ -29,37 +30,40 @@ export default function Navbar() {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={"center"}>
-            <Box>Logo</Box>
-            <HStack
-              as={"nav"}
-              spacing={4}
-              display={{ base: "none", md: "flex" }}
+            <Image src={"/images/qf-logo.png"} alt={"Logo"} width={30} />
+            <Box>Quantum Fair</Box>
+          </HStack>
+          <HStack
+            as={"nav"}
+            spacing={4}
+            display={{ base: "none", md: "flex" }}
+            alignItems={"center"}
+          >
+            <Input placeholder="Search"/>
+            <Link
+              px={2}
+              py={1}
+              rounded={"md"}
+              _hover={{
+                textDecoration: "none",
+                bg: useColorModeValue("gray.200", "gray.700"),
+              }}
+              href={"/createRaffle"}
             >
-              <Link
-                px={2}
-                py={1}
-                rounded={"md"}
-                _hover={{
-                  textDecoration: "none",
-                  bg: useColorModeValue("gray.200", "gray.700"),
-                }}
-                href={"/createRaffle"}
-              >
-                Create Raffle
-              </Link>
-              <Link
-                px={2}
-                py={1}
-                rounded={"md"}
-                _hover={{
-                  textDecoration: "none",
-                  bg: useColorModeValue("gray.200", "gray.700"),
-                }}
-                href={"/raffleBoard"}
-              >
-                Raffle Board
-              </Link>
-            </HStack>
+              Create Raffle
+            </Link>
+            <Link
+              px={2}
+              py={1}
+              rounded={"md"}
+              _hover={{
+                textDecoration: "none",
+                bg: useColorModeValue("gray.200", "gray.700"),
+              }}
+              href={"/raffleBoard"}
+            >
+              Raffle Board
+            </Link>
           </HStack>
           <Flex alignItems={"center"}>
             {active ? (
@@ -70,11 +74,11 @@ export default function Navbar() {
                 mr={4}
                 leftIcon={<GreenDot />}
               >
-                {account?.substring(0,6) + "..." + account?.substring(38)}
+                {account?.substring(0, 6) + "..." + account?.substring(38)}
               </Button>
             ) : (
               <Button
-               variant={"solid"}
+                variant={"solid"}
                 colorScheme={"gray"}
                 size={"sm"}
                 mr={4}
