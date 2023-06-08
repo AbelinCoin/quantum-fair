@@ -52,8 +52,7 @@ function CreateRaffle() {
               onClick={async () => {
                 const fair = await open(nftContract, hub as string, id);
                 if (fair.status === 200) {
-                await findByHub(hub as string,);
-                  router.push(`/raffle?id=${fair.data}`);
+                  router.push(`/raffle?contract=${hub as string}`);
                 }
               }}
             >

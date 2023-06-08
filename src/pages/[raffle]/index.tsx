@@ -11,11 +11,21 @@ import {
   useColorModeValue,
   Input,
   Button,
+  FormControl,
+  FormLabel,
+  ModalBody,
+  Modal,
+  ModalOverlay,
+  ModalHeader,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { IoPerson, IoTimeSharp, IoPeople } from "react-icons/io5";
 import { useRouter } from "next/router";
 import { FeatureProps, RaffleProps } from "../../types";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useSmartContract from "../../hooks/useSmartContract";
 import { useEthers } from "@usedapp/core";
 import useIcons from "../../ui/icons";
@@ -55,38 +65,14 @@ function NoConnected() {
         <Stack align={"center"} spacing={2}>
           <Heading
             textTransform={"uppercase"}
-            fontSize={"3xl"}
+            fontSize={"x-large"}
             color={useColorModeValue("gray.800", "gray.200")}
           >
-            Subscribe
+            Not Connected
           </Heading>
           <Text fontSize={"lg"} color={"gray.500"}>
-            Subscribe to our newsletter & stay up to date!
+            Connect Web3 provider to stay here!
           </Text>
-        </Stack>
-        <Stack spacing={4} direction={{ base: "column", md: "row" }} w={"full"}>
-          <Input
-            type={"text"}
-            placeholder={"john@doe.net"}
-            color={useColorModeValue("gray.800", "gray.200")}
-            bg={useColorModeValue("gray.100", "gray.600")}
-            rounded={"full"}
-            border={0}
-            _focus={{
-              bg: useColorModeValue("gray.200", "gray.800"),
-              outline: "none",
-            }}
-          />
-          <Button
-            bg={"blue.400"}
-            rounded={"full"}
-            color={"white"}
-            flex={"1 0 auto"}
-            _hover={{ bg: "blue.500" }}
-            _focus={{ bg: "blue.500" }}
-          >
-            Subscribe
-          </Button>
         </Stack>
       </Stack>
     </>
@@ -95,10 +81,15 @@ function NoConnected() {
 
 export default function Raffle() {
   const { query } = useRouter();
-  const { findByHub } = useSmartContract();
-
+  const { findByHub, enter, finish } = useSmartContract();
   const { active, activateBrowserWallet, account } = useEthers();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const initialRef = useRef(null);
+  const finalRef = useRef(null);
   const [params, setParams] = useState<RaffleProps>();
+  const [payableAmount, setPayableAmount] = useState("");
+  const [address, setAddress] = useState("");
+  const [amount, setAmount] = useState("");
 
   useEffect(() => {
     async () => {
@@ -112,9 +103,77 @@ export default function Raffle() {
   });
 
   return (
-    <Container maxW={"5xl"} py={12}>
-      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
-        {!active && <NoConnected />}
+    <Container
+      maxW={"5xl"}
+      py={12}
+      alignItems={"center"}
+      justifyContent={"center"}
+      display={"flex"}
+    >
+      {!active && <NoConnected />}
+      <Modal
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Join to raffle</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <FormLabel>Payable Amount</FormLabel>
+              <Input
+                ref={initialRef}
+                placeholder="Payable Amount"
+                onChange={(e) => {
+                  setPayableAmount(e.target.value);
+                }}
+              />
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Address</FormLabel>
+              <Input
+                placeholder="Address"
+                onChange={(e) => {
+                  setAddress(e.target.value);
+                }}
+              />
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel>Amount</FormLabel>
+              <Input
+                placeholder="Amount"
+                onChange={(e) => {
+                  setAmount(e.target.value);
+                }}
+              />
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              colorScheme="blue"
+              mr={3}
+              onClick={async () => {
+                onClose();
+                await enter(query.contract, payableAmount, address, amount);
+              }}
+            >
+              Enter
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      <SimpleGrid
+        columns={{ base: 1, md: 2 }}
+        spacing={10}
+        alignItems={"center"}
+      >
         <Stack spacing={4}>
           <Text
             textTransform={"uppercase"}
@@ -156,15 +215,23 @@ export default function Raffle() {
               iconBg={useColorModeValue("purple.100", "purple.900")}
               text={params?.endTime!}
             />
-            {active && account == params?.owner! ? (
+            {active ? (
               <Button
                 bg={"blue.400"}
                 color={"white"}
                 flex={"1 0 auto"}
                 _hover={{ bg: "blue.500" }}
                 _focus={{ bg: "blue.500" }}
+                onClick={async () => {
+                  if (account == params?.owner!) {
+                    onClose();
+                    await finish(query.contract);
+                  } else {
+                    onOpen();
+                  }
+                }}
               >
-                Finish
+                {active && account == params?.owner! ? "Finish" : "Enter"}
               </Button>
             ) : (
               <Button
@@ -173,8 +240,9 @@ export default function Raffle() {
                 flex={"1 0 auto"}
                 _hover={{ bg: "blue.500" }}
                 _focus={{ bg: "blue.500" }}
+                onClick={activateBrowserWallet}
               >
-                Enter
+                Connect Wallet
               </Button>
             )}
           </Stack>

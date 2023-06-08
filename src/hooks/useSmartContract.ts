@@ -1,3 +1,4 @@
+import { addressEqual } from "@usedapp/core";
 import axios from "axios";
 import { ethers } from "ethers";
 import { ERC721ABI } from "../abis/nft";
@@ -93,14 +94,14 @@ export default function useSmartContract() {
       const signer = provider.getSigner();
       const FairProxy = new ethers.Contract(hub, Proxy, signer);
       const raffleId = await FairProxy.raffleId();
-      const creatorAddress = await FairProxy.creatorAddress();
+      const owner = await FairProxy.owner();
       const startTime = await FairProxy.startTime();
       const endTime = await FairProxy.endTime();
       const status = await FairProxy.status();
       return {
         id: raffleId,
         address: hub,
-        owner: creatorAddress,
+        owner: owner,
         startTime: startTime,
         endTime: endTime,
         status: status,
@@ -110,5 +111,42 @@ export default function useSmartContract() {
     }
   }
 
-  return { create, open, findByHub };
+  async function enter(
+    hub: any,
+    payableAmount: string,
+    address: string,
+    amount: string
+  ): Promise<Queries> {
+    try {
+      const ethereum = (window as any).ethereum;
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
+      const raffle = new ethers.Contract(hub, Raffle, signer);
+      const entered = await raffle.enter(
+        BigInt(payableAmount),
+        address,
+        amount
+      );
+      return { status: 200, data: entered };
+    } catch (err: any) {
+      console.error(err);
+      return { status: 500, data: err };
+    }
+  }
+
+  async function finish(hub: any): Promise<Queries> {
+    try {
+      const ethereum = (window as any).ethereum;
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
+      const raffle = new ethers.Contract(hub, Raffle, signer);
+      const finished = await raffle.finish();
+      return { status: 200, data: finished };
+    } catch (err: any) {
+      console.error(err);
+      return { status: 500, data: err };
+    }
+  }
+
+  return { create, open, findByHub, enter, finish };
 }
