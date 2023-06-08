@@ -26,7 +26,7 @@ import {
 import { IoPerson, IoTimeSharp, IoPeople } from "react-icons/io5";
 import { useRouter } from "next/router";
 import { FeatureProps, RaffleProps } from "../../types";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useSmartContract from "../../hooks/useSmartContract";
 import { useEthers } from "@usedapp/core";
 import useIcons from "../../ui/icons";
@@ -88,18 +88,25 @@ export default function Raffle() {
   const initialRef = useRef(null);
   const finalRef = useRef(null);
   const [params, setParams] = useState<RaffleProps>();
+  const [contract, setContract] = useState(query.contract);
+  const [payableAmount, setPayableAmount] = useState("");
   const [address, setAddress] = useState("");
   const [amount, setAmount] = useState("");
 
   async function getValues() {
     if (active) {
-      const getParams = await findByHub(query.contract);
+      setContract(contract);
+      const getParams = await findByHub(contract);
       setParams(getParams);
       console.log({ params });
     } else {
       activateBrowserWallet();
     }
   }
+
+  useEffect(() => {
+    getValues();
+  });
 
   return (
     <Container
@@ -121,6 +128,16 @@ export default function Raffle() {
           <ModalHeader>Join to raffle</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
+            <FormControl mt={4}>
+              <FormLabel>Payable Amount</FormLabel>
+              <Input
+                placeholder="Payable Amount"
+                onChange={(e) => {
+                  setPayableAmount(e.target.value);
+                }}
+              />
+            </FormControl>
+
             <FormControl mt={4}>
               <FormLabel>Address</FormLabel>
               <Input
@@ -149,7 +166,7 @@ export default function Raffle() {
               onClick={async () => {
                 onClose();
                 // getValues();
-                await enter(query.contract, address, amount);
+                await enter(query.contract, payableAmount, address, amount);
               }}
             >
               Enter

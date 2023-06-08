@@ -112,6 +112,7 @@ export default function useSmartContract() {
 
   async function enter(
     hub: any,
+    payableAmount: string,
     address: string,
     amount: string
   ): Promise<Queries> {
@@ -120,7 +121,11 @@ export default function useSmartContract() {
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
       const raffle = new ethers.Contract(hub, Raffle, signer);
-      const entered = await raffle.enter(address, amount);
+      const entered = await raffle.enter(
+        { value: payableAmount },
+        address,
+        amount
+      );
       return { status: 200, data: entered };
     } catch (err: any) {
       console.error(err);
