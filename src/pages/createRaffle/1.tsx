@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FormLabel, Input, Stack, Flex, Button, Text } from "@chakra-ui/react";
 import useSmartContract from "../../hooks/useSmartContract";
 import { useRouter } from "next/router";
@@ -6,13 +6,13 @@ import { useRouter } from "next/router";
 function CreateRaffle() {
   const { create } = useSmartContract();
   const router = useRouter();
-  const [name, setName] = React.useState("");
-  const [start, setStart] = React.useState("");
-  const [end, setEnd] = React.useState("");
-  const [winners, setWinners] = React.useState("");
-  const [price, setPrice] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const [hub, setHub] = React.useState(""); // 0xca11f9ff5fc64de0445b0a64a27f94cc91f6b9d5
+  const [name, setName] = useState("");
+  const [start, setStart] = useState("");
+  const [end, setEnd] = useState("");
+  const [winners, setWinners] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [hub, setHub] = useState(""); // 0xca11f9ff5fc64de0445b0a64a27f94cc91f6b9d5
 
   return (
     <>
@@ -21,8 +21,9 @@ function CreateRaffle() {
           <Stack spacing={4} w={"full"} maxW={"md"}>
             <Text textAlign={"center"}>CREATE RAFFLE 1/3</Text>
             <FormLabel>Raffle Name</FormLabel>
-            <Input type="text"
-              onChange={(e)=> {
+            <Input
+              type="text"
+              onChange={(e) => {
                 setName(e.currentTarget.value);
               }}
             />
@@ -36,21 +37,24 @@ function CreateRaffle() {
             />
             <FormLabel>End</FormLabel>
             <Input
-             required  type="number"
+              required
+              type="number"
               onChange={(e) => {
                 setEnd(e.currentTarget.value);
               }}
             />
             <FormLabel>N° Winners</FormLabel>
             <Input
-             required  type="number"
+              required
+              type="number"
               onChange={(e) => {
                 setWinners(e.currentTarget.value);
               }}
             />
             <FormLabel>Ticker Price</FormLabel>
             <Input
-             required  type="number"
+              required
+              type="number"
               onChange={(e) => {
                 setPrice(e.currentTarget.value);
               }}

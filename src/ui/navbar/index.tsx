@@ -7,11 +7,32 @@ import {
   Button,
   useDisclosure,
   useColorModeValue,
-  Image,Input
+  Image,
+  Input,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { useEthers } from "@usedapp/core";
 import useIcons from "../icons";
+import { useState } from "react";
+import { useRouter } from "next/router";
+
+function SearchInput() {
+  const router = useRouter();
+  const [address, setAddress] = useState("");
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAddress(e.currentTarget.value);
+    router.push(`/raffle?contract=${e.currentTarget.value}`);
+  };
+
+  return (
+    <Input
+      type="text"
+      placeholder="Search for collection or address"
+      value={address}
+      onChange={handleInputChange}
+    />
+  );
+}
 
 export default function Navbar() {
   const { Metamask, GreenDot } = useIcons();
@@ -39,7 +60,7 @@ export default function Navbar() {
             display={{ base: "none", md: "flex" }}
             alignItems={"center"}
           >
-            <Input placeholder="Search"/>
+            <SearchInput />
             <Link
               px={2}
               py={1}

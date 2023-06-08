@@ -15,10 +15,13 @@ export interface Queries {
   data: string;
 }
 
-interface IRaffleCardProps {
-  id: number;
+export interface RaffleProps {
+  id: string;
   address: string;
-  endTime: Date;
+  owner: string;
+  startTime: string;
+  endTime: string;
+  status: string;
 }
 
 export interface FeatureProps {

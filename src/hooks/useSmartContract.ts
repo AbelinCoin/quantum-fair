@@ -3,13 +3,13 @@ import { ethers } from "ethers";
 import { ERC721ABI } from "../abis/nft";
 import { Proxy } from "../abis/proxy";
 import { Raffle } from "../abis/raffle";
-import { Queries, CreateData } from "../types";
+import { Queries, CreateData, RaffleProps } from "../types";
 
 export default function useSmartContract() {
   // 0x38abA480f2bA7A17bC01EE5E1AD64fCedd93EfE7
   // 29
   // 0xca11f9ff5fc64de0445b0a64a27f94cc91f6b9d5
-
+  const ProxyContract = "0x21f754BEEB1c5d1c9470E8E5a33D8E2526462799";
   async function create(
     start: string,
     end: string,
@@ -17,7 +17,6 @@ export default function useSmartContract() {
     price: string
   ): Promise<Queries> {
     try {
-      const ProxyContract = "0x21f754BEEB1c5d1c9470E8E5a33D8E2526462799";
       const ethereum = (window as any).ethereum;
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
@@ -87,17 +86,27 @@ export default function useSmartContract() {
     }
   }
 
-  async function findByHub(hub: string): Promise<Queries> {
+  async function findByHub(hub: any): Promise<RaffleProps> {
     try {
       const ethereum = (window as any).ethereum;
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
       const FairProxy = new ethers.Contract(hub, Proxy, signer);
-      const query = await FairProxy.raffleId();
-      return { status: 200, data: query };
+      const raffleId = await FairProxy.raffleId();
+      const creatorAddress = await FairProxy.creatorAddress();
+      const startTime = await FairProxy.startTime();
+      const endTime = await FairProxy.endTime();
+      const status = await FairProxy.status();
+      return {
+        id: raffleId,
+        address: hub,
+        owner: creatorAddress,
+        startTime: startTime,
+        endTime: endTime,
+        status: status,
+      };
     } catch (err: any) {
-      console.error(err);
-      return { status: 500, data: err };
+      throw Error(err);
     }
   }
 
