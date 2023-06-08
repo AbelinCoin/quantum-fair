@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-var-requires: "off" */
 import {
   Container,
   SimpleGrid,
@@ -25,7 +26,7 @@ import {
 import { IoPerson, IoTimeSharp, IoPeople } from "react-icons/io5";
 import { useRouter } from "next/router";
 import { FeatureProps, RaffleProps } from "../../types";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import useSmartContract from "../../hooks/useSmartContract";
 import { useEthers } from "@usedapp/core";
 import useIcons from "../../ui/icons";
@@ -87,20 +88,18 @@ export default function Raffle() {
   const initialRef = useRef(null);
   const finalRef = useRef(null);
   const [params, setParams] = useState<RaffleProps>();
-  const [payableAmount, setPayableAmount] = useState("");
   const [address, setAddress] = useState("");
   const [amount, setAmount] = useState("");
 
-  useEffect(() => {
-    async () => {
-      if (active) {
-        const getParams = await findByHub(query.contract);
-        setParams(getParams);
-      } else {
-        activateBrowserWallet();
-      }
-    };
-  });
+  async function getValues() {
+    if (active) {
+      const getParams = await findByHub(query.contract);
+      setParams(getParams);
+      console.log({ params });
+    } else {
+      activateBrowserWallet();
+    }
+  }
 
   return (
     <Container
@@ -122,17 +121,6 @@ export default function Raffle() {
           <ModalHeader>Join to raffle</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <FormControl>
-              <FormLabel>Payable Amount</FormLabel>
-              <Input
-                ref={initialRef}
-                placeholder="Payable Amount"
-                onChange={(e) => {
-                  setPayableAmount(e.target.value);
-                }}
-              />
-            </FormControl>
-
             <FormControl mt={4}>
               <FormLabel>Address</FormLabel>
               <Input
@@ -160,7 +148,8 @@ export default function Raffle() {
               mr={3}
               onClick={async () => {
                 onClose();
-                await enter(query.contract, payableAmount, address, amount);
+                // getValues();
+                await enter(query.contract, address, amount);
               }}
             >
               Enter

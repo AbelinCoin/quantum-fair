@@ -1,4 +1,3 @@
-import { addressEqual } from "@usedapp/core";
 import axios from "axios";
 import { ethers } from "ethers";
 import { ERC721ABI } from "../abis/nft";
@@ -92,7 +91,7 @@ export default function useSmartContract() {
       const ethereum = (window as any).ethereum;
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
-      const FairProxy = new ethers.Contract(hub, Proxy, signer);
+      const FairProxy = new ethers.Contract(hub, Raffle, signer);
       const raffleId = await FairProxy.raffleId();
       const owner = await FairProxy.owner();
       const startTime = await FairProxy.startTime();
@@ -113,7 +112,6 @@ export default function useSmartContract() {
 
   async function enter(
     hub: any,
-    payableAmount: string,
     address: string,
     amount: string
   ): Promise<Queries> {
@@ -122,11 +120,7 @@ export default function useSmartContract() {
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
       const raffle = new ethers.Contract(hub, Raffle, signer);
-      const entered = await raffle.enter(
-        BigInt(payableAmount),
-        address,
-        amount
-      );
+      const entered = await raffle.enter(address, amount);
       return { status: 200, data: entered };
     } catch (err: any) {
       console.error(err);
