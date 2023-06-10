@@ -140,7 +140,7 @@ function CreateRaffle() {
     <>
       <Heading />
       <Navbar />
-      <Flex>
+      <div>
         {screen ? (
           <div
             style={{
@@ -188,54 +188,96 @@ function CreateRaffle() {
           </div>
         ) : (
           <div
-            style={{
-              justifyContent: "center",
-              background: "#efefef",
-              flexDirection: "column",
-              alignItems: "center",
-              display: "flex",
-              transform: "translateY(30px)",
-              alignContent: "center",
-              zIndex: "1",
-            }}
+            className="flex flex-col justify-center content-center	items-center	bg-white w-full min-w-fit px-3"
           >
-            <Typography>CREATE RAFFLE 1/3</Typography>
-            <LabelName>Raffle Name</LabelName>
-            <Input
-              type="text"
-              onChange={(e) => {
-                setName(e.currentTarget.value);
-              }}
-            />
-            <LabelStart>Start</LabelStart>
-            <Input
-              type="number"
-              onChange={(e) => {
-                setStart(e.target.value);
-              }}
-            />
-            <LabelEnd>End</LabelEnd>
-            <Input
-              type="number"
-              onChange={(e) => {
-                setEnd(e.currentTarget.value);
-              }}
-            />
-            <LabelWinners>N° Winners</LabelWinners>
-            <Input
+            <div className="flex flex-col justify-center mt-16">
+              <span className="text-5xl font-bold text-primary-purple text-center">Launch FairShow</span>
+              <span className="text-base font-normal text-primary-purple mt-2 text-center">All the apps you need to pick random winners from everywhere!</span>
+            </div>
+
+            <div className="flex justify-center mt-24 w-[478px]">
+              <img src="https://github.com/AbelinCoin/Blog-Des-orden-files/blob/main/bar.png?raw=true" alt="bar progres" />
+            </div>
+
+            <div className="flex justify-between w-[408px]">
+              <div className="flex flex-col justify-start text-center">
+                <span className="text-2xl font-bold text-primary-purple mt-5">Step 1</span>
+                <span className="text-base font-bold text-light-purple">Main raffle data</span>
+              </div>
+
+              <div className="flex flex-col justify-end text-center">
+                <span className="text-2xl font-bold text-dark-grey mt-5">Step 2</span>
+                <span className="text-base font-bold text-light-grey">Technical data</span>
+              </div>
+            </div>
+            
+            <div className="mt-[6.563rem] flex flex-col w-[560px]">
+              <label className="text-base font-bold text-primary-purple">Raffle Name</label>
+              <input
+                className="h-14 rounded-lg border border-primary-purple  bg-bg-grey"
+                type="text"
+                onChange={(e) => {
+                  setName(e.currentTarget.value);
+                }}
+              />
+            </div>
+
+            <div className="flex flex-row w-[560px] justify-between	mt-6">
+              <div className="flex flex-col">
+                <label className="text-base font-bold text-primary-purple">Start date</label>
+                <input
+                  className="w-60 h-14 rounded-lg border border-primary-purple bg-bg-grey"
+                  type="number"
+                  onChange={(e) => {
+                    setStart(e.target.value);
+                  }}
+                />
+              </div>
+
+              <div className="flex flex-col">
+                <label className="flex flex-col text-base font-bold text-primary-purple bg-grey">Close date</label>
+                <input
+                  className="w-60 h-14 rounded-lg border border-primary-purple  bg-bg-grey"
+                  type="number"
+                  onChange={(e) => {
+                    setEnd(e.currentTarget.value);
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* <label className="text-base font-bold text-primary-purple">N° Winners</label>
+            <input
               type="number"
               onChange={(e) => {
                 setWinners(e.currentTarget.value);
               }}
-            />
-            <LabelDesc>Description</LabelDesc>
-            <InputDesc
-              onChange={(e) => {
-                setDescription(e.currentTarget.value);
-              }}
-            />
+            /> */}
+
+            <div className="flex flex-col w-[560px]">
+              <label className="text-base font-bold text-primary-purple mt-6">Description</label>
+              <input
+                className="h-[6.75rem] rounded-lg border border-primary-purple  bg-bg-grey"
+                onChange={(e) => {
+                  setDescription(e.currentTarget.value);
+                }}
+              />
+            </div>
+
+            <div className="flex flex-col w-[560px]">
+              <label className="text-base font-bold text-primary-purple mt-6">Ticket Price</label>
+              <input
+                className="h-10 rounded-lg border border-primary-purple  bg-bg-grey"
+                type="number"
+                onChange={(e) => {
+                  setDescription(e.currentTarget.value);
+                }}
+              />
+            </div>
+
             {canyed ? (
-              <Button
+              <button
+                className="h-10 w-[140px] rounded-lg border bg-secondary-purple font-bold text-base text-white"
                 onClick={() => {
                   if (String(hub).length >= 42) {
                     setScreen(true);
@@ -243,9 +285,28 @@ function CreateRaffle() {
                 }}
               >
                 Next
-              </Button>
+              </button>
             ) : (
-              <Button onClick={create}>Create</Button>
+              
+              <div className="flex justify-end w-[560px] mt-3">
+                <div className="flex flex-col">
+                  <div className="flex justify-start content-center items-center w-60 h-14 rounded-lg border border-primary-purple  bg-bg-grey">
+                    <button
+                    type="submit"
+                    className="ml-4 w-6 h-6 rounded border border-primary-purple  bg-white">
+                    </button>
+                    <span className="ml-4 font-bold text-base text-primary-purple">Im not a robot!</span>
+                  </div>
+                  
+                  <div className="flex justify-end mt-6 mb-[133px]"> 
+                    <button
+                    className="h-10 w-[140px] rounded-lg border bg-secondary-purple font-bold text-base text-white" 
+                    onClick={create}>
+                      Next step
+                    </button>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
         )}
@@ -330,7 +391,7 @@ function CreateRaffle() {
             </Button>
           </div>
         )*/}
-      </Flex>
+      </div>
     </>
   );
 }
